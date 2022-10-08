@@ -5,3 +5,9 @@
 .flex-center {
     @apply justify-center items-center;
 }
+
+/* The height of header is h-12, which is 3 rem */
+.main-content {
+    width: 100%;
+    height: calc(100vh - 3rem);
+}
