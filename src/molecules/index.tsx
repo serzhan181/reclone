@@ -1,1 +1,1 @@
-export { TrendingCard } from "./trending-card";
+export { TrendingCard } from "./TrendingCard";
