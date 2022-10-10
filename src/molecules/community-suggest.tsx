@@ -12,7 +12,7 @@ export const CommunitySuggest: FC<ICommunitySuggest> = ({
   title,
 }) => {
   return (
-    <div className="flex w-full h-12 overflow-hidden flex-center">
+    <div className="flex w-full h-12 overflow-hidden cursor-pointer flex-center">
       <div className="flex items-center justify-between w-full h-full m-2">
         <div className="flex">
           <Image

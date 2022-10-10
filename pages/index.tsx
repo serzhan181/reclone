@@ -5,9 +5,13 @@ const Home: NextPage = () => {
   return (
     <>
       <div className="flex flex-wrap w-full">
-        <TrendingRow />
-        <PopularCommunities />
-        <div className=" border p-6 mt-2 basis-[70%]">Future content</div>
+        <div className="flex w-[70%]">
+          <TrendingRow />
+        </div>
+
+        <div className="flex w-[30%]">
+          <PopularCommunities />
+        </div>
       </div>
     </>
   );
