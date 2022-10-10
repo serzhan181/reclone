@@ -6,6 +6,7 @@ interface IButton {
   rounded?: boolean;
   size?: "s" | "m" | "l";
   outline?: boolean;
+  uppercase?: boolean;
 }
 
 export const Button: FC<IButton> = ({
@@ -13,6 +14,7 @@ export const Button: FC<IButton> = ({
   size = "m",
   rounded = false,
   outline = false,
+  uppercase,
   onClick,
 }) => {
   const [bSize, setBSize] = useState("px-6 py-2.5 text-xs");
@@ -32,7 +34,8 @@ export const Button: FC<IButton> = ({
             ? "border-2 border-blue-600 text-blue-600 hover:bg-black hover:bg-opacity-5 "
             : "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800"
         }
-        font-medium uppercase   shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out`}
+        ${uppercase && "uppercase"}
+        font-medium    shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out`}
       onClick={onClick}
     >
       {children}

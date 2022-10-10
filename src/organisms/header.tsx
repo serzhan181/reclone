@@ -13,8 +13,8 @@ export const Header = () => {
           </Button>
         </div>
         <div className="flex gap-3">
-          <Button>log in</Button>
-          <Button outline rounded>
+          <Button uppercase>log in</Button>
+          <Button uppercase outline rounded>
             sign in
           </Button>
         </div>
