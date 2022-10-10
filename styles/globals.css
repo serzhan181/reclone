@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    background-color: #dae0e6;
+}
+
 .flex-center {
-    @apply justify-center items-center;
+    @apply items-center justify-center;
 }
 
 /* The height of header is h-12, which is 3 rem */
