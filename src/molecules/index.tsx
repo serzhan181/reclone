@@ -1,2 +1,2 @@
-export { TrendingCard } from "./TrendingCard";
+export { TrendingCard } from "./trending-card";
 export { CommunitySuggest } from "./community-suggest";
