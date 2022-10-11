@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { TrendingRow, PopularCommunities, Accordion } from "@/src/organisms";
-
-// TODO: Create accordion for categories
+import { accordion_data } from "@/public/constants";
 
 const Home: NextPage = () => {
   return (
@@ -17,7 +16,9 @@ const Home: NextPage = () => {
           <PopularCommunities />
 
           {/* categories */}
-          <Accordion />
+          <Accordion options={accordion_data}>
+            {(option) => <p>{option.description}</p>}
+          </Accordion>
         </div>
       </div>
     </>
