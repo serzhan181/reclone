@@ -3,7 +3,7 @@ import { Button } from "../atoms";
 
 export const PopularCommunities = () => {
   return (
-    <div className="flex flex-col w-full gap-1 pl-2">
+    <div className="flex flex-col w-full gap-1">
       {/* Title */}
       <h3 className="text-sm font-semibold">Popular communities</h3>
 
