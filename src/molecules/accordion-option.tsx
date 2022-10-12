@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import { ChevronDown } from "react-feather";
 
 export interface IAccordionOption {
-  [x: string]: ReactNode;
+  [x: string]: any;
   children: ReactNode;
   title: string;
 }

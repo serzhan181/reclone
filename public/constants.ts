@@ -2,13 +2,11 @@
 
 interface IAccordion_Data {
     title: string;
-    description: string;
+    communities: string[];
 }
 export const accordion_data: IAccordion_Data[] = [
-    {title: 'Doggy brotha', description: 'Sed nisi lacus sed viverra tellus in hac habitasse platea. Vitae turpis massa sed elementum tempus. Vestibulum rhoncus'},
-    {title: 'Math', description: 'Sed nisi lacus sed viverra tellus in hac habitasse platea. Vitae turpis massa sed elementum tempus. Vestibulum rhoncus'},
-    {title: 'Travel', description: 'Sed nisi lacus sed viverra tellus in hac habitasse platea. Vitae turpis massa sed elementum tempus. Vestibulum rhoncus'},
-    {title: 'WORKOUT', description: 'Sed nisi lacus sed viverra tellus in hac habitasse platea. Vitae turpis massa sed elementum tempus. Vestibulum rhoncus'},
-    {title: 'Top G', description: 'Sed nisi lacus sed viverra tellus in hac habitasse platea. Vitae turpis massa sed elementum tempus. Vestibulum rhoncus'},
-    {title: 'Fashion', description: 'Sed nisi lacus sed viverra tellus in hac habitasse platea. Vitae turpis massa sed elementum tempus. Vestibulum rhoncus'},
+    {title: 'Gaming', communities: ['jinja', 'gamedone', 'wasted', 'gta6isbanger']},
+    {title: 'Gym', communities: ['alphaworkout', 'gigachad', 'putonhours']},
+    {title: 'Humor', communities: ['bruv', 'bool of wa\'ar', 'rumemes', 'notfunny']},
+    {title: 'Fashion', communities: ['faketits', 'hugeeyelips', 'witchnails', 'buffedlips']},
 ]
