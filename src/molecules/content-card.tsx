@@ -1,14 +1,21 @@
-import { ThumbsUp, ThumbsDown } from "react-feather";
+import { FC } from "react";
+import { ThumbsUp, ThumbsDown, MessageSquare, Share } from "react-feather";
 
 // TODO: Find a way to replace <img /> to <Image /> (next/image)
+// TODO: Find a way to replace bottom sections of the content-card with links (<a>, <Link />)
 
-export const ContentCard = () => {
+interface IContentCard {
+  title: string;
+  imgSrc?: string;
+}
+
+export const ContentCard: FC<IContentCard> = ({ title, imgSrc }) => {
   return (
     <div className="flex w-full overflow-hidden rounded border-slate-700">
-      <div className="w-full p-2 bg-white">
-        <div className="flex justify-between">
+      <div className="w-full px-3 bg-white">
+        <div className="flex justify-between my-2">
           <div>
-            <h2 className="text-xl font-semibold cursor-pointer">Title</h2>
+            <h2 className="text-xl font-semibold cursor-pointer">{title}</h2>
           </div>
 
           <div className="flex gap-2 text-gray-600 select-none">
@@ -25,13 +32,23 @@ export const ContentCard = () => {
 
         <div className="w-full ">
           <img
-            src="https://images.unsplash.com/photo-1543357480-c60d40007a3f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZnJlZWRvbXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+            src={imgSrc}
             alt="hello"
-            className="max-h-[460px] min-h-[100px] w-full object-contain"
+            className="max-h-[460px] min-h-[100px] w-full object-cover"
           />
         </div>
 
-        <div>comments</div>
+        <div className="flex gap-3">
+          <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
+            <MessageSquare />
+            <p>178 comments</p>
+          </div>
+
+          <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
+            <Share />
+            <p>Share</p>
+          </div>
+        </div>
       </div>
     </div>
   );
