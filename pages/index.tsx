@@ -1,23 +1,29 @@
 import type { NextPage } from "next";
+import { ContentCard } from "@/src/molecules";
 import { TrendingRow, PopularCommunities, Categories } from "@/src/organisms";
-
-// TODO: Content section
 
 const Home: NextPage = () => {
   return (
     <>
-      <div className="flex flex-wrap w-full">
-        <div className="flex flex-col gap-2 w-[70%]">
-          <TrendingRow />
+      <div className="flex flex-wrap w-full flex-center">
+        <div className="flex flex-col gap-2">
+          <div className="flex mb-5">
+            <TrendingRow />
+          </div>
 
-          <div className="flex border">future contento</div>
-        </div>
+          <div className="flex">
+            <div className="flex flex-col gap-2 w-[70%]">
+              <ContentCard />
+              <ContentCard />
+            </div>
 
-        <div className="flex gap-2 flex-col w-[30%] pl-2">
-          <PopularCommunities />
+            <div className="flex gap-2 flex-col w-[30%] pl-2">
+              <PopularCommunities />
 
-          {/* categories */}
-          <Categories />
+              {/* categories */}
+              <Categories />
+            </div>
+          </div>
         </div>
       </div>
     </>
