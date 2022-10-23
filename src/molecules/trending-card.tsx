@@ -13,10 +13,8 @@ export const TrendingCard: FC<ITrendingCard> = ({
   imgSrc,
 }) => {
   return (
-    <div className="relative flex cursor-pointer">
-      <div
-        className={`overflow-hidden flex w-64 h-56 p-6 rounded-lg bg-black bg-opacity-50`}
-      >
+    <div className="overflow-hidden  min-w-[160px] max-w-[264px] h-56 rounded-lg bg-black bg-opacity-50 relative flex cursor-pointer">
+      <div className={`flex overflow-hidden p-6`}>
         <Image
           src={imgSrc}
           layout="fill"
