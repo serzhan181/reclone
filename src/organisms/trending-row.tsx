@@ -7,7 +7,7 @@ export const TrendingRow = () => {
       <h3 className="text-sm font-semibold">Trending news</h3>
 
       {/* Cards themselves */}
-      <div className="flex justify-between gap-2">
+      <div className="flex flex-row flex-wrap justify-between h-56 overflow-hidden">
         <TrendingCard
           title="Trending news"
           description="pardon me sir? how did u get that"
