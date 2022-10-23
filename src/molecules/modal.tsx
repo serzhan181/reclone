@@ -15,7 +15,7 @@ export const Modal: FC<IModal> = ({ active, setActive, children }) => {
       onClick={() => setActive(false)}
     >
       <div
-        className={`p-4 bg-white rounded duration-300 ${
+        className={`p-4 bg-white rounded-3xl duration-300 ${
           active ? "scale-100" : "scale-50"
         }`}
         onClick={(e) => e.stopPropagation()}
