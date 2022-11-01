@@ -1,13 +1,14 @@
-import { FC } from "react";
+import { FC, HTMLInputTypeAttribute } from "react";
 
 interface IInput {
   placeholder: string;
+  type?: HTMLInputTypeAttribute;
 }
 
-export const Input: FC<IInput> = ({ placeholder }) => {
+export const Input: FC<IInput> = ({ placeholder, type = "text" }) => {
   return (
     <input
-      type="text"
+      type={type}
       className="
       w-full
       px-3
