@@ -37,12 +37,18 @@ export const Header = () => {
       {/* Modals for auth */}
       {/* Sign up */}
       <Modal active={activeSignUp} setActive={setActiveSignUp}>
-        <div className="flex flex-col gap-3 px-6 py-9">
+        <div className="flex flex-col gap-3 px-6 h-80 w-80 py-9">
           <div>
             <h2 className="text-lg font-semibold">Sign up</h2>
           </div>
           <div>
-            <Input placeholder="Email" />
+            <Input type="email" placeholder="Email" />
+          </div>
+          <div>
+            <Input type="password" placeholder="Password" />
+          </div>
+          <div>
+            <Input type="password" placeholder="Repeat password" />
           </div>
 
           <div>
@@ -67,7 +73,7 @@ export const Header = () => {
 
       {/* Log in */}
       <Modal active={activeLogIn} setActive={setActiveLogIn}>
-        <div className="flex flex-col gap-3 px-6 py-9">
+        <div className="flex flex-col gap-3 px-6 h-80 w-80 py-9">
           <div>
             <h2 className="text-lg font-semibold">Log in</h2>
           </div>
