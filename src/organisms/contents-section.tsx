@@ -1,6 +1,6 @@
 import { ContentCard } from "../molecules";
 
-export const ContentMainPage = () => {
+export const ContentsSection = () => {
   return (
     <div className="flex flex-col gap-2">
       <ContentCard

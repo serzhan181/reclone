@@ -3,7 +3,7 @@ import {
   TrendingRow,
   PopularCommunities,
   Categories,
-  ContentMainPage,
+  ContentsSection,
 } from "@/src/organisms";
 
 const Home: NextPage = () => {
@@ -15,11 +15,11 @@ const Home: NextPage = () => {
         </div>
 
         <div className="flex w-full">
-          <div className="flex flex-col w-[70%]">
-            <ContentMainPage />
+          <div className="flex flex-col basis-[70%]">
+            <ContentsSection />
           </div>
 
-          <div className="flex gap-2 flex-col w-[30%] pl-2">
+          <div className="flex flex-col flex-grow gap-2 pl-2">
             <PopularCommunities />
 
             <Categories />

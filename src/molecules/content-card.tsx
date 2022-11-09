@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { ThumbsUp, ThumbsDown, MessageSquare, Share } from "react-feather";
+import Link from "next/link";
 
 // TODO: Find a way to replace <img /> to <Image /> (next/image)
 // TODO: Find a way to replace bottom sections of the content-card with links (<a>, <Link />)
@@ -15,7 +16,9 @@ export const ContentCard: FC<IContentCard> = ({ title, imgSrc }) => {
       <div className="w-full px-3 bg-white">
         <div className="flex justify-between my-2">
           <div>
-            <h2 className="text-xl font-semibold cursor-pointer">{title}</h2>
+            <h2 className="text-xl font-semibold cursor-pointer">
+              <Link href="/r/community/id94/some-slug/">{title}</Link>
+            </h2>
           </div>
 
           <div className="flex gap-2 text-gray-600 select-none">

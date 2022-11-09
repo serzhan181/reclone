@@ -11,7 +11,7 @@ export const DefaultLayout: FC<IDefaultLayout> = ({ children }) => {
       <Header />
       <main className="mt-12">
         <div className="flex pt-2 flex-center">
-          <div className="w-[1080px] flex overflow-hidden">{children}</div>
+          <div className="container flex overflow-hidden">{children}</div>
         </div>
       </main>
     </>

@@ -6,6 +6,22 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    container: false
   },
-  plugins: [],
+  plugins: [
+    function({ addComponents }) {
+      addComponents({
+
+        '.container': {
+          width: '100%',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          '@screen sm': { maxWidth: '640px' },
+          '@screen md': { maxWidth: '768px' },
+          '@screen lg': { maxWidth: '1080px' },
+        }
+
+      })
+    }
+  ],
 }

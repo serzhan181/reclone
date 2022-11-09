@@ -1,9 +1,9 @@
 import { FC, ReactNode } from "react";
 
-interface IModal {
+export interface IModal {
   active: boolean;
   setActive: (isActive: boolean) => void;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const Modal: FC<IModal> = ({ active, setActive, children }) => {
