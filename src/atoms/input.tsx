@@ -1,14 +1,22 @@
-import { FC, HTMLInputTypeAttribute } from "react";
+import {
+  DetailedHTMLProps,
+  FC,
+  InputHTMLAttributes,
+  forwardRef,
+  ForwardRefExoticComponent,
+  RefAttributes,
+} from "react";
 
-interface IInput {
-  placeholder: string;
-  type?: HTMLInputTypeAttribute;
-}
-
-export const Input: FC<IInput> = ({ placeholder, type = "text" }) => {
+export const Input: ForwardRefExoticComponent<
+  Pick<
+    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+    "key" | keyof InputHTMLAttributes<HTMLInputElement>
+  > &
+    RefAttributes<HTMLInputElement>
+> = forwardRef(function ReffedInput(props, ref) {
   return (
     <input
-      type={type}
+      {...props}
       className="
       w-full
       px-3
@@ -24,8 +32,7 @@ export const Input: FC<IInput> = ({ placeholder, type = "text" }) => {
       m-0
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
     "
-      id="exampleFormControlInput1"
-      placeholder={placeholder}
+      ref={ref}
     />
   );
-};
+});

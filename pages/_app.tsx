@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next/types";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Authenticator } from "@/src/hoc/authenticator";
 
 export type PageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -29,7 +30,12 @@ export default function MyApp({
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={qc}>
-        {getLayout(<Component {...pageProps} />)}
+        {getLayout(
+          <>
+            <Authenticator />
+            <Component {...pageProps} />
+          </>
+        )}
       </QueryClientProvider>
     </SessionProvider>
   );

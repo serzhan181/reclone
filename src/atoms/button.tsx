@@ -1,6 +1,8 @@
 import {
   ButtonHTMLAttributes,
+  DetailedHTMLProps,
   FC,
+  HTMLAttributes,
   ReactNode,
   useEffect,
   useState,
@@ -16,10 +18,9 @@ interface IButton {
   full?: boolean;
   transparent?: boolean;
   noRound?: boolean;
-  rest?: ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
-export const Button: FC<IButton> = ({
+export const Button: FC<IButton & ButtonHTMLAttributes<HTMLButtonElement>> = ({
   children,
   size = "m",
   rounded = false,
@@ -29,6 +30,7 @@ export const Button: FC<IButton> = ({
   full,
   onClick,
   transparent,
+  ...rest
 }) => {
   const [bSize, setBSize] = useState("px-6 py-2.5 text-xs");
 
@@ -40,7 +42,6 @@ export const Button: FC<IButton> = ({
 
   return (
     <button
-      type="button"
       className={`${bSize} ${rounded && "rounded-full"} 
         ${
           outline
@@ -56,6 +57,7 @@ export const Button: FC<IButton> = ({
         ${noRound ? "" : "rounded"}
        focus:outline-none focus:ring-0   transition duration-150 ease-in-out`}
       onClick={onClick}
+      {...rest}
     >
       {children}
     </button>
