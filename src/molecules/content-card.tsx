@@ -33,13 +33,15 @@ export const ContentCard: FC<IContentCard> = ({ title, imgSrc }) => {
           </div>
         </div>
 
-        <div className="w-full ">
-          <img
-            src={imgSrc}
-            alt="hello"
-            className="max-h-[460px] min-h-[100px] w-full object-cover"
-          />
-        </div>
+        {imgSrc && (
+          <div className="w-full ">
+            <img
+              src={process.env.NEXT_PUBLIC_STATIC_SERVE_ENDPOINT + imgSrc}
+              alt="hello"
+              className="max-h-[460px] min-h-[100px] w-full object-contain"
+            />
+          </div>
+        )}
 
         <div className="flex gap-3">
           <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">

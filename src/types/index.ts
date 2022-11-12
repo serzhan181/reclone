@@ -20,3 +20,9 @@ export interface UserSignUp {
   password: string;
   email: string;
 }
+
+export interface IPostMinimal {
+  identifier: string;
+  title: string;
+  postImgUrn?: string;
+}
