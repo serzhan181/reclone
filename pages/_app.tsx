@@ -1,21 +1,27 @@
 import "@/styles/globals.css";
-import type { AppProps } from "next/app";
+import type { AppContext, AppProps } from "next/app";
 import { DefaultLayout } from "@/src/layouts";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ReactElement, ReactNode } from "react";
-import { NextPage } from "next/types";
+import { NextPage, NextPageContext } from "next/types";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Authenticator } from "@/src/hoc/authenticator";
+import nookies from "nookies";
+import { gqlClient } from "@/src/graphql/setup";
+import { AUTH_ME } from "@/src/graphql/api/auth.graphql";
+import type { IMe } from "@/src/types";
 
 export type PageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
-  Component: PageWithLayout;
-  session: Session;
-};
+type AppPropsCustom = NextPage &
+  AppProps & {
+    Component: PageWithLayout;
+    session: Session;
+    me: IMe;
+  };
 
 const qc = new QueryClient();
 
@@ -23,7 +29,8 @@ export default function MyApp({
   Component,
   pageProps,
   session,
-}: AppPropsWithLayout) {
+  me,
+}: AppPropsCustom) {
   const getLayout =
     Component.getLayout ?? ((page) => <DefaultLayout>{page}</DefaultLayout>);
 
@@ -32,7 +39,7 @@ export default function MyApp({
       <QueryClientProvider client={qc}>
         {getLayout(
           <>
-            <Authenticator />
+            <Authenticator me={me} />
             <Component {...pageProps} />
           </>
         )}
@@ -40,3 +47,16 @@ export default function MyApp({
     </SessionProvider>
   );
 }
+
+MyApp.getInitialProps = async (appCtx: AppContext) => {
+  const cookie = nookies.get(appCtx.ctx);
+  const token =
+    cookie[process.env.NEXT_PUBLIC_AUTHORIZATION_COOKIE_NAME as string] || "";
+
+  gqlClient.setHeader("Authorization", `Bearer ${token}`);
+  const data = await gqlClient.request(AUTH_ME).catch(() => {
+    console.log("unauthorized");
+  });
+
+  return { me: data?.me || null };
+};

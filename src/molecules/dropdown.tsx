@@ -8,20 +8,23 @@ interface IDropdown {
   options: Array<{ actionTitle: string; href: string; onClick?: () => void }>;
 }
 
-const MyLink = forwardRef(function MyLink(
-  props: { href: string; children: ReactElement },
-  ref: ForwardedRef<HTMLAnchorElement>
-) {
-  let { href, children, ...rest } = props;
+// eslint-disable-next-line react/display-name
+const MyLink = forwardRef(
+  (
+    props: { href: string; children: ReactElement },
+    ref: ForwardedRef<HTMLParagraphElement>
+  ) => {
+    let { href, children, ...rest } = props;
 
-  return (
-    <Link href={href}>
-      <a ref={ref} {...rest}>
-        {children}
-      </a>
-    </Link>
-  );
-});
+    return (
+      <Link href={href}>
+        <p {...rest} ref={ref}>
+          {children}
+        </p>
+      </Link>
+    );
+  }
+);
 
 export const Dropdown: FC<IDropdown> = ({ title, options }) => {
   return (

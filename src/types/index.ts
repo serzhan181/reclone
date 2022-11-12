@@ -5,6 +5,11 @@ export interface IUser {
   profile_picture_urn: string | null;
 }
 
+export interface IMe {
+  authenticated: boolean;
+  user: IUser;
+}
+
 export interface UserLogin {
   username: string;
   password: string;
