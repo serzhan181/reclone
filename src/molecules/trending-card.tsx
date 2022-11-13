@@ -14,7 +14,7 @@ export const TrendingCard: FC<ITrendingCard> = ({
 }) => {
   return (
     <div className="overflow-hidden  min-w-[160px] max-w-[264px] h-56 rounded-lg bg-black bg-opacity-50 relative flex cursor-pointer">
-      <div className={`flex overflow-hidden p-6`}>
+      <div className={`flex overflow-hidden p-6 relative`}>
         {imgSrc && (
           <Image
             src={imgSrc}

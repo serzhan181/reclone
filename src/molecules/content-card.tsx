@@ -4,9 +4,6 @@ import Image from "next/image";
 import { IPostMinimal } from "../types";
 import { fromNow } from "@/src/utils/fromNow";
 
-// TODO: Find a way to replace <img /> to <Image /> (next/image)
-// TODO: Find a way to replace bottom sections of the content-card with links (<a>, <Link />)
-
 export const ContentCard: FC<IPostMinimal> = ({
   title,
   postImgUrn,
@@ -54,11 +51,12 @@ export const ContentCard: FC<IPostMinimal> = ({
 
         <div>
           {postImgUrn && (
-            <div className="w-full ">
-              <img
+            <div className="w-full h-[460px] relative">
+              <Image
                 src={process.env.NEXT_PUBLIC_STATIC_SERVE_ENDPOINT + postImgUrn}
                 alt="hello"
-                className="max-h-[460px] min-h-[100px] w-full object-contain"
+                layout="fill"
+                className="absolute object-contain w-full h-full"
               />
             </div>
           )}

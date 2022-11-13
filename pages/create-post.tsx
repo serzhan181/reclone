@@ -94,7 +94,13 @@ export default function CreatePost() {
             type="file"
             ref={fileRef}
           />
-          <Button type="button" outline rounded size="s" onClick={onOpenFile}>
+          <Button
+            type="button"
+            outline
+            rounded
+            size="s"
+            onClick={() => onOpenFile()}
+          >
             <ImageIcon />
           </Button>
 
