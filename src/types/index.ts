@@ -30,3 +30,9 @@ export interface IPostMinimal {
     username: string;
   };
 }
+
+export interface CreatePostInput {
+  title: string;
+  body?: string;
+  file?: File;
+}
