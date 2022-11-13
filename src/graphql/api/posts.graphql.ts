@@ -6,6 +6,11 @@ export const GET_POSTS_MINIMAL = gql`
       identifier
       postImgUrn
       title
+
+      createdAt
+      user {
+        username
+      }
     }
   }
 `;

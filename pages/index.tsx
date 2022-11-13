@@ -10,7 +10,6 @@ import { GET_POSTS_MINIMAL } from "@/src/graphql/api/posts.graphql";
 import { IPostMinimal } from "@/src/types";
 
 const Home: NextPage<{ posts: IPostMinimal[] }> = ({ posts }) => {
-  console.log("YEEE", posts);
   return (
     <>
       <div className="flex flex-wrap w-full flex-center">

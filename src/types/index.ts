@@ -25,4 +25,8 @@ export interface IPostMinimal {
   identifier: string;
   title: string;
   postImgUrn?: string;
+  createdAt: string;
+  user: {
+    username: string;
+  };
 }
