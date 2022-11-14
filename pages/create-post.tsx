@@ -8,6 +8,9 @@ import { useMutation } from "react-query";
 import { CreatePostInput } from "@/src/types";
 import { CREATE_POST } from "@/src/graphql/api/posts.graphql";
 import { request } from "@/src/graphql/custom-gql-fns";
+import { GetServerSideProps } from "next";
+import { isAuthServer } from "@/src/utils/authentication";
+import { useRouter } from "next/router";
 
 interface ICreatePostForm {
   title: string;
@@ -18,6 +21,7 @@ export default function CreatePost() {
   const mutation = useMutation(async (createPostInput: CreatePostInput) => {
     return request(CREATE_POST, { ...createPostInput });
   });
+  const router = useRouter();
 
   const { handleSubmit, control, register } = useForm<ICreatePostForm>();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -33,9 +37,6 @@ export default function CreatePost() {
   };
 
   const onSubmit = (data: ICreatePostForm) => {
-    console.log(data);
-    console.log(file);
-
     const formData = new FormData();
     formData.append("postImg", file as Blob);
 
@@ -45,6 +46,7 @@ export default function CreatePost() {
       {
         onSuccess(data) {
           console.log("SUCCESFUL POST", data);
+          router.push("/");
         },
 
         onError(err) {
@@ -122,3 +124,18 @@ export default function CreatePost() {
     </form>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const authenticated = await isAuthServer(ctx);
+
+  if (!authenticated) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
+};

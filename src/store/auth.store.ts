@@ -1,6 +1,6 @@
 import { AUTH_ME } from "@/src/graphql/api/auth.graphql";
 import { UserSignUp } from "./../types/index";
-import { authenticateClient } from "@/src/utils/authenticate-client";
+import { setAuthCookie } from "@/src/utils/authentication";
 import { useUserStore } from "@/src/store/user.store";
 import { LOGIN, SIGN_UP } from "@/src/graphql/api/auth.graphql";
 import create from "zustand";
@@ -32,7 +32,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
     try {
       const data = await request(LOGIN, { login: dto });
 
-      authenticateClient(data.login.access_token);
+      setAuthCookie(data.login.access_token);
 
       this.setAuthenticated(true);
       useUserStore.getState().setUser(data.login.user);
@@ -46,7 +46,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
     try {
       const data = await request(SIGN_UP, { sign_up: dto });
 
-      authenticateClient(data.signUp.access_token);
+      setAuthCookie(data.signUp.access_token);
 
       this.setAuthenticated(true);
       useUserStore.getState().setUser(data.signUp.user);

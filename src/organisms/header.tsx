@@ -13,8 +13,6 @@ export const Header = () => {
     { actionTitle: "logout", href: "/", onClick: () => auth.logout() },
   ];
 
-  console.log("AUTHENTICATED", auth?.authenticated);
-
   return (
     <div className="fixed top-0 z-50 flex w-full h-12 bg-white border-b flex-center">
       <div className="flex justify-between items-center h-full w-[90%] ">
