@@ -23,7 +23,12 @@ export default function CreatePost() {
   });
   const router = useRouter();
 
-  const { handleSubmit, control, register } = useForm<ICreatePostForm>();
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors },
+  } = useForm<ICreatePostForm>();
   const fileRef = useRef<HTMLInputElement>(null);
   const onOpenFile = () => fileRef.current?.click();
 
@@ -64,18 +69,21 @@ export default function CreatePost() {
         <h1 className="text-lg font-semibold">Create a post</h1>
       </div>
       <div>
+        {errors?.title && (
+          <p className="mb-1 text-sm font-thin text-red-700">
+            {errors.title.message}
+          </p>
+        )}
         <Input
-          {...register("title")}
+          {...register("title", { required: "this is required!" })}
           placeholder="I wonder what the title will be..."
         />
       </div>
       <div>
+        <h3 className="mb-1 text-xs text-gray-500">(optional)</h3>
         <Controller
           name="body"
           control={control}
-          rules={{
-            required: "Please enter task description",
-          }}
           render={({ field }) => (
             <Editor
               theme="snow"
@@ -96,6 +104,8 @@ export default function CreatePost() {
             type="file"
             ref={fileRef}
           />
+          <h3 className="mb-1 text-xs text-gray-500">(optional)</h3>
+
           <Button
             type="button"
             outline
