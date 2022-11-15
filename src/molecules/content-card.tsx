@@ -1,18 +1,33 @@
 import { FC } from "react";
-import { ThumbsUp, ThumbsDown, MessageSquare, Share } from "react-feather";
+import {
+  ThumbsUp,
+  ThumbsDown,
+  MessageSquare,
+  Share,
+  Trash2,
+} from "react-feather";
 import Image from "next/image";
 import { IPostMinimal } from "../types";
 import { fromNow } from "@/src/utils/fromNow";
 
-export const ContentCard: FC<IPostMinimal> = ({
+interface IContentCard {
+  isOwner: boolean;
+  identifier: string;
+  onDeletePost: (identifier: string) => void;
+}
+
+export const ContentCard: FC<IContentCard & IPostMinimal> = ({
   title,
   postImgUrn,
   createdAt,
   user: { username },
+  isOwner,
+  onDeletePost,
+  identifier,
 }) => {
   return (
-    <div className="w-full p-2 text-black bg-white rounded-lg">
-      <div className="flex items-center justify-between">
+    <div className="w-full px-2 text-black bg-white rounded-lg">
+      <div className="flex items-center justify-between mt-2">
         <div className="flex gap-3">
           <div className="relative w-8 h-8">
             <Image
@@ -65,16 +80,27 @@ export const ContentCard: FC<IPostMinimal> = ({
 
       {/* Actions */}
       <div className="flex pt-2">
-        <div className="flex gap-3">
-          <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
-            <MessageSquare />
-            <p>178 comments</p>
+        <div className="flex items-center justify-between w-full">
+          <div className="flex gap-3">
+            <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
+              <MessageSquare />
+              <p>178 comments</p>
+            </div>
+
+            <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
+              <Share />
+              <p>Share</p>
+            </div>
           </div>
 
-          <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
-            <Share />
-            <p>Share</p>
-          </div>
+          {isOwner && (
+            <div
+              onClick={() => onDeletePost(identifier)}
+              className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-red-300"
+            >
+              <Trash2 size={20} />
+            </div>
+          )}
         </div>
       </div>
     </div>

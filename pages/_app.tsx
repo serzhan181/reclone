@@ -4,12 +4,13 @@ import { DefaultLayout } from "@/src/layouts";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ReactElement, ReactNode } from "react";
-import { NextPage, NextPageContext } from "next/types";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { NextPage } from "next/types";
+import { QueryClientProvider } from "react-query";
 import { Authenticator } from "@/src/hoc/authenticator";
 import nookies from "nookies";
 import { gqlClient } from "@/src/graphql/setup";
 import { AUTH_ME } from "@/src/graphql/api/auth.graphql";
+import { qc } from "@/src/react-query/setup";
 import type { IMe } from "@/src/types";
 
 export type PageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -22,8 +23,6 @@ type AppPropsCustom = NextPage &
     session: Session;
     me: IMe;
   };
-
-const qc = new QueryClient();
 
 export default function MyApp({
   Component,

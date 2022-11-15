@@ -5,11 +5,11 @@ export const setAuthHeader = (token: string) => {
   gqlClient.setHeader("Authorization", `Bearer ${token}`);
 };
 
-export const request = async (
+export async function request<T = any>(
   query: string,
   variables?: {} | undefined,
   prioritizedToken?: string
-) => {
+): Promise<T> {
   const token =
     cookie.get(process.env.NEXT_PUBLIC_AUTHORIZATION_COOKIE_NAME as string) ||
     "";
@@ -17,4 +17,4 @@ export const request = async (
   return gqlClient.request(query, variables).catch((err) => {
     throw err.response.errors[0].message;
   });
-};
+}
