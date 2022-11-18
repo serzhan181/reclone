@@ -22,10 +22,15 @@ export interface UserSignUp {
 }
 
 export interface IPostMinimal {
+  id: number;
   identifier: string;
   title: string;
   postImgUrn?: string;
   createdAt: string;
+  subName: string;
+  voteScore: number;
+  commentCount: number;
+  userVote: number;
   user: {
     username: string;
   };

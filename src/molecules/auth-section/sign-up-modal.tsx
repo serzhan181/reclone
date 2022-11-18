@@ -1,6 +1,5 @@
 import { Button, Input } from "@/src/atoms";
-import { useAuthStore } from "@/src/store/auth.store";
-import { UserLogin, UserSignUp } from "@/src/types";
+import { UserSignUp } from "@/src/types";
 import { FC } from "react";
 import { useForm, UseFormSetError } from "react-hook-form";
 import { Modal, IModal } from "../modal";
@@ -22,7 +21,6 @@ export const SignUpModal: FC<ISignUpModal & IModal> = ({
     setError,
     formState: { errors },
   } = useForm<UserSignUp>();
-  const auth = useAuthStore();
 
   return (
     <Modal active={active} setActive={setActive}>
@@ -33,6 +31,7 @@ export const SignUpModal: FC<ISignUpModal & IModal> = ({
         <div>
           <div className="font-semibold text-red-500">
             {Object.keys(errors).map((k) => (
+              // @ts-ignore
               <p key={k}>{errors[k].message}</p>
             ))}
           </div>

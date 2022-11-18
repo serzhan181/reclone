@@ -1,22 +1,22 @@
 import { FC } from "react";
 import {
-  ThumbsUp,
-  ThumbsDown,
   MessageSquare,
   Share,
   Trash2,
+  ArrowUp,
+  ArrowDown,
 } from "react-feather";
 import Image from "next/image";
 import { IPostMinimal } from "../types";
 import { fromNow } from "@/src/utils/fromNow";
 
-interface IContentCard {
+interface IPost {
   isOwner: boolean;
   identifier: string;
   onDeletePost: (identifier: string) => void;
 }
 
-export const ContentCard: FC<IContentCard & IPostMinimal> = ({
+export const Post: FC<IPost & IPostMinimal> = ({
   title,
   postImgUrn,
   createdAt,
@@ -24,11 +24,15 @@ export const ContentCard: FC<IContentCard & IPostMinimal> = ({
   isOwner,
   onDeletePost,
   identifier,
+  commentCount,
+  subName,
+  voteScore,
+  userVote,
 }) => {
   return (
     <div className="w-full px-2 text-black bg-white rounded-lg">
-      <div className="flex items-center justify-between mt-2">
-        <div className="flex gap-3">
+      <div className="flex justify-between mt-2">
+        <div className="flex gap-3 h-fit">
           <div className="relative w-8 h-8">
             <Image
               alt="avatar"
@@ -37,23 +41,30 @@ export const ContentCard: FC<IContentCard & IPostMinimal> = ({
               layout="fill"
             />
           </div>
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-col justify-between h-fit">
             <div className="flex items-center space-x-2">
-              <h2 className="text-sm">community</h2>
+              <h2 className="text-sm">{subName}</h2>
               <div className="text-xs text-slate-400">posted by {username}</div>
             </div>
             <p className="text-xs text-slate-400">{fromNow(createdAt)}</p>
           </div>
         </div>
 
-        <div className="flex gap-2 text-gray-600 select-none">
-          <div className="flex justify-between gap-2">
-            <p className="text-sm">69</p>
-            <ThumbsUp className="w-4 duration-200 cursor-pointer active:stroke-red-800 hover:stroke-red-400" />
+        <div className="flex items-center gap-2 text-gray-600 select-none">
+          <div
+            className={`p-1 rounded-sm cursor-pointer hover:bg-gray-400 ${
+              userVote === 1 && "text-green-600"
+            }`}
+          >
+            <ArrowUp size={18} />
           </div>
-          <div className="flex justify-between gap-2">
-            <ThumbsDown className="w-4 duration-200 cursor-pointer active:stroke-green-800 hover:stroke-green-400" />
-            <p className="text-sm">667</p>
+          <div>{voteScore}</div>
+          <div
+            className={`p-1 rounded-sm cursor-pointer hover:bg-gray-400 ${
+              userVote === -1 && "text-red-600"
+            }`}
+          >
+            <ArrowDown size={18} />
           </div>
         </div>
       </div>
@@ -84,7 +95,7 @@ export const ContentCard: FC<IContentCard & IPostMinimal> = ({
           <div className="flex gap-3">
             <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
               <MessageSquare />
-              <p>178 comments</p>
+              <p>{commentCount} comments</p>
             </div>
 
             <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">

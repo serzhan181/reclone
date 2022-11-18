@@ -3,7 +3,7 @@ import {
   TrendingRow,
   PopularCommunities,
   Categories,
-  ContentsSection,
+  PostsSection,
 } from "@/src/organisms";
 import { GET_POSTS_MINIMAL } from "@/src/graphql/api/posts.graphql";
 import { IPostMinimal } from "@/src/types";
@@ -42,7 +42,7 @@ const Home: NextPage<{ posts: IPostMinimal[] }> = (props) => {
               </div>
             )}
 
-            <ContentsSection posts={data?.posts || []} />
+            <PostsSection posts={data?.posts || []} />
           </div>
 
           <div className="flex flex-col flex-grow gap-2 pl-2">

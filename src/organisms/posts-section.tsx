@@ -2,12 +2,12 @@ import { FC, useCallback } from "react";
 import { useMutation } from "react-query";
 import { DELETE_POST } from "../graphql/api/posts.graphql";
 import { request } from "../graphql/custom-gql-fns";
-import { ContentCard } from "../molecules";
+import { Post } from "@/src/molecules";
 import { qc } from "@/src/react-query/setup";
 import { useUserStore } from "../store/user.store";
 import { IPostMinimal } from "../types";
 
-export const ContentsSection: FC<{ posts: IPostMinimal[] }> = ({ posts }) => {
+export const PostsSection: FC<{ posts: IPostMinimal[] }> = ({ posts }) => {
   const username = useUserStore((state) => state.user?.username);
   const deletePostMutation = useMutation(async (identifier: string) => {
     return request(DELETE_POST, { identifier });
@@ -32,8 +32,8 @@ export const ContentsSection: FC<{ posts: IPostMinimal[] }> = ({ posts }) => {
     <div className="flex flex-col gap-2">
       {posts &&
         posts?.map((p) => (
-          <ContentCard
-            key={p.identifier}
+          <Post
+            key={p.id}
             isOwner={p.user.username === username}
             onDeletePost={() => onDeletePost(p.identifier)}
             {...p}
