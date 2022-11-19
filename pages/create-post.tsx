@@ -1,28 +1,32 @@
 import { Button, Input } from "@/src/atoms";
-import { Editor } from "@/src/molecules";
+import { Editor, Select } from "@/src/molecules";
 import { ChangeEvent, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Image from "next/image";
 import { Image as ImageIcon } from "react-feather";
-import { useMutation } from "react-query";
-import { CreatePostInput } from "@/src/types";
+import { useMutation, useQuery } from "react-query";
+import { CreatePostInput, GetSubsForDropdown } from "@/src/types";
 import { CREATE_POST } from "@/src/graphql/api/posts.graphql";
 import { request } from "@/src/graphql/custom-gql-fns";
 import { GetServerSideProps } from "next";
 import { isAuthServer } from "@/src/utils/authentication";
 import { useRouter } from "next/router";
+import { GET_SUBS } from "@/src/graphql/api/subs.graphql";
 
 interface ICreatePostForm {
   title: string;
   body?: string;
+  subName: string;
 }
 
 export default function CreatePost() {
   const mutation = useMutation(async (createPostInput: CreatePostInput) => {
     return request(CREATE_POST, { ...createPostInput });
   });
+  // Router
   const router = useRouter();
 
+  // Form
   const {
     handleSubmit,
     control,
@@ -60,6 +64,12 @@ export default function CreatePost() {
       }
     );
   };
+
+  // Fetch subs
+  const { data: subsData, isLoading: isSubsLoading } = useQuery<{
+    subs: GetSubsForDropdown[];
+  }>("subs", async () => await request(GET_SUBS));
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -67,6 +77,23 @@ export default function CreatePost() {
     >
       <div>
         <h1 className="text-lg font-semibold">Create a post</h1>
+      </div>
+      <div>
+        {errors.subName && (
+          <h4 className="text-sm text-red-700">{errors.subName.message}</h4>
+        )}
+        <Controller
+          name="subName"
+          control={control}
+          rules={{ required: "You have to select 1 community" }}
+          render={({ field }) => (
+            <Select
+              onSelect={(e) => field.onChange(e.name)}
+              options={isSubsLoading ? [] : subsData?.subs || []}
+              placeholder="Select community"
+            />
+          )}
+        />
       </div>
       <div>
         {errors?.title && (

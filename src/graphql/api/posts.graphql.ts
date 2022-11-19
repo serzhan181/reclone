@@ -21,13 +21,21 @@ export const GET_POSTS_MINIMAL = gql`
 `;
 
 export const CREATE_POST = gql`
-  mutation CreatePost($file: Upload, $title: String!, $body: String) {
+  mutation CreatePost(
+    $file: Upload
+    $title: String!
+    $body: String
+    $subName: String!
+  ) {
     createPost(
-      createPostInput: { postImg: $file, title: $title, body: $body }
+      createPostInput: {
+        postImg: $file
+        title: $title
+        body: $body
+        subName: $subName
+      }
     ) {
-      postImgUrn
-      title
-      body
+      createdAt
     }
   }
 `;

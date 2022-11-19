@@ -9,7 +9,7 @@ export const Header = () => {
   const { user } = useUserStore();
   const auth = useAuthStore();
 
-  const MOCK_OPTIONS = [
+  const USER_OPTIONS = [
     { actionTitle: "logout", href: "/", onClick: () => auth.logout() },
   ];
 
@@ -27,7 +27,7 @@ export const Header = () => {
         </div>
         <div className="flex gap-3">
           {auth?.authenticated ? (
-            <Dropdown title={user?.username || ""} options={MOCK_OPTIONS} />
+            <Dropdown title={user?.username || ""} options={USER_OPTIONS} />
           ) : (
             <AuthSection />
           )}

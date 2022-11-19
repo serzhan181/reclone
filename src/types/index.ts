@@ -41,3 +41,9 @@ export interface CreatePostInput {
   body?: string;
   file?: File;
 }
+
+export interface GetSubsForDropdown {
+  name: string;
+  title: string;
+  id: number;
+}
