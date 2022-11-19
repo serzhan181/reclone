@@ -4,13 +4,21 @@ import Link from "next/link";
 import { AuthSection, Dropdown } from "@/src/molecules";
 import { useAuthStore } from "@/src/store/auth.store";
 import { useUserStore } from "../store/user.store";
+import { qc } from "../react-query/setup";
 
 export const Header = () => {
   const { user } = useUserStore();
   const auth = useAuthStore();
 
   const USER_OPTIONS = [
-    { actionTitle: "logout", href: "/", onClick: () => auth.logout() },
+    {
+      actionTitle: "logout",
+      href: "/",
+      onClick: () => {
+        auth.logout();
+        qc.invalidateQueries("posts");
+      },
+    },
   ];
 
   return (

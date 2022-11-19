@@ -14,7 +14,7 @@ export async function request<T = any>(
     cookie.get(process.env.NEXT_PUBLIC_AUTHORIZATION_COOKIE_NAME as string) ||
     "";
   setAuthHeader(prioritizedToken ? prioritizedToken : token);
-  return gqlClient.request(query, variables).catch((err) => {
+  return gqlClient.request<T>(query, variables).catch((err) => {
     throw err.response.errors[0].message;
   });
 }

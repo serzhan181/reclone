@@ -1,19 +1,14 @@
-import { AUTH_ME } from "@/src/graphql/api/auth.graphql";
-import { UserSignUp } from "./../types/index";
+import { authRequest } from "@/src/graphql/requests/auth.requests";
+import { AuthenticationMeta } from "./../types/index";
 import { setAuthCookie } from "@/src/utils/authentication";
 import { useUserStore } from "@/src/store/user.store";
-import { LOGIN, SIGN_UP } from "@/src/graphql/api/auth.graphql";
 import create from "zustand";
-import { UserLogin } from "../types";
-import { request } from "@/src/graphql/custom-gql-fns";
 import { deleteAuthorizationFromClient } from "../utils/authentication";
 
 interface AuthState {
   authenticated: boolean;
   setAuthenticated: (authenticated: boolean) => void;
-  me: () => Promise<any>;
-  login: (dto: UserLogin) => Promise<any> | void;
-  signup: (dto: UserSignUp) => Promise<any> | void;
+  setAuthData: (data: AuthenticationMeta) => Promise<any> | void;
   logout: () => void;
 }
 
@@ -23,46 +18,19 @@ export const useAuthStore = create<AuthState>()((set) => ({
     set((state) => ({ ...state, authenticated }));
   },
 
-  async me() {
-    const data = await request(AUTH_ME, {}).catch((err) => err);
-    return data;
-  },
+  async setAuthData(data) {
+    setAuthCookie(data.access_token);
 
-  async login(dto) {
-    try {
-      const data = await request(LOGIN, { login: dto });
-
-      setAuthCookie(data.login.access_token);
-
-      this.setAuthenticated(true);
-      useUserStore.getState().setUser(data.login.user);
-    } catch (err) {
-      console.log("err", err);
-      return err;
-    }
-  },
-
-  async signup(dto) {
-    try {
-      const data = await request(SIGN_UP, { sign_up: dto });
-
-      setAuthCookie(data.signUp.access_token);
-
-      this.setAuthenticated(true);
-      useUserStore.getState().setUser(data.signUp.user);
-    } catch (err: any) {
-      console.log(err);
-      return err;
-    }
+    this.setAuthenticated(true);
+    useUserStore.getState().setUser(data.user);
   },
 
   async logout() {
     console.log("IN LOGOUT");
-    const before = await this.me();
     // delete cookies, remove headers
     deleteAuthorizationFromClient();
 
-    const userIs = await this.me();
+    const userIs = await authRequest.me();
     if (userIs === "Unauthorized") {
       this.setAuthenticated(false);
       useUserStore.setState({});

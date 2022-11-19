@@ -47,3 +47,8 @@ export interface GetSubsForDropdown {
   title: string;
   id: number;
 }
+
+export interface AuthenticationMeta {
+  access_token: string;
+  user: IUser;
+}

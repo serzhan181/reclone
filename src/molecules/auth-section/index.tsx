@@ -1,6 +1,8 @@
 import { Button } from "@/src/atoms";
+import { authRequest } from "@/src/graphql/requests/auth.requests";
+import { qc } from "@/src/react-query/setup";
 import { useAuthStore } from "@/src/store/auth.store";
-import { UserLogin, UserSignUp } from "@/src/types";
+import { AuthenticationMeta, UserLogin, UserSignUp } from "@/src/types";
 import { useState, useCallback } from "react";
 import { UseFormSetError } from "react-hook-form";
 import { LoginModal } from "./login-modal";
@@ -16,17 +18,17 @@ export const AuthSection = () => {
     data: UserLogin,
     setError: UseFormSetError<UserLogin>
   ) => {
-    const err = await auth.login(data);
-    console.log("err", err);
-
-    if (err) {
+    const loginData = await authRequest.login(data).catch((err) => {
       setError("username", {
         type: "manual",
         message: err,
       });
       return;
-    }
+    });
 
+    loginData && auth.setAuthData(loginData.login);
+
+    qc.invalidateQueries("posts");
     setActiveLogIn(false);
   };
 
@@ -34,9 +36,7 @@ export const AuthSection = () => {
     data: UserSignUp,
     setError: UseFormSetError<UserSignUp>
   ) => {
-    const err = await auth.signup(data);
-
-    if (err) {
+    const signUpData = await authRequest.signUp(data).catch((err) => {
       const { errors } = JSON.parse(err);
 
       console.log("ERRRORS", errors);
@@ -48,9 +48,13 @@ export const AuthSection = () => {
       });
 
       return;
-    }
+    });
+
+    qc.invalidateQueries("posts");
+    signUpData && auth.setAuthData(signUpData.signUp);
 
     setActiveSignUp(false);
+    return;
   };
 
   const onNotSignedUp = () => {
