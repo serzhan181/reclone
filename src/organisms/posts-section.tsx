@@ -9,13 +9,13 @@ import { IPostMinimal } from "../types";
 
 export const PostsSection: FC<{ posts: IPostMinimal[] }> = ({ posts }) => {
   const username = useUserStore((state) => state.user?.username);
-  const deletePostMutation = useMutation(async (identifier: string) => {
-    return request(DELETE_POST, { identifier });
+  const deletePostMutation = useMutation(async (postId: number) => {
+    return request(DELETE_POST, { postId });
   });
 
   const onDeletePost = useCallback(
-    (identifier: string) => {
-      deletePostMutation.mutate(identifier, {
+    (postId: number) => {
+      deletePostMutation.mutate(postId, {
         onSuccess() {
           qc.invalidateQueries("posts");
         },
@@ -35,7 +35,7 @@ export const PostsSection: FC<{ posts: IPostMinimal[] }> = ({ posts }) => {
           <Post
             key={p.id}
             isOwner={p.user.username === username}
-            onDeletePost={() => onDeletePost(p.identifier)}
+            onDeletePost={onDeletePost}
             {...p}
           />
         ))}
