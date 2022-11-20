@@ -1216,6 +1216,11 @@ globby@^11.1.0:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
+goober@^2.1.10:
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/goober/-/goober-2.1.11.tgz#bbd71f90d2df725397340f808dbe7acc3118e610"
+  integrity sha512-5SS2lmxbhqH0u9ABEWq7WPU69a4i2pYcHeCxqaNq6Cw3mnrF0ghWNM4tEGid4dKy8XNIAUbuThuozDHHKJVh3A==
+
 grapheme-splitter@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/grapheme-splitter/-/grapheme-splitter-1.0.4.tgz#9cf3a665c6247479896834af35cf1dbb4400767e"
@@ -2055,6 +2060,13 @@ react-hook-form@^7.39.3:
   version "7.39.3"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.39.3.tgz#d5e66dae44187606992ba01f26460cca2565ea58"
   integrity sha512-H/vwk1vBf+TiXuyW6+hWz+zCujiDO6NqHlN5sPE/a+NGKKGK95XTM65DZz3NmEgs2M20Wka+g4uv4VD367wDBA==
+
+react-hot-toast@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-hot-toast/-/react-hot-toast-2.4.0.tgz#b91e7a4c1b6e3068fc599d3d83b4fb48668ae51d"
+  integrity sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==
+  dependencies:
+    goober "^2.1.10"
 
 react-is@^16.13.1:
   version "16.13.1"

@@ -6,12 +6,14 @@ import { SessionProvider } from "next-auth/react";
 import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next/types";
 import { QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { Authenticator } from "@/src/hoc/authenticator";
 import nookies from "nookies";
 import { gqlClient } from "@/src/graphql/setup";
 import { AUTH_ME } from "@/src/graphql/api/auth.graphql";
 import { qc } from "@/src/react-query/setup";
 import type { IMe } from "@/src/types";
+import { Toaster } from "react-hot-toast";
 
 export type PageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -38,10 +40,14 @@ export default function MyApp({
       <QueryClientProvider client={qc}>
         {getLayout(
           <>
-            <Authenticator me={me} />
             <Component {...pageProps} />
           </>
         )}
+        <Authenticator me={me} />
+        <Toaster />
+
+        {/* Devtools */}
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </SessionProvider>
   );

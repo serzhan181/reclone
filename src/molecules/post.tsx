@@ -10,6 +10,7 @@ import Image from "next/image";
 import { GetPost } from "../types";
 import { fromNow } from "@/src/utils/fromNow";
 import Link from "next/link";
+import { copyToClipboard } from "../utils/copyToClipboard";
 
 interface IPost {
   isOwner: boolean;
@@ -71,6 +72,7 @@ export const Post: FC<IPost & GetPost> = ({
         isOwner={isOwner}
         postId={id}
         onDeletePost={onDeletePost}
+        linkToPost={`${process.env.NEXT_PUBLIC_URL}/r/${subName}/${identifier}/${slug}`}
       />
     </div>
   );
@@ -93,6 +95,7 @@ interface IActions {
   isOwner: boolean;
   postId: number;
   onDeletePost: (postId: number) => void;
+  linkToPost: string;
 }
 
 function PostMeta({ subName, username, createdAt }: IPostMeta) {
@@ -141,17 +144,27 @@ function VoteActions({ userVote, voteScore, onVotePost }: IVoteActions) {
   );
 }
 
-function Actions({ commentCount, isOwner, onDeletePost, postId }: IActions) {
+function Actions({
+  commentCount,
+  isOwner,
+  onDeletePost,
+  postId,
+  linkToPost,
+}: IActions) {
   return (
     <div className="flex pt-2">
       <div className="flex items-center justify-between w-full">
         <div className="flex gap-3">
-          <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
-            <MessageSquare />
-            <p>{commentCount} comments</p>
-          </div>
-
-          <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
+          <Link href={linkToPost} target="_blank">
+            <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
+              <MessageSquare />
+              <p>{commentCount} comments</p>
+            </div>
+          </Link>
+          <div
+            onClick={copyToClipboard(linkToPost)}
+            className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300"
+          >
             <Share />
             <p>Share</p>
           </div>
