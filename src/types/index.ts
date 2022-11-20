@@ -21,7 +21,7 @@ export interface UserSignUp {
   email: string;
 }
 
-export interface IPostMinimal {
+export interface GetPost {
   id: number;
   identifier: string;
   title: string;
@@ -31,9 +31,22 @@ export interface IPostMinimal {
   voteScore: number;
   commentCount: number;
   userVote: number;
+  slug: string;
   user: {
     username: string;
   };
+}
+
+export interface GetPostComments {
+  comments: {
+    createdAt: string;
+    username: string;
+    body: string;
+    id: number;
+
+    userVote: number;
+    voteScore: number;
+  }[];
 }
 
 export interface CreatePostInput {
@@ -51,4 +64,10 @@ export interface GetSubsForDropdown {
 export interface AuthenticationMeta {
   access_token: string;
   user: IUser;
+}
+
+export interface CreateCommentOnPost {
+  identifier: string;
+  slug: string;
+  body: string;
 }

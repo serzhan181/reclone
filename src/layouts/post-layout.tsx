@@ -9,8 +9,7 @@ interface IDefaultLayout {
 const imgsrc =
   "https://styles.redditmedia.com/t5_2s30g/styles/bannerBackgroundImage_zjbes4zarmd01.png?width=4000&s=9a78c4d3789062c4df2d41b6b24d80d87b82ad81";
 
-const pp =
-  "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
+const pp = "https://www.gravatar.com/avatar/?d=mp&f=y";
 
 export const PostLayout: FC<IDefaultLayout> = ({ children }) => {
   return (

@@ -55,7 +55,7 @@ export const Button: FC<IButton & ButtonHTMLAttributes<HTMLButtonElement>> = ({
           "bg-transparent text-blue-500 active:bg-slate-400 hover:bg-slate-200"
         }
         ${noRound ? "" : "rounded"}
-       focus:outline-none focus:ring-0   transition duration-150 ease-in-out`}
+       focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-500 transition duration-150 ease-in-out`}
       onClick={onClick}
       {...rest}
     >

@@ -8,4 +8,5 @@ export { AuthSection } from "./auth-section";
 export { WriteComment } from "./write-comment";
 export { Editor } from "./editor";
 export { Select } from "./select";
+export { Comment } from "./comment";
 export type { IAccordionOption } from "./accordion-option";

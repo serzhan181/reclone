@@ -7,16 +7,17 @@ import {
   ArrowDown,
 } from "react-feather";
 import Image from "next/image";
-import { IPostMinimal } from "../types";
+import { GetPost } from "../types";
 import { fromNow } from "@/src/utils/fromNow";
+import Link from "next/link";
 
 interface IPost {
   isOwner: boolean;
-  identifier: string;
   onDeletePost: (postId: number) => void;
+  onVotePost: (value: -1 | 0 | 1) => void;
 }
 
-export const Post: FC<IPost & IPostMinimal> = ({
+export const Post: FC<IPost & GetPost> = ({
   title,
   postImgUrn,
   createdAt,
@@ -27,19 +28,28 @@ export const Post: FC<IPost & IPostMinimal> = ({
   subName,
   voteScore,
   userVote,
+  slug,
+  identifier,
+  onVotePost,
   id,
 }) => {
   return (
-    <div className="w-full px-2 text-black bg-white rounded-lg">
+    <div className="w-full px-2 text-black bg-white rounded-sm">
       <div className="flex justify-between mt-2">
         <PostMeta createdAt={createdAt} subName={subName} username={username} />
-        <VoteActions userVote={userVote} voteScore={voteScore} />
+        <VoteActions
+          onVotePost={onVotePost}
+          userVote={userVote}
+          voteScore={voteScore}
+        />
       </div>
 
       {/* Content */}
-      <div className="flex flex-col gap-2 pt-2">
+      <div className="flex flex-col gap-2 pt-2 cursor-pointer">
         <div>
-          <p className="text-black ">{title}</p>
+          <Link href={`/r/${subName}/${identifier}/${slug}`}>
+            <p className="text-black ">{title}</p>
+          </Link>
         </div>
 
         <div>
@@ -75,6 +85,7 @@ interface IPostMeta {
 interface IVoteActions {
   userVote: number;
   voteScore: number;
+  onVotePost: (value: -1 | 0 | 1) => void;
 }
 
 interface IActions {
@@ -106,10 +117,11 @@ function PostMeta({ subName, username, createdAt }: IPostMeta) {
   );
 }
 
-function VoteActions({ userVote, voteScore }: IVoteActions) {
+function VoteActions({ userVote, voteScore, onVotePost }: IVoteActions) {
   return (
     <div className="flex items-center gap-2 text-gray-600 select-none">
       <div
+        onClick={() => onVotePost(userVote === 1 ? 0 : 1)}
         className={`p-1 rounded-sm cursor-pointer hover:bg-gray-400 ${
           userVote === 1 && "text-green-600"
         }`}
@@ -118,6 +130,7 @@ function VoteActions({ userVote, voteScore }: IVoteActions) {
       </div>
       <div>{voteScore}</div>
       <div
+        onClick={() => onVotePost(userVote === -1 ? 0 : -1)}
         className={`p-1 rounded-sm cursor-pointer hover:bg-gray-400 ${
           userVote === -1 && "text-red-600"
         }`}

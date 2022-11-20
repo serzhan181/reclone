@@ -5,18 +5,18 @@ import {
   Categories,
   PostsSection,
 } from "@/src/organisms";
-import { GET_POSTS_MINIMAL } from "@/src/graphql/api/posts.graphql";
-import { IPostMinimal } from "@/src/types";
+import { GET_POSTS } from "@/src/graphql/api/posts.graphql";
+import { GetPost } from "@/src/types";
 import Link from "next/link";
 import { useAuthStore } from "@/src/store/auth.store";
 import { useQuery } from "react-query";
 import { request } from "@/src/graphql/custom-gql-fns";
 
-const Home: NextPage<{ posts: IPostMinimal[] }> = (props) => {
+const Home: NextPage<{ posts: GetPost[] }> = (props) => {
   const authenticated = useAuthStore((state) => state.authenticated);
-  const { data } = useQuery<{ posts: IPostMinimal[] }>(
+  const { data } = useQuery<{ posts: GetPost[] }>(
     "posts",
-    async () => await request(GET_POSTS_MINIMAL),
+    async () => await request(GET_POSTS),
     {
       initialData: { posts: props.posts },
     }
@@ -57,7 +57,7 @@ const Home: NextPage<{ posts: IPostMinimal[] }> = (props) => {
 };
 
 export async function getStaticProps() {
-  const data = await request(GET_POSTS_MINIMAL);
+  const data = await request(GET_POSTS);
 
   return {
     props: {
