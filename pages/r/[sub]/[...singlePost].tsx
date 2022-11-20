@@ -23,11 +23,10 @@ export default function SubPage() {
   // Posts
   const { data, isLoading } = useQuery(
     ["post", identifier],
-    async () => await postsRequests.getPost({ identifier, slug })
+    async () => await postsRequests.getPostDetailed({ identifier, slug })
   );
 
   const { onVotePost } = useVoteOnPost(["post", identifier]);
-
   const { onDeletePost } = useDeletePost(["post", identifier]);
 
   // Comments
@@ -78,6 +77,7 @@ export default function SubPage() {
               {...data.post}
               isOwner={data.post.user.username === username}
               onDeletePost={onDeletePost}
+              body={data.post.body}
               onVotePost={(value) =>
                 onVotePost({ value, postId: data.post.id })
               }

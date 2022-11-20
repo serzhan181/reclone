@@ -11,11 +11,13 @@ import { GetPost } from "../types";
 import { fromNow } from "@/src/utils/fromNow";
 import Link from "next/link";
 import { copyToClipboard } from "../utils/copyToClipboard";
+import parse from "html-react-parser";
 
 interface IPost {
   isOwner: boolean;
   onDeletePost: (postId: number) => void;
   onVotePost: (value: -1 | 0 | 1) => void;
+  body?: string;
 }
 
 export const Post: FC<IPost & GetPost> = ({
@@ -33,6 +35,8 @@ export const Post: FC<IPost & GetPost> = ({
   identifier,
   onVotePost,
   id,
+
+  body,
 }) => {
   return (
     <div className="w-full px-2 text-black bg-white rounded-sm">
@@ -49,8 +53,10 @@ export const Post: FC<IPost & GetPost> = ({
       <div className="flex flex-col gap-2 pt-2 cursor-pointer">
         <div>
           <Link href={`/r/${subName}/${identifier}/${slug}`}>
-            <p className="text-black ">{title}</p>
+            <p className="font-semibold text-black">{title}</p>
           </Link>
+
+          {body && <div className="mt-2 text-sm">{parse(body)}</div>}
         </div>
 
         <div>
@@ -152,7 +158,7 @@ function Actions({
   linkToPost,
 }: IActions) {
   return (
-    <div className="flex pt-2">
+    <div className="flex">
       <div className="flex items-center justify-between w-full">
         <div className="flex gap-3">
           <Link href={linkToPost} target="_blank">

@@ -42,6 +42,29 @@ export const GET_POST = gql`
   }
 `;
 
+export const GET_POST_DETAILED = gql`
+  query GetSinglePostDetailed($identifier: String!, $slug: String!) {
+    post(getSinglePost: { identifier: $identifier, slug: $slug }) {
+      id
+      identifier
+      slug
+      postImgUrn
+      title
+      subName
+      voteScore
+      commentCount
+      userVote
+
+      body
+
+      createdAt
+      user {
+        username
+      }
+    }
+  }
+`;
+
 export const GET_POST_COMMENTS = gql`
   query GetSinglePost($identifier: String!, $slug: String!) {
     post(getSinglePost: { identifier: $identifier, slug: $slug }) {

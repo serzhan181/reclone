@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FC } from "react";
 import { ArrowDown, ArrowUp } from "react-feather";
 import { fromNow } from "../utils/fromNow";
+import parse from "html-react-parser";
 
 interface IComment {
   username: string;
@@ -46,7 +47,7 @@ export const Comment: FC<IComment> = ({
 
       {/* Comment body */}
       <div className="mt-1">
-        <p className="text-sm">{body}</p>
+        <div className="text-sm">{parse(body)}</div>
       </div>
 
       {/* Vote Actions */}

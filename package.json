@@ -13,6 +13,7 @@
     "dayjs": "^1.11.6",
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
+    "html-react-parser": "^3.0.4",
     "immer": "^9.0.16",
     "js-cookie": "^3.0.1",
     "next": "12.3.1",

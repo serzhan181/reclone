@@ -1,5 +1,5 @@
-import { GetPost, GetPostComments } from "@/src/types";
-import { GET_POST, GET_POST_COMMENTS } from "../api/posts.graphql";
+import { GetPostComments, GetPostDetailed } from "@/src/types";
+import { GET_POST_DETAILED, GET_POST_COMMENTS } from "../api/posts.graphql";
 import { request } from "../custom-gql-fns";
 
 interface GetPostVars {
@@ -7,8 +7,8 @@ interface GetPostVars {
   slug: string;
 }
 
-const getPost = ({ identifier, slug }: GetPostVars) => {
-  return request<{ post: GetPost }>(GET_POST, {
+const getPostDetailed = ({ identifier, slug }: GetPostVars) => {
+  return request<{ post: GetPostDetailed }>(GET_POST_DETAILED, {
     identifier,
     slug,
   });
@@ -22,6 +22,6 @@ const getPostComments = ({ identifier, slug }: GetPostVars) => {
 };
 
 export const postsRequests = {
-  getPost,
+  getPostDetailed,
   getPostComments,
 };

@@ -15,3 +15,7 @@ body {
     width: 100%;
     height: calc(100vh - 3rem);
 }
+
+a {
+    @apply underline text-blue-900
+}

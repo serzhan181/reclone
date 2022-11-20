@@ -37,6 +37,10 @@ export interface GetPost {
   };
 }
 
+export interface GetPostDetailed extends GetPost {
+  body: string;
+}
+
 export interface GetPostComments {
   comments: {
     createdAt: string;
