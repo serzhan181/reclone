@@ -6,12 +6,37 @@ export const GET_POSTS = gql`
       id
       identifier
       slug
-      postImgUrn
       title
       subName
       voteScore
       commentCount
       userVote
+
+      postImgUrl
+      subImgUrl
+
+      createdAt
+      user {
+        username
+      }
+    }
+  }
+`;
+
+export const GET_POSTS_BY_SUBNAME = gql`
+  query PostsBySubName($subName: String!) {
+    postsBySubName(subName: $subName) {
+      id
+      identifier
+      slug
+      title
+      subName
+      voteScore
+      commentCount
+      userVote
+
+      postImgUrl
+      subImgUrl
 
       createdAt
       user {
@@ -27,12 +52,14 @@ export const GET_POST = gql`
       id
       identifier
       slug
-      postImgUrn
       title
       subName
       voteScore
       commentCount
       userVote
+
+      postImgUrl
+      subImgUrl
 
       createdAt
       user {
@@ -48,12 +75,14 @@ export const GET_POST_DETAILED = gql`
       id
       identifier
       slug
-      postImgUrn
       title
       subName
       voteScore
       commentCount
       userVote
+
+      postImgUrl
+      subImgUrl
 
       body
 

@@ -1,7 +1,7 @@
 import { Header } from "@/src/organisms";
 import { FC, ReactNode } from "react";
 
-interface IDefaultLayout {
+export interface IDefaultLayout {
   children: ReactNode;
 }
 

@@ -21,7 +21,7 @@ interface ICreatePostForm {
 
 export default function CreatePost() {
   const mutation = useMutation(async (createPostInput: CreatePostInput) => {
-    return request(CREATE_POST, { ...createPostInput });
+    return request<unknown>(CREATE_POST, { ...createPostInput });
   });
   // Router
   const router = useRouter();
@@ -53,8 +53,7 @@ export default function CreatePost() {
     mutation.mutate(
       { ...data, file },
       {
-        onSuccess(data) {
-          console.log("SUCCESFUL POST", data);
+        onSuccess() {
           router.push("/");
         },
 

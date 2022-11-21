@@ -5,6 +5,11 @@ export interface IUser {
   profile_picture_urn: string | null;
 }
 
+export interface AuthenticationMeta {
+  access_token: string;
+  user: IUser;
+}
+
 export interface IMe {
   authenticated: boolean;
   user: IUser;
@@ -25,13 +30,16 @@ export interface GetPost {
   id: number;
   identifier: string;
   title: string;
-  postImgUrn?: string;
   createdAt: string;
   subName: string;
   voteScore: number;
   commentCount: number;
   userVote: number;
   slug: string;
+
+  postImgUrl: string;
+  subImgUrl: string;
+
   user: {
     username: string;
   };
@@ -65,9 +73,14 @@ export interface GetSubsForDropdown {
   id: number;
 }
 
-export interface AuthenticationMeta {
-  access_token: string;
-  user: IUser;
+export interface GetSub {
+  description: string;
+  title: string;
+
+  bannerUrn: string;
+  subImgUrn: string;
+  createdAt: string;
+  creator_name: string;
 }
 
 export interface CreateCommentOnPost {

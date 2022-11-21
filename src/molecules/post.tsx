@@ -22,7 +22,6 @@ interface IPost {
 
 export const Post: FC<IPost & GetPost> = ({
   title,
-  postImgUrn,
   createdAt,
   user: { username },
   isOwner,
@@ -36,12 +35,20 @@ export const Post: FC<IPost & GetPost> = ({
   onVotePost,
   id,
 
+  subImgUrl,
+  postImgUrl,
+
   body,
 }) => {
   return (
     <div className="w-full px-2 text-black bg-white rounded-sm">
       <div className="flex justify-between mt-2">
-        <PostMeta createdAt={createdAt} subName={subName} username={username} />
+        <PostMeta
+          subImgUrl={subImgUrl}
+          createdAt={createdAt}
+          subName={subName}
+          username={username}
+        />
         <VoteActions
           onVotePost={onVotePost}
           userVote={userVote}
@@ -60,10 +67,10 @@ export const Post: FC<IPost & GetPost> = ({
         </div>
 
         <div>
-          {postImgUrn && (
+          {postImgUrl && (
             <div className="w-full h-[460px] relative">
               <Image
-                src={process.env.NEXT_PUBLIC_STATIC_SERVE_ENDPOINT + postImgUrn}
+                src={postImgUrl}
                 alt="hello"
                 layout="fill"
                 className="absolute object-contain w-full h-full"
@@ -88,6 +95,7 @@ interface IPostMeta {
   subName: string;
   username: string;
   createdAt: string;
+  subImgUrl: string;
 }
 
 interface IVoteActions {
@@ -104,20 +112,24 @@ interface IActions {
   linkToPost: string;
 }
 
-function PostMeta({ subName, username, createdAt }: IPostMeta) {
+function PostMeta({ subName, username, createdAt, subImgUrl }: IPostMeta) {
   return (
     <div className="flex gap-3 h-fit">
       <div className="relative w-8 h-8">
         <Image
           alt="avatar"
-          src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+          src={subImgUrl}
           className="absolute object-cover w-full h-full rounded-full "
           layout="fill"
         />
       </div>
       <div className="flex flex-col justify-between h-fit">
         <div className="flex items-center space-x-2">
-          <h2 className="text-sm">{subName}</h2>
+          <Link href={`/r/${subName}`}>
+            <h2 className="text-sm cursor-pointer hover:underline">
+              r/{subName}
+            </h2>
+          </Link>
           <div className="text-xs text-slate-400">posted by {username}</div>
         </div>
         <p className="text-xs text-slate-400">{fromNow(createdAt)}</p>
