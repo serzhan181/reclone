@@ -3,7 +3,6 @@ import { COMMENT_ON_POST } from "@/src/graphql/api/posts.graphql";
 import { request } from "@/src/graphql/custom-gql-fns";
 import { postsRequests } from "@/src/graphql/requests/posts.requests";
 import { useDeletePost } from "@/src/hooks/useDeletePost";
-import { useVoteOnComment, useVoteOnPost } from "@/src/hooks/useVote";
 import { Post, Comment, Editor } from "@/src/molecules";
 import { qc } from "@/src/react-query/setup";
 import { useAuthStore } from "@/src/store/auth.store";
@@ -26,7 +25,6 @@ export default function SubPage() {
     async () => await postsRequests.getPostDetailed({ identifier, slug })
   );
 
-  const { onVotePost } = useVoteOnPost(["post", identifier]);
   const { onDeletePost } = useDeletePost(["post", identifier]);
 
   // Comments
@@ -40,8 +38,6 @@ export default function SubPage() {
       return request(COMMENT_ON_POST, createComment);
     }
   );
-
-  const { onVoteComment } = useVoteOnComment(["comment", identifier]);
 
   const {
     control,
@@ -78,9 +74,6 @@ export default function SubPage() {
               isOwner={data.post.user.username === username}
               onDeletePost={onDeletePost}
               body={data.post.body}
-              onVotePost={(value) =>
-                onVotePost({ value, postId: data.post.id })
-              }
             />
           )}
 
@@ -120,14 +113,11 @@ export default function SubPage() {
                   <Comment
                     key={c.id}
                     {...c}
+                    userVote={c.userVote}
+                    voteScore={c.voteScore}
+                    postId={data.post.id}
+                    id={c.id}
                     isOwner={data.post.user.username === c.username}
-                    onVote={(value) =>
-                      onVoteComment({
-                        postId: data.post.id,
-                        commentId: c.id,
-                        value,
-                      })
-                    }
                   />
                 ))}
             </div>

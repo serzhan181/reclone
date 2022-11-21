@@ -1,4 +1,5 @@
-import { FC } from "react";
+/* eslint-disable react/display-name */
+import { FC, memo } from "react";
 import {
   MessageSquare,
   Share,
@@ -12,11 +13,11 @@ import { fromNow } from "@/src/utils/fromNow";
 import Link from "next/link";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import parse from "html-react-parser";
+import { useVoteOnPost } from "../hooks/useVote";
 
 interface IPost {
   isOwner: boolean;
   onDeletePost: (postId: number) => void;
-  onVotePost: (value: -1 | 0 | 1) => void;
   body?: string;
 }
 
@@ -28,18 +29,20 @@ export const Post: FC<IPost & GetPost> = ({
   onDeletePost,
   commentCount,
   subName,
-  voteScore,
-  userVote,
   slug,
   identifier,
-  onVotePost,
   id,
+
+  userVote,
+  voteScore,
 
   subImgUrl,
   postImgUrl,
 
   body,
 }) => {
+  const { onVotePost, vote } = useVoteOnPost({ userVote, voteScore });
+
   return (
     <div className="w-full px-2 text-black bg-white rounded-sm">
       <div className="flex justify-between mt-2">
@@ -50,35 +53,21 @@ export const Post: FC<IPost & GetPost> = ({
           username={username}
         />
         <VoteActions
-          onVotePost={onVotePost}
-          userVote={userVote}
-          voteScore={voteScore}
+          onVotePost={(value) => onVotePost({ value, postId: id })}
+          userVote={vote.userVote}
+          voteScore={vote.voteScore}
         />
       </div>
 
       {/* Content */}
-      <div className="flex flex-col gap-2 pt-2 cursor-pointer">
-        <div>
-          <Link href={`/r/${subName}/${identifier}/${slug}`}>
-            <p className="font-semibold text-black">{title}</p>
-          </Link>
-
-          {body && <div className="mt-2 text-sm">{parse(body)}</div>}
-        </div>
-
-        <div>
-          {postImgUrl && (
-            <div className="w-full h-[460px] relative">
-              <Image
-                src={postImgUrl}
-                alt="hello"
-                layout="fill"
-                className="absolute object-contain w-full h-full"
-              />
-            </div>
-          )}
-        </div>
-      </div>
+      <PostContent
+        identifier={identifier}
+        slug={slug}
+        subName={subName}
+        title={title}
+        body={body}
+        postImgUrl={postImgUrl}
+      />
 
       <Actions
         commentCount={commentCount}
@@ -112,31 +101,71 @@ interface IActions {
   linkToPost: string;
 }
 
-function PostMeta({ subName, username, createdAt, subImgUrl }: IPostMeta) {
-  return (
-    <div className="flex gap-3 h-fit">
-      <div className="relative w-8 h-8">
-        <Image
-          alt="avatar"
-          src={subImgUrl}
-          className="absolute object-cover w-full h-full rounded-full "
-          layout="fill"
-        />
-      </div>
-      <div className="flex flex-col justify-between h-fit">
-        <div className="flex items-center space-x-2">
-          <Link href={`/r/${subName}`}>
-            <h2 className="text-sm cursor-pointer hover:underline">
-              r/{subName}
-            </h2>
-          </Link>
-          <div className="text-xs text-slate-400">posted by {username}</div>
-        </div>
-        <p className="text-xs text-slate-400">{fromNow(createdAt)}</p>
-      </div>
-    </div>
-  );
+interface IPostContent {
+  subName: string;
+  identifier: string;
+  slug: string;
+  body?: string;
+  postImgUrl?: string;
+  title: string;
 }
+
+const PostContent = memo(
+  ({ identifier, slug, subName, body, postImgUrl, title }: IPostContent) => {
+    return (
+      <div className="flex flex-col gap-2 pt-2 cursor-pointer">
+        <div>
+          <Link href={`/r/${subName}/${identifier}/${slug}`}>
+            <p className="font-semibold text-black">{title}</p>
+          </Link>
+
+          {body && <div className="mt-2 text-sm">{parse(body)}</div>}
+        </div>
+
+        <div>
+          {postImgUrl && (
+            <div className="w-full h-[460px] relative">
+              <Image
+                src={postImgUrl}
+                alt="hello"
+                layout="fill"
+                className="absolute object-contain w-full h-full"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+);
+
+const PostMeta = memo(
+  ({ subName, username, createdAt, subImgUrl }: IPostMeta) => {
+    return (
+      <div className="flex gap-3 h-fit">
+        <div className="relative w-8 h-8">
+          <Image
+            alt="avatar"
+            src={subImgUrl}
+            className="absolute object-cover w-full h-full rounded-full "
+            layout="fill"
+          />
+        </div>
+        <div className="flex flex-col justify-between h-fit">
+          <div className="flex items-center space-x-2">
+            <Link href={`/r/${subName}`}>
+              <h2 className="text-sm cursor-pointer hover:underline">
+                r/{subName}
+              </h2>
+            </Link>
+            <div className="text-xs text-slate-400">posted by {username}</div>
+          </div>
+          <p className="text-xs text-slate-400">{fromNow(createdAt)}</p>
+        </div>
+      </div>
+    );
+  }
+);
 
 function VoteActions({ userVote, voteScore, onVotePost }: IVoteActions) {
   return (
@@ -162,41 +191,37 @@ function VoteActions({ userVote, voteScore, onVotePost }: IVoteActions) {
   );
 }
 
-function Actions({
-  commentCount,
-  isOwner,
-  onDeletePost,
-  postId,
-  linkToPost,
-}: IActions) {
-  return (
-    <div className="flex">
-      <div className="flex items-center justify-between w-full">
-        <div className="flex gap-3">
-          <Link href={linkToPost} target="_blank">
-            <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
-              <MessageSquare />
-              <p>{commentCount} comments</p>
+const Actions = memo(
+  ({ commentCount, isOwner, onDeletePost, postId, linkToPost }: IActions) => {
+    return (
+      <div className="flex">
+        <div className="flex items-center justify-between w-full">
+          <div className="flex gap-3">
+            <Link href={linkToPost} target="_blank">
+              <div className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300">
+                <MessageSquare />
+                <p>{commentCount} comments</p>
+              </div>
+            </Link>
+            <div
+              onClick={copyToClipboard(linkToPost)}
+              className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300"
+            >
+              <Share />
+              <p>Share</p>
             </div>
-          </Link>
-          <div
-            onClick={copyToClipboard(linkToPost)}
-            className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300"
-          >
-            <Share />
-            <p>Share</p>
           </div>
-        </div>
 
-        {isOwner && (
-          <div
-            onClick={() => onDeletePost(postId)}
-            className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-red-300"
-          >
-            <Trash2 size={20} />
-          </div>
-        )}
+          {isOwner && (
+            <div
+              onClick={() => onDeletePost(postId)}
+              className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-red-300"
+            >
+              <Trash2 size={20} />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+);

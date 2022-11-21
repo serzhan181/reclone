@@ -37,7 +37,7 @@ export interface GetPost {
   userVote: number;
   slug: string;
 
-  postImgUrl: string;
+  postImgUrl?: string;
   subImgUrl: string;
 
   user: {

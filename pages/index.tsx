@@ -12,8 +12,6 @@ import { useAuthStore } from "@/src/store/auth.store";
 import { useQuery } from "react-query";
 import { request } from "@/src/graphql/custom-gql-fns";
 
-// TODO: Use useQueries instead of useQuery to optimize render cost
-
 const Home: NextPage<{ posts: GetPost[] }> = (props) => {
   const authenticated = useAuthStore((state) => state.authenticated);
   const { data } = useQuery<{ posts: GetPost[] }>(

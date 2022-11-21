@@ -3,6 +3,7 @@ import { FC } from "react";
 import { ArrowDown, ArrowUp } from "react-feather";
 import { fromNow } from "../utils/fromNow";
 import parse from "html-react-parser";
+import { useVoteOnComment } from "../hooks/useVote";
 
 interface IComment {
   username: string;
@@ -11,7 +12,8 @@ interface IComment {
   userVote: number;
   voteScore: number;
   isOwner: boolean;
-  onVote: (value: 1 | 0 | -1) => void;
+  postId: number;
+  id: number;
 }
 
 export const Comment: FC<IComment> = ({
@@ -21,8 +23,11 @@ export const Comment: FC<IComment> = ({
   userVote,
   voteScore,
   isOwner,
-  onVote,
+  postId,
+  id,
 }) => {
+  const { onVoteComment, vote } = useVoteOnComment({ userVote, voteScore });
+
   return (
     <div className="flex flex-col p-1 mb-2 bg-white">
       {/* Comment Meta */}
@@ -54,18 +59,30 @@ export const Comment: FC<IComment> = ({
       <div className="mt-1">
         <div className="flex items-center gap-2 text-gray-600 select-none">
           <div
-            onClick={() => onVote(1)}
+            onClick={() =>
+              onVoteComment({
+                commentId: id,
+                postId,
+                value: userVote !== 1 ? 1 : 0,
+              })
+            }
             className={`p-1 rounded-sm cursor-pointer hover:bg-gray-400 ${
-              userVote === 1 && "text-green-600"
+              vote.userVote === 1 && "text-green-600"
             }`}
           >
             <ArrowUp size={16} />
           </div>
-          <div className="text-xs">{voteScore}</div>
+          <div className="text-xs">{vote.voteScore}</div>
           <div
-            onClick={() => onVote(-1)}
+            onClick={() =>
+              onVoteComment({
+                commentId: id,
+                postId,
+                value: userVote !== -1 ? -1 : 0,
+              })
+            }
             className={`p-1 rounded-sm cursor-pointer hover:bg-gray-400 ${
-              userVote === -1 && "text-red-600"
+              vote.userVote === -1 && "text-red-600"
             }`}
           >
             <ArrowDown size={16} />

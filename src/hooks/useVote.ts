@@ -1,28 +1,37 @@
-import { useCallback } from "react";
+import { toast } from "react-hot-toast";
+import { useCallback, useState } from "react";
 import { useMutation } from "react-query";
 import { VOTE_ON_COMMENT, VOTE_ON_POST } from "../graphql/api/votes.graphql";
 import { request } from "../graphql/custom-gql-fns";
-import { qc } from "../react-query/setup";
+
+// TODO: Fix bug when there is inequality between  initialVote and vote
 
 interface VoteOnPost {
   value: -1 | 0 | 1;
   postId: number;
 }
 
+interface VoteResponse {
+  userVote: number;
+  voteScore: number;
+}
+
 interface VoteOnComment extends VoteOnPost {
   commentId: number;
 }
 
-export const useVoteOnPost = (queryIds: string | string[]) => {
+export const useVoteOnPost = (initialVote: VoteResponse) => {
   const { mutate } = useMutation(async ({ postId, value }: VoteOnPost) => {
-    return request(VOTE_ON_POST, { postId, value });
+    return request<{ vote: VoteResponse }>(VOTE_ON_POST, { postId, value });
   });
+
+  const [vote, setVote] = useState<VoteResponse>(initialVote);
 
   const onVotePost = useCallback(
     (voteOnPost: VoteOnPost) => {
       mutate(voteOnPost, {
-        onSuccess() {
-          qc.invalidateQueries(queryIds);
+        onSuccess(data) {
+          setVote(data.vote);
         },
 
         onError(err) {
@@ -30,33 +39,41 @@ export const useVoteOnPost = (queryIds: string | string[]) => {
         },
       });
     },
-    [mutate, queryIds]
+    [mutate]
   );
 
-  return { onVotePost };
+  return { onVotePost, vote };
 };
 
-export const useVoteOnComment = (queryIds: string | string[]) => {
+export const useVoteOnComment = (initialVote: VoteResponse) => {
   const { mutate } = useMutation(
     async ({ value, commentId, postId }: VoteOnComment) => {
-      return request(VOTE_ON_COMMENT, { postId, commentId, value });
+      return request<{ vote: { comments: VoteResponse[] } }>(VOTE_ON_COMMENT, {
+        postId,
+        commentId,
+        value,
+      });
     }
   );
+
+  const [vote, setVote] = useState<VoteResponse>(initialVote);
 
   const onVoteComment = useCallback(
     (voteOnComment: VoteOnComment) => {
       mutate(voteOnComment, {
-        onSuccess() {
-          qc.invalidateQueries(queryIds);
+        onSuccess(data) {
+          console.log("COMMENT", data.vote);
+          setVote(data.vote.comments[0]);
         },
 
         onError(err) {
           console.error("Error voting on comment", err);
+          toast.error(err as string);
         },
       });
     },
-    [mutate, queryIds]
+    [mutate]
   );
 
-  return { onVoteComment };
+  return { onVoteComment, vote };
 };
