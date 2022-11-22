@@ -3,8 +3,11 @@ import { authRequest } from "@/src/graphql/requests/auth.requests";
 import { qc } from "@/src/react-query/setup";
 import { useAuthStore } from "@/src/store/auth.store";
 import { AuthenticationMeta, UserLogin, UserSignUp } from "@/src/types";
+import { useRouter } from "next/router";
 import { useState, useCallback } from "react";
+import { X } from "react-feather";
 import { UseFormSetError } from "react-hook-form";
+import toast from "react-hot-toast";
 import { LoginModal } from "./login-modal";
 import { SignUpModal } from "./sign-up-modal";
 
@@ -13,6 +16,7 @@ export const AuthSection = () => {
   const [activeLogIn, setActiveLogIn] = useState(false);
 
   const auth = useAuthStore();
+  const router = useRouter();
 
   const onLogin = async (
     data: UserLogin,
@@ -29,6 +33,9 @@ export const AuthSection = () => {
     loginData && auth.setAuthData(loginData.login);
 
     qc.invalidateQueries("posts");
+
+    toast.success("You logged in! 🎉");
+
     setActiveLogIn(false);
   };
 
@@ -52,6 +59,23 @@ export const AuthSection = () => {
 
     qc.invalidateQueries("posts");
     signUpData && auth.setAuthData(signUpData.signUp);
+
+    toast(
+      (t) => (
+        <div className="font-semibold">
+          <p>Congrats!, you created an account! 🎉</p>
+          <div className="flex justify-between gap-2 mt-1">
+            <Button onClick={() => router.push("/create-post")} size="s">
+              create post
+            </Button>
+            <button onClick={() => toast.dismiss(t.id)}>
+              <X size={16} />
+            </button>
+          </div>
+        </div>
+      ),
+      { position: "bottom-center" }
+    );
 
     setActiveSignUp(false);
     return;

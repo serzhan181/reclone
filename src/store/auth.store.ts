@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import { authRequest } from "@/src/graphql/requests/auth.requests";
 import { AuthenticationMeta } from "./../types/index";
 import { setAuthCookie } from "@/src/utils/authentication";
@@ -36,6 +37,8 @@ export const useAuthStore = create<AuthState>()((set) => ({
       useUserStore.setState({});
 
       return true;
+
+      toast.success("You logged out!");
     }
     return false;
   },

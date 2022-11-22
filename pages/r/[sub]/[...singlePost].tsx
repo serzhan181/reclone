@@ -9,6 +9,7 @@ import { useAuthStore } from "@/src/store/auth.store";
 import { useUserStore } from "@/src/store/user.store";
 import { CreateCommentOnPost } from "@/src/types";
 import { useRouter } from "next/router";
+import { memo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 
@@ -47,6 +48,8 @@ export default function SubPage() {
   } = useForm<{ body: string }>();
 
   const onCommentSubmit = (data: { body: string }) => {
+    if (!data.body.trim()) return;
+
     createComment.mutate(
       { body: data.body, identifier, slug },
       {
