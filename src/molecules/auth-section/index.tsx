@@ -65,7 +65,7 @@ export const AuthSection = () => {
         <div className="font-semibold">
           <p>Congrats!, you created an account! 🎉</p>
           <div className="flex justify-between gap-2 mt-1">
-            <Button onClick={() => router.push("/create-post")} size="s">
+            <Button onClick={() => router.push("/create/post")} size="s">
               create post
             </Button>
             <button onClick={() => toast.dismiss(t.id)}>

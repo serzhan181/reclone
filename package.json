@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.4",
+    "@hookform/resolvers": "^2.9.10",
     "dayjs": "^1.11.6",
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
@@ -27,6 +28,7 @@
     "react-query": "^3.39.2",
     "react-quill": "^2.0.0",
     "rehype-sanitize": "^5.0.1",
+    "yup": "^0.32.11",
     "zustand": "^4.1.4"
   },
   "devDependencies": {

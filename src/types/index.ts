@@ -76,11 +76,20 @@ export interface GetSubsForDropdown {
 export interface GetSub {
   description: string;
   title: string;
+  name: string;
 
   bannerUrn: string;
   subImgUrn: string;
   createdAt: string;
   creator_name: string;
+}
+
+export interface CreateSubInput {
+  name: string;
+  description: string;
+  title: string;
+  subImg?: File;
+  bannerImg?: File;
 }
 
 export interface CreateCommentOnPost {

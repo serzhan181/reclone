@@ -35,7 +35,7 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
             {authenticated && (
               <div className="p-1 mb-2 border-2 border-gray-500 rounded bg-slate-100">
                 <h1 className="text-lg font-semibold text-gray-900 underline">
-                  <Link className="w-full" href="/create-post">
+                  <Link className="w-full" href="/create/post">
                     Create post
                   </Link>
                 </h1>

@@ -1,4 +1,4 @@
-import { Button, Input } from "@/src/atoms";
+import { Input, Button } from "@/src/atoms";
 import { Search } from "react-feather";
 import Link from "next/link";
 import { AuthSection, Dropdown } from "@/src/molecules";
@@ -34,6 +34,11 @@ export const Header = () => {
           </Button>
         </div>
         <div className="flex gap-3">
+          {auth.authenticated && (
+            <Button outline>
+              <Link href="/create/sub">Create sub</Link>
+            </Button>
+          )}
           {auth?.authenticated ? (
             <Dropdown title={user?.username || ""} options={USER_OPTIONS} />
           ) : (

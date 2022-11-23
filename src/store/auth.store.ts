@@ -36,9 +36,8 @@ export const useAuthStore = create<AuthState>()((set) => ({
       this.setAuthenticated(false);
       useUserStore.setState({});
 
-      return true;
-
       toast.success("You logged out!");
+      return true;
     }
     return false;
   },
