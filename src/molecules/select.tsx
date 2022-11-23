@@ -1,10 +1,12 @@
 import { FC, Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
-import { Check, ArrowDownCircle } from "react-feather";
+import { ArrowDownCircle } from "react-feather";
+import Image from "next/image";
 
 interface ISelectOptions {
   title: string;
   name: string;
+  subImgUrl?: string;
 }
 
 interface ISelect {
@@ -64,11 +66,22 @@ export const Select: FC<ISelect> = ({ options, placeholder, onSelect }) => {
                       >
                         {o.title}
                       </span>
-                      {selected ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                          <Check className="w-5 h-5" aria-hidden="true" />
-                        </span>
-                      ) : null}
+                      <div
+                        className={`absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600`}
+                      >
+                        <div className="relative flex w-5 h-5 flex-center">
+                          {o?.subImgUrl ? (
+                            <Image
+                              src={o.subImgUrl}
+                              alt={o.name}
+                              className="absolute object-cover rounded-full"
+                              layout="fill"
+                            />
+                          ) : (
+                            <span>{o.name[0].toUpperCase()}</span>
+                          )}
+                        </div>
+                      </div>
                     </>
                   )}
                 </Listbox.Option>

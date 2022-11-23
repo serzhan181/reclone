@@ -71,6 +71,8 @@ export interface GetSubsForDropdown {
   name: string;
   title: string;
   id: number;
+
+  subImgUrl: string;
 }
 
 export interface GetSub {

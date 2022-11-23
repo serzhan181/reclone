@@ -6,6 +6,8 @@ export const GET_SUBS = gql`
       name
       title
       id
+
+      subImgUrl
     }
   }
 `;
