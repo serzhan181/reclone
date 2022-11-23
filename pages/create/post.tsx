@@ -12,6 +12,7 @@ import { GetServerSideProps } from "next";
 import { isAuthServer } from "@/src/utils/authentication";
 import { useRouter } from "next/router";
 import { GET_SUBS } from "@/src/graphql/api/subs.graphql";
+import { useInputImg } from "@/src/hooks/useInputImg";
 
 interface ICreatePostForm {
   title: string;
@@ -36,14 +37,8 @@ export default function CreatePost() {
   const fileRef = useRef<HTMLInputElement>(null);
   const onOpenFile = () => fileRef.current?.click();
 
-  const [filepath, setFilepath] = useState<string | null>(null);
-  const [file, setFile] = useState<File | undefined>();
-
-  const handlePreviewImg = async (e: ChangeEvent<HTMLInputElement>) => {
-    const url = URL.createObjectURL(e.target.files![0]);
-
-    setFilepath(url);
-  };
+  const { setFileUrl, setFile, handlePreviewImg, file, fileUrl } =
+    useInputImg();
 
   const onSubmit = (data: ICreatePostForm) => {
     const formData = new FormData();
@@ -123,7 +118,7 @@ export default function CreatePost() {
         <div>
           <input
             onChange={(e) => {
-              handlePreviewImg(e);
+              setFileUrl(handlePreviewImg(e));
               setFile(e.target.files![0]);
             }}
             className="hidden"
@@ -142,10 +137,10 @@ export default function CreatePost() {
             <ImageIcon />
           </Button>
 
-          {filepath && (
+          {fileUrl && (
             <div className="relative w-full mt-2 h-36">
               <Image
-                src={filepath}
+                src={fileUrl}
                 layout="fill"
                 className="absolute object-contain object-left"
                 alt="help"
