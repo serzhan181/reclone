@@ -8,6 +8,7 @@ import { qc } from "@/src/react-query/setup";
 import { useAuthStore } from "@/src/store/auth.store";
 import { useUserStore } from "@/src/store/user.store";
 import { CreateCommentOnPost } from "@/src/types";
+import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
@@ -66,6 +67,7 @@ export default function SinglePost() {
 
   return (
     <>
+      <NextSeo title={data?.post.title} />
       {isLoading ? (
         <div>Loading...</div>
       ) : (

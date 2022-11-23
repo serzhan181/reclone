@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useAuthStore } from "@/src/store/auth.store";
 import { useQuery } from "react-query";
 import { request } from "@/src/graphql/custom-gql-fns";
+import { NextSeo } from "next-seo";
 
 const Home: NextPage<{ posts: GetPost[] }> = (props) => {
   const authenticated = useAuthStore((state) => state.authenticated);
@@ -24,6 +25,7 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
 
   return (
     <>
+      <NextSeo title="Reclone" />
       <div className="flex flex-wrap w-full flex-center">
         <div className="flex w-full mb-5">
           <TrendingRow />

@@ -35,9 +35,9 @@ export const Header = () => {
         </div>
         <div className="flex gap-3">
           {auth.authenticated && (
-            <Button outline>
-              <Link href="/create/sub">Create sub</Link>
-            </Button>
+            <Link href="/create/sub">
+              <Button outline>Create sub</Button>
+            </Link>
           )}
           {auth?.authenticated ? (
             <Dropdown title={user?.username || ""} options={USER_OPTIONS} />
