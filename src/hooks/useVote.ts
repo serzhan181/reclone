@@ -1,10 +1,8 @@
 import { toast } from "react-hot-toast";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { VOTE_ON_COMMENT, VOTE_ON_POST } from "../graphql/api/votes.graphql";
 import { request } from "../graphql/custom-gql-fns";
-
-// TODO: Fix bug when there is inequality between  initialVote and vote
 
 interface VoteOnPost {
   value: -1 | 0 | 1;
@@ -42,7 +40,7 @@ export const useVoteOnPost = (initialVote: VoteResponse) => {
     [mutate]
   );
 
-  return { onVotePost, vote };
+  return { onVotePost, vote, setVote };
 };
 
 export const useVoteOnComment = (initialVote: VoteResponse) => {

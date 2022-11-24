@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { FC, memo } from "react";
+import { FC, memo, useEffect } from "react";
 import {
   MessageSquare,
   Share,
@@ -41,7 +41,11 @@ export const Post: FC<IPost & GetPost> = ({
 
   body,
 }) => {
-  const { onVotePost, vote } = useVoteOnPost({ userVote, voteScore });
+  const { onVotePost, vote, setVote } = useVoteOnPost({ userVote, voteScore });
+
+  useEffect(() => {
+    setVote({ userVote, voteScore });
+  }, [setVote, userVote, voteScore]);
 
   return (
     <div className="w-full px-2 text-black bg-white rounded-sm">

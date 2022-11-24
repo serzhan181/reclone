@@ -2,14 +2,20 @@ import { Button } from "@/src/atoms";
 import { authRequest } from "@/src/graphql/requests/auth.requests";
 import { qc } from "@/src/react-query/setup";
 import { useAuthStore } from "@/src/store/auth.store";
-import { AuthenticationMeta, UserLogin, UserSignUp } from "@/src/types";
+import { UserLogin, UserSignUp } from "@/src/types";
 import { useRouter } from "next/router";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { X } from "react-feather";
 import { UseFormSetError } from "react-hook-form";
 import toast from "react-hot-toast";
-import { LoginModal } from "./login-modal";
-import { SignUpModal } from "./sign-up-modal";
+import dynamic from "next/dynamic";
+
+const LoginModal = dynamic(() =>
+  import("./login-modal").then(({ LoginModal }) => LoginModal)
+);
+const SignUpModal = dynamic(() =>
+  import("./sign-up-modal").then(({ SignUpModal }) => SignUpModal)
+);
 
 export const AuthSection = () => {
   const [activeSignUp, setActiveSignUp] = useState(false);

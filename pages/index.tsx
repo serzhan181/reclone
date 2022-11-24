@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import {
   TrendingRow,
   PopularCommunities,
@@ -44,7 +44,7 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
               </div>
             )}
 
-            <PostsSection posts={data?.posts || []} />
+            {data && <PostsSection posts={data.posts} />}
           </div>
 
           <div className="flex flex-col flex-grow gap-2 pl-2">
@@ -58,7 +58,7 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async (ctx) => {
   const data = await request(GET_POSTS);
 
   return {
@@ -70,6 +70,6 @@ export async function getStaticProps() {
     // - At most once every 10 seconds
     revalidate: 10, // In seconds
   };
-}
+};
 
 export default Home;
