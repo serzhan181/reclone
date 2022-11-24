@@ -84,6 +84,9 @@ export interface GetSub {
   subImgUrn: string;
   createdAt: string;
   creator_name: string;
+
+  isUserSubscribed: boolean;
+  subsribersCount: number;
 }
 
 export interface CreateSubInput {

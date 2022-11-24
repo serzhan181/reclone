@@ -23,6 +23,9 @@ export const GET_SUB = gql`
       subImgUrn
       createdAt
       creator_name
+
+      isUserSubscribed
+      subsribersCount
     }
   }
 `;
@@ -45,6 +48,22 @@ export const CREATE_SUB = gql`
       }
     ) {
       name
+    }
+  }
+`;
+
+export const SUBSCRIBE_TO_SUB = gql`
+  mutation Subscribe($subName: String!) {
+    subscribe(subName: $subName) {
+      id
+    }
+  }
+`;
+
+export const UNSUBSCRIBE_FROM_SUB = gql`
+  mutation Unsubscribe($subName: String!) {
+    unsubscribe(subName: $subName) {
+      createdAt
     }
   }
 `;
