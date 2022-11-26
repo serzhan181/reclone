@@ -1,5 +1,5 @@
 import type { GetStaticProps, NextPage } from "next";
-import { TrendingRow, PopularCommunities, PostsSection } from "@/src/organisms";
+import { PopularCommunities, PostsSection } from "@/src/organisms";
 import { GET_POSTS } from "@/src/graphql/api/posts.graphql";
 import { GetPost } from "@/src/types";
 import { useQuery } from "react-query";
@@ -19,10 +19,6 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
     <>
       <NextSeo title="Reclone" />
       <div className="flex flex-wrap w-full flex-center">
-        <div className="flex w-full mb-5">
-          <TrendingRow />
-        </div>
-
         <div className="flex w-full">
           <div className="flex flex-col basis-[70%]">
             {data && <PostsSection posts={data.posts} />}

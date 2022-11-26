@@ -1,3 +1,5 @@
+// ! Abondoned: Feature will be added later, because it does not represent core functions of this project. I will add this feature in future, but now it is not necessary
+
 import { TrendingCard } from "@/src/molecules";
 
 export const TrendingRow = () => {
