@@ -5,14 +5,32 @@ import { GetPost } from "@/src/types";
 import { useQuery } from "react-query";
 import { request } from "@/src/graphql/custom-gql-fns";
 import { NextSeo } from "next-seo";
+import { Tabs } from "@/src/molecules";
+import { useAuthStore } from "@/src/store/auth.store";
 
 const Home: NextPage<{ posts: GetPost[] }> = (props) => {
-  const { data } = useQuery<{ posts: GetPost[] }>(
-    "posts",
+  const { data, isLoading } = useQuery<{ posts: GetPost[] }>(
+    ["posts"],
     async () => await request(GET_POSTS),
     {
       initialData: { posts: props.posts },
     }
+  );
+
+  const authenticated = useAuthStore((state) => state.authenticated);
+
+  const tabs = ["home"];
+  if (authenticated) tabs.push("feed");
+
+  // Fetch communities posts to which user subscribed
+  const {
+    data: dataForMe,
+    refetch,
+    isLoading: isLoadingForMe,
+  } = useQuery<{ posts: GetPost[] }>(
+    ["posts", "for_me"],
+    async () => await request(GET_POSTS, { forUserSubscribed: true }),
+    { refetchOnMount: false, refetchOnWindowFocus: false, enabled: false }
   );
 
   return (
@@ -21,10 +39,39 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
       <div className="flex flex-wrap w-full flex-center">
         <div className="flex w-full">
           <div className="flex flex-col basis-[70%]">
-            {data && <PostsSection posts={data.posts} />}
+            {data && (
+              <Tabs
+                tabs={tabs}
+                onTabChange={(i) => {
+                  // index of array (in this case tabs on line 22)
+                  i === 1 && refetch();
+                }}
+                contents={[
+                  {
+                    id: 0,
+                    content: (
+                      <PostsSection
+                        isLoading={isLoading}
+                        posts={data?.posts || []}
+                      />
+                    ),
+                  },
+                  {
+                    id: 1,
+                    content: (
+                      <PostsSection
+                        isLoading={isLoadingForMe}
+                        posts={dataForMe?.posts || []}
+                        queryIds={["posts", "for_me"]}
+                      />
+                    ),
+                  },
+                ]}
+              />
+            )}
           </div>
 
-          <div className="flex flex-col flex-grow gap-2 pl-2">
+          <div className="flex flex-col basis-[30%] gap-2 pl-2">
             <PopularCommunities />
           </div>
         </div>

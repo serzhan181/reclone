@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 
 export const GET_POSTS = gql`
-  {
-    posts {
+  query Posts($forUserSubscribed: Boolean) {
+    posts(forUserSubscribed: $forUserSubscribed) {
       id
       identifier
       slug

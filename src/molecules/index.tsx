@@ -9,4 +9,5 @@ export { WriteComment } from "./write-comment";
 export { Editor } from "./editor";
 export { Select } from "./select";
 export { Comment } from "./comment";
+export { Tabs } from "./tabs";
 export type { IAccordionOption } from "./accordion-option";
