@@ -1,12 +1,6 @@
 /* eslint-disable react/display-name */
 import { FC, memo, useEffect } from "react";
-import {
-  MessageSquare,
-  Share,
-  Trash2,
-  ArrowUp,
-  ArrowDown,
-} from "react-feather";
+import { MessageSquare, Trash2, ArrowUp, ArrowDown, Copy } from "react-feather";
 import Image from "next/image";
 import { GetPost } from "../types";
 import { fromNow } from "@/src/utils/fromNow";
@@ -84,6 +78,7 @@ export const Post: FC<IPost & GetPost> = ({
   );
 };
 
+// Types
 interface IPostMeta {
   subName: string;
   username: string;
@@ -214,8 +209,8 @@ const Actions = memo(
               onClick={copyToClipboard(linkToPost)}
               className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300"
             >
-              <Share />
-              <p>Share</p>
+              <Copy />
+              <p>Copy link</p>
             </div>
           </div>
 

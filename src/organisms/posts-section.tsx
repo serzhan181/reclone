@@ -21,8 +21,8 @@ export const PostsSection: FC<IPostsSection> = ({
       {posts.length &&
         posts.map((p) => (
           <Post
-            key={p.id}
             {...p}
+            key={p.id}
             userVote={p.userVote}
             voteScore={p.voteScore}
             isOwner={p.user.username === username}

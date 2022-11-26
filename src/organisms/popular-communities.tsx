@@ -17,10 +17,8 @@ export const PopularCommunities = () => {
         ))}
 
         <div className="flex mt-3 flex-center">
-          <div className="w-[85%]">
-            <Button full rounded>
-              View all
-            </Button>
+          <div className="w-full px-2">
+            <Button full>View all</Button>
           </div>
         </div>
       </div>
