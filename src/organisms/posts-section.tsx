@@ -18,7 +18,7 @@ export const PostsSection: FC<IPostsSection> = ({
 
   return (
     <div className="flex flex-col gap-2">
-      {posts &&
+      {posts.length &&
         posts.map((p) => (
           <Post
             key={p.id}

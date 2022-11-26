@@ -101,7 +101,6 @@ export default function SinglePost() {
             <Button
               disabled={authenticated && Boolean(errors.body)}
               type="submit"
-              rounded
               size="s"
             >
               comment

@@ -42,20 +42,19 @@ export const Button: FC<IButton & ButtonHTMLAttributes<HTMLButtonElement>> = ({
 
   return (
     <button
-      className={`${bSize} ${rounded && "rounded-full"} 
-        ${
-          outline
-            ? "border-2 border-blue-600 text-blue-600 hover:bg-black hover:bg-opacity-5 "
-            : "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800"
-        }
-        ${uppercase && "uppercase"}
-        ${full && "w-full h-full"}
-        ${
-          transparent &&
-          "bg-transparent text-blue-500 active:bg-slate-400 hover:bg-slate-200"
-        }
-        ${noRound ? "" : "rounded"}
-       focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-500 transition duration-150 ease-in-out`}
+      className={`inline-flex items-center justify-center font-medium tracking-wide text-white transition duration-200 bg-gray-900 hover:bg-gray-800 focus:shadow-outline focus:outline-none ${bSize} ${
+        rounded && "rounded-full"
+      }  ${
+        outline &&
+        "border-2 border-gray-700 text-gray-900 hover:bg-black hover:text-gray-900 hover:bg-opacity-5 "
+      }
+      ${uppercase && "uppercase"}
+      ${full && "w-full h-full"}
+      ${
+        transparent &&
+        "bg-transparent text-white active:bg-gray-400 hover:bg-gray-500"
+      }
+      ${noRound ? "" : "rounded"}`}
       onClick={onClick}
       {...rest}
     >

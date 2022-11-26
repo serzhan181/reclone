@@ -137,12 +137,16 @@ export default function SubPage() {
         {/* Content */}
         <div className="container mt-3">
           <div className="flex w-full">
-            <div className="flex flex-col basis-[70%]">
-              {postsData && (
+            <div className="flex flex-col basis-[100%]">
+              {postsData?.postsBySubName.length ? (
                 <PostsSection
                   queryIds={["posts", sub as string]}
                   posts={postsData.postsBySubName}
                 />
+              ) : (
+                <div className="w-full border border-black border-dashed">
+                  <p className="text-sm text-center">No posts yet</p>
+                </div>
               )}
             </div>
 

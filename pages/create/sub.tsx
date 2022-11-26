@@ -99,7 +99,7 @@ export default function CreateSub() {
               />
             </div>
           ) : (
-            <div className="flex w-20 h-20 border border-blue-500 border-dashed rounded-full flex-center">
+            <div className="flex w-20 h-20 border border-gray-900 border-dashed rounded-full flex-center">
               <input
                 type="file"
                 className="hidden"
@@ -110,7 +110,7 @@ export default function CreateSub() {
                 }}
               />
               <Plus
-                className="text-blue-500 transition-all rounded cursor-pointer hover:bg-slate-400"
+                className="text-gray-900 transition-all rounded cursor-pointer hover:bg-gray-400"
                 onClick={() => onOpenFile(subImg)}
               />
             </div>
@@ -149,7 +149,7 @@ export default function CreateSub() {
           </div>
 
           {/* Banner */}
-          <div className="flex overflow-hidden border border-blue-500 border-dashed rounded-sm flex-center h-80">
+          <div className="flex overflow-hidden border border-gray-900 border-dashed rounded-sm flex-center h-80">
             {bannerFileUrl ? (
               <div className="relative z-40 w-full h-full group">
                 <div className="absolute z-10 justify-end w-full h-full p-2 transition-all bg-black opacity-0 group-hover:opacity-50">
@@ -183,7 +183,7 @@ export default function CreateSub() {
                 >
                   <Plus />
                 </Button>
-                <h2 className="text-sm text-center text-blue-500">
+                <h2 className="text-sm text-center text-gray-900">
                   add banner
                 </h2>
               </div>
