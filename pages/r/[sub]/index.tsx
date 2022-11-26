@@ -1,23 +1,16 @@
-import {
-  GET_SUB,
-  SUBSCRIBE_TO_SUB,
-  UNSUBSCRIBE_FROM_SUB,
-} from "@/src/graphql/api/subs.graphql";
+import { GET_SUB } from "@/src/graphql/api/subs.graphql";
 import { request } from "@/src/graphql/custom-gql-fns";
 import { GetPost, GetSub } from "@/src/types";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import Image from "next/image";
 import { NoContainerLayout } from "@/src/layouts";
 import { PostsSection } from "@/src/organisms";
 import { GET_POSTS_BY_SUBNAME } from "@/src/graphql/api/posts.graphql";
 import { NextSeo } from "next-seo";
 import dayjs from "dayjs";
-import { Button } from "@/src/atoms";
-import { useAuthStore } from "@/src/store/auth.store";
-import toast from "react-hot-toast";
-import { qc } from "@/src/react-query/setup";
+import { SubscribeButton } from "@/src/atoms";
 
 export default function SubPage() {
   const router = useRouter();
@@ -31,47 +24,6 @@ export default function SubPage() {
       subName: sub,
     })
   );
-
-  const joinSub = useMutation(
-    async (subName: string) => await request(SUBSCRIBE_TO_SUB, { subName })
-  );
-  const leaveSub = useMutation(
-    async (subName: string) => await request(UNSUBSCRIBE_FROM_SUB, { subName })
-  );
-
-  const authenticated = useAuthStore((state) => state.authenticated);
-
-  const onJoinSub = (subName: string, action: "join" | "leave") => {
-    if (!authenticated) {
-      toast.error("You have to be logged in to join any community!");
-      return;
-    }
-
-    if (action === "join") {
-      joinSub.mutate(subName, {
-        onSuccess() {
-          toast.success("You have joined the sub!");
-          qc.invalidateQueries(["sub", sub]);
-        },
-        onError(errMsg) {
-          toast.error(errMsg as string);
-        },
-      });
-    }
-
-    if (action === "leave") {
-      leaveSub.mutate(subName, {
-        onSuccess() {
-          toast.success("You left the sub!");
-          qc.invalidateQueries(["sub", sub]);
-        },
-        onError(errMsg) {
-          toast.error(errMsg as string);
-        },
-      });
-    }
-    return;
-  };
 
   return (
     <>
@@ -150,7 +102,7 @@ export default function SubPage() {
               )}
             </div>
 
-            <div className="flex flex-col flex-grow gap-2 ml-2 overflow-hidden bg-white border rounded-sm">
+            <div className="flex flex-col basis-[30%] flex-grow gap-2 ml-2 overflow-hidden bg-white border rounded-sm">
               <div>
                 <div className="p-2 bg-blue-500">
                   <h1 className="text-lg font-semibold text-white">
@@ -186,17 +138,13 @@ export default function SubPage() {
                 </div>
 
                 <div className="flex p-2 flex-center">
-                  <Button
-                    outline={subsData?.sub.isUserSubscribed}
-                    onClick={() =>
-                      onJoinSub(
-                        sub as string,
-                        subsData?.sub.isUserSubscribed ? "leave" : "join"
-                      )
-                    }
-                  >
-                    {subsData?.sub.isUserSubscribed ? "Joined" : "Join"}
-                  </Button>
+                  {subsData && (
+                    <SubscribeButton
+                      subName={sub as string}
+                      isSubscribed={subsData.sub.isUserSubscribed}
+                      queryIds={["sub", sub as string]}
+                    />
+                  )}
                 </div>
               </div>
             </div>

@@ -143,14 +143,15 @@ const PostMeta = memo(
     return (
       <div className="flex gap-3 h-fit">
         <div className="relative flex w-8 h-8 bg-gray-200 rounded-full select-none flex-center">
-          <span>{subName[0].toUpperCase()}</span>
-          {subImgUrl && (
+          {subImgUrl ? (
             <Image
               alt="avatar"
               src={subImgUrl}
               className="absolute object-cover w-full h-full rounded-full "
               layout="fill"
             />
+          ) : (
+            <span>{subName[0].toUpperCase()}</span>
           )}
         </div>
         <div className="flex flex-col justify-between h-fit">

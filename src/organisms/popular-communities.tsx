@@ -1,26 +1,33 @@
 import { CommunitySuggest } from "@/src/molecules";
+import { useQuery } from "react-query";
 import { Button } from "../atoms";
+import { GET_SUBS_POPULAR } from "../graphql/api/subs.graphql";
+import { request } from "../graphql/custom-gql-fns";
+import { GetSubsPopular } from "../types";
 
 export const PopularCommunities = () => {
+  const { data } = useQuery(
+    ["subs", "popular"],
+    async () =>
+      await request<{ subsPopular: GetSubsPopular[] }>(GET_SUBS_POPULAR)
+  );
+
   return (
     <div className="flex flex-col w-full gap-1">
       {/* Title */}
       <h3 className="text-sm font-semibold">Popular communities</h3>
 
       <div className="py-2 bg-white rounded">
-        {[1, 2, 3, 4, 5].map((_, i) => (
-          <CommunitySuggest
-            key={i}
-            avatarUrl="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            title="ornot?"
-          />
-        ))}
-
-        <div className="flex mt-3 flex-center">
-          <div className="w-full px-2">
-            <Button full>View all</Button>
-          </div>
-        </div>
+        {data?.subsPopular &&
+          data.subsPopular.map((s) => (
+            <CommunitySuggest
+              key={s.id}
+              name={s.name}
+              avatarUrl={s.subImgUrl}
+              isSubscribed={s.isUserSubscribed}
+              queryIds={["subs", "popular"]}
+            />
+          ))}
       </div>
     </div>
   );

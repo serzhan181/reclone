@@ -75,6 +75,14 @@ export interface GetSubsForDropdown {
   subImgUrl: string;
 }
 
+export interface GetSubsPopular {
+  id: number;
+  name: string;
+  subImgUrl: string;
+
+  isUserSubscribed: boolean;
+}
+
 export interface GetSub {
   description: string;
   title: string;

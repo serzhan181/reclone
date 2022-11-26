@@ -42,11 +42,10 @@ export const Button: FC<IButton & ButtonHTMLAttributes<HTMLButtonElement>> = ({
 
   return (
     <button
-      className={`inline-flex items-center justify-center font-medium tracking-wide text-white transition duration-200 bg-gray-900 hover:bg-gray-800 focus:shadow-outline focus:outline-none ${bSize} ${
-        rounded && "rounded-full"
-      }  ${
-        outline &&
-        "border-2 border-gray-700 text-gray-900 hover:bg-black hover:text-gray-900 hover:bg-opacity-5 "
+      className={`${bSize} ${rounded && "rounded-full"}  ${
+        outline
+          ? "border-2 border-gray-700 text-gray-900 hover:text-gray-900 hover:bg-opacity-5 bg-white"
+          : "bg-gray-900 text-white"
       }
       ${uppercase && "uppercase"}
       ${full && "w-full h-full"}
@@ -54,7 +53,9 @@ export const Button: FC<IButton & ButtonHTMLAttributes<HTMLButtonElement>> = ({
         transparent &&
         "bg-transparent text-white active:bg-gray-400 hover:bg-gray-500"
       }
-      ${noRound ? "" : "rounded"}`}
+      ${
+        noRound ? "" : "rounded"
+      } inline-flex items-center justify-center font-medium tracking-wide transition duration-200 hover:bg-gray-800 focus:shadow-outline focus:outline-none`}
       onClick={onClick}
       {...rest}
     >

@@ -12,6 +12,17 @@ export const GET_SUBS = gql`
   }
 `;
 
+export const GET_SUBS_POPULAR = gql`
+  {
+    subsPopular {
+      id
+      name
+      subImgUrl
+      isUserSubscribed
+    }
+  }
+`;
+
 export const GET_SUB = gql`
   query GetSub($name: String!) {
     sub(name: $name) {
