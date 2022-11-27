@@ -1,8 +1,6 @@
 import {
   ButtonHTMLAttributes,
-  DetailedHTMLProps,
   FC,
-  HTMLAttributes,
   ReactNode,
   useEffect,
   useState,

@@ -7,6 +7,8 @@ import { request } from "@/src/graphql/custom-gql-fns";
 import { NextSeo } from "next-seo";
 import { Tabs } from "@/src/molecules";
 import { useAuthStore } from "@/src/store/auth.store";
+import { Button } from "@/src/atoms";
+import { useRouter } from "next/router";
 
 const Home: NextPage<{ posts: GetPost[] }> = (props) => {
   const { data, isLoading } = useQuery<{ posts: GetPost[] }>(
@@ -33,11 +35,14 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
     { refetchOnMount: false, refetchOnWindowFocus: false, enabled: false }
   );
 
+  const router = useRouter();
+
   return (
     <>
       <NextSeo title="Reclone" />
       <div className="flex flex-wrap w-full flex-center">
         <div className="flex w-full">
+          {/* Main content */}
           <div className="flex flex-col basis-[70%]">
             {data && (
               <Tabs
@@ -73,6 +78,9 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
 
           <div className="flex flex-col basis-[30%] gap-2 pl-2">
             <PopularCommunities />
+            <Button onClick={() => router.push("/create/post")}>
+              Create post
+            </Button>
           </div>
         </div>
       </div>

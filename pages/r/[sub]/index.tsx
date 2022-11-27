@@ -10,7 +10,7 @@ import { PostsSection } from "@/src/organisms";
 import { GET_POSTS_BY_SUBNAME } from "@/src/graphql/api/posts.graphql";
 import { NextSeo } from "next-seo";
 import dayjs from "dayjs";
-import { SubscribeButton } from "@/src/atoms";
+import { Button, SubscribeButton } from "@/src/atoms";
 
 export default function SubPage() {
   const router = useRouter();
@@ -137,15 +137,32 @@ export default function SubPage() {
                   <p className="text-sm text-gray-500">followers</p>
                 </div>
 
-                <div className="flex p-2 flex-center">
-                  {subsData && (
-                    <SubscribeButton
-                      subName={sub as string}
-                      isSubscribed={subsData.sub.isUserSubscribed}
-                      queryIds={["sub", sub as string]}
-                    />
-                  )}
-                </div>
+                {subsData && (
+                  <>
+                    <div className="flex p-2 flex-center">
+                      <SubscribeButton
+                        subName={sub as string}
+                        isSubscribed={subsData.sub.isUserSubscribed}
+                        queryIds={["sub", sub as string]}
+                      />
+                    </div>
+
+                    <hr />
+
+                    <div className="flex justify-center p-2">
+                      <Button
+                        onClick={() =>
+                          router.push(
+                            `/create/post?sub_name=${subsData?.sub.name}`
+                          )
+                        }
+                        size="s"
+                      >
+                        Create post
+                      </Button>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>

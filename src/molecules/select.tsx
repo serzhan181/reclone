@@ -13,6 +13,7 @@ interface ISelect {
   options: ISelectOptions[];
   onSelect: (e: ISelectOptions) => void;
   placeholder: string;
+  defaultValue?: string;
 }
 
 export const Select: FC<ISelect> = ({ options, placeholder, onSelect }) => {
@@ -31,7 +32,10 @@ export const Select: FC<ISelect> = ({ options, placeholder, onSelect }) => {
         }}
       >
         <div className="relative mt-1">
-          <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+          <Listbox.Button
+            defaultValue={"hello"}
+            className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
+          >
             <span className="block truncate">{selected?.title}</span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
               <ArrowDownCircle

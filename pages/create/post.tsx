@@ -1,6 +1,6 @@
 import { Button, Input } from "@/src/atoms";
 import { Editor, Select } from "@/src/molecules";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Image from "next/image";
 import { Image as ImageIcon } from "react-feather";
@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { GET_SUBS } from "@/src/graphql/api/subs.graphql";
 import { useInputImg } from "@/src/hooks/useInputImg";
 import { NextSeo } from "next-seo";
+import { subRequests } from "@/src/graphql/requests/subs.requests";
 
 interface ICreatePostForm {
   title: string;
@@ -27,6 +28,7 @@ export default function CreatePost() {
   });
   // Router
   const router = useRouter();
+  const subNameParam = (router.query?.sub_name as string) || "";
 
   // Form
   const {
@@ -34,6 +36,7 @@ export default function CreatePost() {
     control,
     register,
     formState: { errors },
+    setValue,
   } = useForm<ICreatePostForm>();
   const fileRef = useRef<HTMLInputElement>(null);
   const onOpenFile = () => fileRef.current?.click();
@@ -65,6 +68,17 @@ export default function CreatePost() {
     subs: GetSubsForDropdown[];
   }>("subs", async () => await request(GET_SUBS));
 
+  const { data: subDoesExist, isLoading: isSubDoesExistLoading } = useQuery(
+    ["sub", "exists", subNameParam],
+    async () => await subRequests.subDoesExist(subNameParam)
+  );
+
+  useEffect(() => {
+    if (subDoesExist) {
+      setValue("subName", subDoesExist.name, { shouldValidate: true });
+    }
+  }, [subDoesExist, setValue]);
+
   return (
     <>
       <NextSeo title="Create post to reclone" />
@@ -83,13 +97,23 @@ export default function CreatePost() {
             name="subName"
             control={control}
             rules={{ required: "You have to select 1 community" }}
-            render={({ field }) => (
-              <Select
-                onSelect={(e) => field.onChange(e.name)}
-                options={isSubsLoading ? [] : subsData?.subs || []}
-                placeholder="Select community"
-              />
-            )}
+            render={({ field }) => {
+              return (
+                <>
+                  {!isSubDoesExistLoading && (
+                    <Select
+                      onSelect={(e) => {
+                        field.onChange(e.name);
+                      }}
+                      options={isSubsLoading ? [] : subsData?.subs || []}
+                      placeholder={
+                        subDoesExist ? subDoesExist.title : "Select community"
+                      }
+                    />
+                  )}
+                </>
+              );
+            }}
           />
         </div>
         <div>
