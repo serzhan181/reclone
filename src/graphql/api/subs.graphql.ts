@@ -78,3 +78,23 @@ export const UNSUBSCRIBE_FROM_SUB = gql`
     }
   }
 `;
+
+export const UPDATE_SUB = gql`
+  mutation UpdateSub(
+    $name: String!
+    $subImg: Upload
+    $bannerImg: Upload
+    $description: String
+  ) {
+    updateSub(
+      updateSubInput: {
+        name: $name
+        description: $description
+        subImg: $subImg
+        bannerImg: $bannerImg
+      }
+    ) {
+      name
+    }
+  }
+`;

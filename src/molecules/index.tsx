@@ -10,4 +10,5 @@ export { Editor } from "./editor";
 export { Select } from "./select";
 export { Comment } from "./comment";
 export { Tabs } from "./tabs";
+export { ConfigureSubModal } from "./configure-sub-modal";
 export type { IAccordionOption } from "./accordion-option";

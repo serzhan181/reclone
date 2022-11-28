@@ -15,6 +15,8 @@ export async function request<T = any>(
     "";
   setAuthHeader(prioritizedToken ? prioritizedToken : token);
   return gqlClient.request<T>(query, variables).catch((err) => {
+    console.error("something went wrong", err);
+
     throw err.response.errors[0].message;
   });
 }

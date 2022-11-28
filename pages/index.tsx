@@ -11,7 +11,11 @@ import { Button } from "@/src/atoms";
 import { useRouter } from "next/router";
 
 const Home: NextPage<{ posts: GetPost[] }> = (props) => {
-  const { data, isLoading } = useQuery<{ posts: GetPost[] }>(
+  const {
+    data,
+    isLoading,
+    refetch: refetchPosts,
+  } = useQuery<{ posts: GetPost[] }>(
     ["posts"],
     async () => await request(GET_POSTS),
     {
@@ -49,7 +53,8 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
                 tabs={tabs}
                 onTabChange={(i) => {
                   // index of array (in this case tabs on line 22)
-                  i === 1 && refetch();
+                  if (tabs[i] === "feed") refetch();
+                  if (tabs[i] === "home") refetchPosts();
                 }}
                 contents={[
                   {
