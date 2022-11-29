@@ -30,8 +30,8 @@ export const GET_SUB = gql`
       title
       name
 
-      bannerUrn
-      subImgUrn
+      subImgUrl
+      bannerImgUrl
       createdAt
       creator_name
 

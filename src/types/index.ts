@@ -88,8 +88,8 @@ export interface GetSub {
   title: string;
   name: string;
 
-  bannerUrn: string;
-  subImgUrn: string;
+  bannerImgUrl: string;
+  subImgUrl: string;
   createdAt: string;
   creator_name: string;
 

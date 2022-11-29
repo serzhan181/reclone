@@ -48,7 +48,7 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
         <div className="flex w-full">
           {/* Main content */}
           <div className="flex flex-col basis-[70%]">
-            {data && (
+            {data?.posts.length ? (
               <Tabs
                 tabs={tabs}
                 onTabChange={(i) => {
@@ -78,6 +78,10 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
                   },
                 ]}
               />
+            ) : (
+              <div className="w-full border border-black border-dashed">
+                <p className="text-sm text-center">No posts yet</p>
+              </div>
             )}
           </div>
 

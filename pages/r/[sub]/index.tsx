@@ -53,13 +53,13 @@ export default function SubPage() {
           onSuccess={() => router.reload()}
         />
       )}
-      {subsData?.sub.bannerUrn ? (
+      {subsData?.sub.bannerImgUrl ? (
         <div
           className="relative flex items-center w-full h-48 cursor-pointer"
           onClick={onOpenSubUpdates}
         >
           <Image
-            src={`${process.env.NEXT_PUBLIC_STATIC_SERVE_ENDPOINT}/subs/${subsData.sub.bannerUrn}`}
+            src={subsData.sub.bannerImgUrl}
             layout="fill"
             className="absolute inset-0 object-cover"
             alt="sub banner"
@@ -79,9 +79,9 @@ export default function SubPage() {
               className="w-[58px] h-[58px] relative cursor-pointer rounded-full overflow-hidden"
               onClick={onOpenSubUpdates}
             >
-              {subsData?.sub.subImgUrn ? (
+              {subsData?.sub.subImgUrl ? (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_STATIC_SERVE_ENDPOINT}/subs/${subsData.sub.subImgUrn}`}
+                  src={subsData.sub.subImgUrl}
                   alt={subsData.sub.name}
                   layout="fill"
                   className="object-cover"
