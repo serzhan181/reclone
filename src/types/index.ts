@@ -83,13 +83,17 @@ export interface GetSubsPopular {
   isUserSubscribed: boolean;
 }
 
-export interface GetSub {
-  description: string;
-  title: string;
+export interface GetSubMinimal {
   name: string;
+  title: string;
+
+  subImgUrl: string;
+}
+
+export interface GetSub extends GetSubMinimal {
+  description: string;
 
   bannerImgUrl: string;
-  subImgUrl: string;
   createdAt: string;
   creator_name: string;
 

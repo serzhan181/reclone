@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 
 export const GET_SUBS = gql`
-  query {
-    subs {
+  query Subs($term: String) {
+    subs(searchSubsInput: { term: $term }) {
       name
       title
       id
