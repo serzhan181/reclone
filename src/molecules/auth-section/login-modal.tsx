@@ -31,6 +31,7 @@ export const LoginModal: FC<ILoginModal & IModal> = ({
         <div>
           <div className="font-semibold text-red-500">
             {Object.keys(errors).map((k) => (
+              // @ts-ignore
               <p key={k}>{errors[k].message}</p>
             ))}
           </div>
