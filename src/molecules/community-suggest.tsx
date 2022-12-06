@@ -33,10 +33,7 @@ export const CommunitySuggest: FC<ICommunitySuggest> = ({
           )}
         </div>
         <div className="flex">
-          <Link
-            href={`${process.env.NEXT_PUBLIC_URL}/r/${name}`}
-            target="_blank"
-          >
+          <Link href={`/r/${name}`} target="_blank">
             <p className="text-sm font-semibold tracking-wide">/r/{name}</p>
           </Link>
         </div>

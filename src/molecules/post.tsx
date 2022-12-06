@@ -72,7 +72,7 @@ export const Post: FC<IPost & GetPost> = ({
         isOwner={isOwner}
         postId={id}
         onDeletePost={onDeletePost}
-        linkToPost={`${process.env.NEXT_PUBLIC_URL}/r/${subName}/${identifier}/${slug}`}
+        linkToPost={`/r/${subName}/${identifier}/${slug}`}
       />
     </div>
   );
@@ -207,7 +207,9 @@ const Actions = memo(
               </div>
             </Link>
             <div
-              onClick={copyToClipboard(linkToPost)}
+              onClick={copyToClipboard(
+                `${process.env.NEXT_CLIENT_URL}/linkToPost`
+              )}
               className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300"
             >
               <Copy />
