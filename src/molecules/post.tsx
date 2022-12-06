@@ -208,7 +208,7 @@ const Actions = memo(
             </Link>
             <div
               onClick={copyToClipboard(
-                `${process.env.NEXT_CLIENT_URL}/linkToPost`
+                `${process.env.NEXT_CLIENT_URL}/${linkToPost}`
               )}
               className="flex gap-1 px-1 py-2 text-sm cursor-pointer select-none hover:bg-gray-300"
             >
