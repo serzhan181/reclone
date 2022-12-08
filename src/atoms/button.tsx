@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   ButtonHTMLAttributes,
   FC,
@@ -51,9 +52,8 @@ export const Button: FC<IButton & ButtonHTMLAttributes<HTMLButtonElement>> = ({
         transparent &&
         "bg-transparent text-white active:bg-gray-400 hover:bg-gray-500"
       }
-      ${
-        noRound ? "" : "rounded"
-      } inline-flex items-center justify-center font-medium tracking-wide transition duration-200 hover:bg-gray-800 focus:shadow-outline focus:outline-none`}
+      ${noRound ? "" : "rounded"}
+      inline-flex  items-center justify-center font-medium tracking-wide transition disabled:bg-gray-500 disabled:cursor-not-allowed duration-200 hover:bg-gray-800 focus:shadow-outline focus:outline-none`}
       onClick={onClick}
       {...rest}
     >

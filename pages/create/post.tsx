@@ -23,7 +23,7 @@ interface ICreatePostForm {
 }
 
 export default function CreatePost() {
-  const mutation = useMutation(async (createPostInput: CreatePostInput) => {
+  const createPost = useMutation(async (createPostInput: CreatePostInput) => {
     return request<unknown>(CREATE_POST, { ...createPostInput });
   });
   // Router
@@ -49,7 +49,7 @@ export default function CreatePost() {
     formData.append("postImg", file as Blob);
 
     // Mutate
-    mutation.mutate(
+    createPost.mutate(
       { ...data, file },
       {
         onSuccess() {
@@ -176,7 +176,12 @@ export default function CreatePost() {
             )}
           </div>
           <div className="mt-2">
-            <Button type="submit">Submit</Button>
+            <Button
+              disabled={createPost.isLoading && Boolean(errors)}
+              type="submit"
+            >
+              Submit
+            </Button>
           </div>
         </div>
       </form>

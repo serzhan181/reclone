@@ -99,7 +99,9 @@ export default function SinglePost() {
             />
 
             <Button
-              disabled={authenticated && Boolean(errors.body)}
+              disabled={
+                authenticated || Boolean(errors.body) || createComment.isLoading
+              }
               type="submit"
               size="s"
             >
