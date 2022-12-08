@@ -70,7 +70,10 @@ export default function CreatePost() {
 
   const { data: subDoesExist, isLoading: isSubDoesExistLoading } = useQuery(
     ["sub", "exists", subNameParam],
-    async () => await subRequests.subDoesExist(subNameParam)
+    async () => await subRequests.subDoesExist(subNameParam),
+    {
+      enabled: Boolean(router.pathname) || router.pathname !== "/",
+    }
   );
 
   useEffect(() => {
