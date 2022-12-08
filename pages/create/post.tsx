@@ -72,7 +72,7 @@ export default function CreatePost() {
     ["sub", "exists", subNameParam],
     async () => await subRequests.subDoesExist(subNameParam),
     {
-      enabled: Boolean(router.pathname) || router.pathname !== "/",
+      enabled: Boolean(router.pathname) || router.pathname !== "\\",
     }
   );
 
