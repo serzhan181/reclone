@@ -35,7 +35,7 @@ export const setAuthCookie = (token: string) => {
     token,
     {
       expires: 30 * 24 * 60 * 60,
-      sameSite: "Strict",
+      sameSite: "None",
       path: "/",
     }
   );
