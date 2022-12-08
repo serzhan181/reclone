@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import { Button, SubscribeButton } from "@/src/atoms";
 import dynamic from "next/dynamic";
 import { useUserStore } from "@/src/store/user.store";
+import { useAuthStore } from "@/src/store/auth.store";
 
 const ConfigureSubModal = dynamic(() =>
   import("@/src/molecules").then((mols) => mols.ConfigureSubModal)
@@ -23,6 +24,7 @@ export default function SubPage() {
   const { sub } = router.query;
 
   const username = useUserStore((state) => state.user?.username);
+  const authenticated = useAuthStore((state) => state.authenticated);
 
   const { data: subsData } = useQuery(["sub", sub], async () =>
     request<{ sub: GetSub }>(GET_SUB, { name: sub })
@@ -177,18 +179,20 @@ export default function SubPage() {
 
                     <hr />
 
-                    <div className="flex justify-center p-2">
-                      <Button
-                        onClick={() =>
-                          router.push(
-                            `/create/post?sub_name=${subsData?.sub.name}`
-                          )
-                        }
-                        size="s"
-                      >
-                        Create post
-                      </Button>
-                    </div>
+                    {authenticated && (
+                      <div className="flex justify-center p-2">
+                        <Button
+                          onClick={() =>
+                            router.push(
+                              `/create/post?sub_name=${subsData?.sub.name}`
+                            )
+                          }
+                          size="s"
+                        >
+                          Create post
+                        </Button>
+                      </div>
+                    )}
                   </>
                 )}
               </div>

@@ -87,9 +87,11 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
 
           <div className="flex flex-col basis-[30%] gap-2 pl-2">
             <PopularCommunities />
-            <Button onClick={() => router.push("/create/post")}>
-              Create post
-            </Button>
+            {authenticated && (
+              <Button onClick={() => router.push("/create/post")}>
+                Create post
+              </Button>
+            )}
           </div>
         </div>
       </div>
