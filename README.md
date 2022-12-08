@@ -1,34 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Reclone (clone of reddit, [sort of])
 
-## Getting Started
+[Live demo](reclone.vercel.app)
 
-First, run the development server:
+It has main functionality of reddit, except for design.
+You can:
+- Create account
+- Create communities
+- Subscribe to communities
+- Create posts
+- Vote on posts
+- Vote on comments
+- Comment on posts
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Other functionalities include
+- Searching and autocomplition of communities
+- Seperated main and feed tabs (feed is posts from communities you are subscribed to)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+I like this project and will provide new features/fix bugs as they appear in future.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### ⚙ Main technologies i used:
+Frontend
+- Next.js
+- GraphQL
+- react-query
+- tailwindcss
+- zustand
+- react-hook-form
+- react-quill
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Backend
+- Nestjs
+- TypeORM
+- PostgreSQL
+- GraphQL
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### ⛑ Contribution
+I've been developing it alone, but open-source experience would be cool as well, so if you want to contribute feel free to.
 
-## Learn More
+Clone [frontend](https://github.com/serzhan181/reclone) repo <br>
+Clone [backend](https://github.com/serzhan181/reclone-backend) repo
 
-To learn more about Next.js, take a look at the following resources:
+Installing frontend repo is pretty straightforward -> yarn install and you should be good
+To installing backend repo you have to:
+- Create database in your postgresql and name it *reclone_db*
+- Run migrations ```yarn typeorm migration:run -d typeOrm.config.ts```
+- Start dev server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Remember, you have to run backend **first**, before running backend.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
