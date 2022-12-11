@@ -4,6 +4,7 @@ import { request } from "@/src/graphql/custom-gql-fns";
 import { postsRequests } from "@/src/graphql/requests/posts.requests";
 import { useDeletePost } from "@/src/hooks/useDeletePost";
 import { Post, Comment, Editor } from "@/src/molecules";
+import { REACT_QUILL_EMPTY } from "@/src/molecules/editor";
 import { qc } from "@/src/react-query/setup";
 import { useAuthStore } from "@/src/store/auth.store";
 import { useUserStore } from "@/src/store/user.store";
@@ -48,7 +49,11 @@ export default function SinglePost() {
   } = useForm<{ body: string }>();
 
   const onCommentSubmit = (data: { body: string }) => {
-    if (!data.body.trim()) return;
+    if (
+      !data.body.trim().length ||
+      REACT_QUILL_EMPTY.includes(data.body.trim())
+    )
+      return;
 
     createComment.mutate(
       { body: data.body, identifier, slug },
@@ -100,7 +105,9 @@ export default function SinglePost() {
 
             <Button
               disabled={
-                authenticated || Boolean(errors.body) || createComment.isLoading
+                !authenticated ||
+                Boolean(errors.body?.message) ||
+                createComment.isLoading
               }
               type="submit"
               size="s"

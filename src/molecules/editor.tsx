@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 
 const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
+export const REACT_QUILL_EMPTY = ["<p><br></p>"];
+
 export const Editor: FC<ReactQuillProps> = (props) => {
   return (
     <div className="w-full mb-2 bg-white rounded">
