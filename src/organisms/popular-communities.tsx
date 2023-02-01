@@ -1,6 +1,5 @@
 import { CommunitySuggest } from "@/src/molecules";
 import { useQuery } from "react-query";
-import { Button } from "../atoms";
 import { GET_SUBS_POPULAR } from "../graphql/api/subs.graphql";
 import { request } from "../graphql/custom-gql-fns";
 import { GetSubsPopular } from "../types";

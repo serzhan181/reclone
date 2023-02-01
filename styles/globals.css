@@ -4,6 +4,7 @@
 
 body {
     background-color: #dae0e6;
+    @apply text-primary
 }
 
 .flex-center {

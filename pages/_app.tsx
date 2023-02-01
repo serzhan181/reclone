@@ -27,6 +27,8 @@ export default function MyApp({ Component, pageProps, me }: AppPropsCustom) {
   const getLayout =
     Component.getLayout || ((page) => <DefaultLayout>{page}</DefaultLayout>);
 
+  console.log(me);
+
   return (
     <QueryClientProvider client={qc}>
       {getLayout(
@@ -49,7 +51,8 @@ MyApp.getInitialProps = async (appCtx: AppContext) => {
     cookie[process.env.NEXT_PUBLIC_AUTHORIZATION_COOKIE_NAME as string] || "";
 
   gqlClient.setHeader("Authorization", `Bearer ${token}`);
-  const data = await gqlClient.request(AUTH_ME).catch(() => {
+  const data = await gqlClient.request(AUTH_ME).catch((err) => {
+    console.log("Error: ", err);
     console.log("unauthorized");
   });
 

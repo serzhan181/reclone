@@ -14,7 +14,7 @@ import { AUTH_ME } from "../graphql/api/auth.graphql";
 import { ParsedUrlQuery } from "querystring";
 
 export const initializeAuthentication = async (me: IMe) => {
-  if (me?.authenticated) {
+  if (me?.authenticated || me?.user) {
     useAuthStore.setState({ authenticated: true });
     useUserStore.setState({ user: me.user });
   }
@@ -25,8 +25,6 @@ export const deleteAuthorizationFromClient = async () => {
     sameSite: "Lax",
   });
   gqlClient.setHeader("Authorization", "");
-
-  return;
 };
 
 export const setAuthCookie = (token: string) => {
@@ -41,6 +39,7 @@ export const setAuthCookie = (token: string) => {
   );
 };
 
+// Run on server functions.
 export const isAuthServer = async (
   ctx: NextPageContext | GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
 ) => {

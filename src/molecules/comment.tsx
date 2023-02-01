@@ -63,7 +63,7 @@ export const Comment: FC<IComment> = ({
               onVoteComment({
                 commentId: id,
                 postId,
-                value: userVote !== 1 ? 1 : 0,
+                value: userVote === 1 ? 0 : 1,
               })
             }
             className={`p-1 rounded-sm cursor-pointer hover:bg-gray-400 ${
@@ -78,7 +78,7 @@ export const Comment: FC<IComment> = ({
               onVoteComment({
                 commentId: id,
                 postId,
-                value: userVote !== -1 ? -1 : 0,
+                value: userVote === -1 ? 0 : -1,
               })
             }
             className={`p-1 rounded-sm cursor-pointer hover:bg-gray-400 ${

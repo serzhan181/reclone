@@ -43,8 +43,8 @@ export const Button: FC<IButton & ButtonHTMLAttributes<HTMLButtonElement>> = ({
     <button
       className={`${bSize} ${rounded && "rounded-full"}  ${
         outline
-          ? "border-2 border-gray-700 text-gray-900 hover:text-gray-900 hover:bg-opacity-5 bg-white"
-          : "bg-gray-900 text-white"
+          ? "border-2 border-gray-700 text-bg-primary hover:text-primary hover:bg-opacity-5 bg-white"
+          : "bg-primary text-white"
       }
       ${uppercase && "uppercase"}
       ${full && "w-full h-full"}

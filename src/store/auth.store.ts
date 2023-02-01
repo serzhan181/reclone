@@ -31,14 +31,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
     // delete cookies, remove headers
     deleteAuthorizationFromClient();
 
-    const userIs = await authRequest.me();
-    if (userIs === "Unauthorized") {
-      this.setAuthenticated(false);
-      useUserStore.setState({});
-
-      toast.success("You logged out!");
-      return true;
-    }
-    return false;
+    this.setAuthenticated(false);
+    toast.success("You logged out!");
   },
 }));

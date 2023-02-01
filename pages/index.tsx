@@ -44,55 +44,53 @@ const Home: NextPage<{ posts: GetPost[] }> = (props) => {
   return (
     <>
       <NextSeo title="Reclone" />
-      <div className="flex flex-wrap w-full flex-center">
-        <div className="flex w-full">
-          {/* Main content */}
-          <div className="flex flex-col basis-[70%]">
-            {data?.posts.length ? (
-              <Tabs
-                tabs={tabs}
-                onTabChange={(i) => {
-                  // index of array (in this case tabs on line 22)
-                  if (tabs[i] === "feed") refetch();
-                  if (tabs[i] === "home") refetchPosts();
-                }}
-                contents={[
-                  {
-                    id: 0,
-                    content: (
-                      <PostsSection
-                        isLoading={isLoading}
-                        posts={data?.posts || []}
-                      />
-                    ),
-                  },
-                  {
-                    id: 1,
-                    content: (
-                      <PostsSection
-                        isLoading={isLoadingForMe}
-                        posts={dataForMe?.posts || []}
-                        queryIds={["posts", "for_me"]}
-                      />
-                    ),
-                  },
-                ]}
-              />
-            ) : (
-              <div className="w-full border border-black border-dashed">
-                <p className="text-sm text-center">No posts yet</p>
-              </div>
-            )}
-          </div>
+      <div className="flex w-full">
+        {/* Main content */}
+        <div className="flex flex-col basis-[70%]">
+          {data?.posts.length ? (
+            <Tabs
+              tabs={tabs}
+              onTabChange={(i) => {
+                // index of array (in this case tabs on line 22)
+                if (tabs[i] === "feed") refetch();
+                if (tabs[i] === "home") refetchPosts();
+              }}
+              contents={[
+                {
+                  id: 0,
+                  content: (
+                    <PostsSection
+                      isLoading={isLoading}
+                      posts={data?.posts || []}
+                    />
+                  ),
+                },
+                {
+                  id: 1,
+                  content: (
+                    <PostsSection
+                      isLoading={isLoadingForMe}
+                      posts={dataForMe?.posts || []}
+                      queryIds={["posts", "for_me"]}
+                    />
+                  ),
+                },
+              ]}
+            />
+          ) : (
+            <div className="w-full border border-black border-dashed">
+              <p className="text-sm text-center">No posts yet</p>
+            </div>
+          )}
+        </div>
 
-          <div className="flex flex-col basis-[30%] gap-2 pl-2">
-            <PopularCommunities />
-            {authenticated && (
-              <Button onClick={() => router.push("/create/post")}>
-                Create post
-              </Button>
-            )}
-          </div>
+        <div className="flex flex-col basis-[30%] gap-2 pl-2">
+          <PopularCommunities />
+          {authenticated && (
+            <Button onClick={() => router.push("/create/post")}>
+              Create post
+            </Button>
+          )}
         </div>
       </div>
     </>

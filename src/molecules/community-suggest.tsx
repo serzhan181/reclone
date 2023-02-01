@@ -1,4 +1,4 @@
-import { Button, SubscribeButton } from "@/src/atoms";
+import { SubscribeButton } from "@/src/atoms";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
