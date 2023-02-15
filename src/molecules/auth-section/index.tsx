@@ -38,9 +38,7 @@ export const AuthSection = () => {
 
     loginData && auth.setAuthData(loginData.login);
 
-    qc.invalidateQueries("posts");
-
-    toast.success("You logged in! 🎉");
+    router.reload();
 
     setActiveLogIn(false);
   };

@@ -12,17 +12,20 @@ import { useQuery } from "react-query";
 import { GET_SUBS } from "../graphql/api/subs.graphql";
 import { request } from "../graphql/custom-gql-fns";
 import { GetSubMinimal } from "../types";
+import { useRouter } from "next/router";
 
 export const Header = () => {
   const { user } = useUserStore();
   const auth = useAuthStore();
+  const router = useRouter();
+
   const USER_OPTIONS = [
     {
       actionTitle: "logout",
       href: "/",
       onClick: () => {
         auth.logout();
-        qc.invalidateQueries("posts");
+        router.reload();
       },
     },
   ];
