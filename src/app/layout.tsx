@@ -1,3 +1,4 @@
+import { Header } from "@/components/header";
 import "./globals.css";
 
 export const metadata = {
@@ -12,7 +13,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        <main className="flex justify-center mt-20">
+          <div className="container pt-10">{children}</div>
+        </main>
+      </body>
     </html>
   );
 }
