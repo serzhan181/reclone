@@ -16,13 +16,21 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header />
-        <div className="flex justify-center mt-20">
-          <div className="container relative flex w-full gap-16 pt-10">
-            <SidebarMenu />
-            <main className="grow">{children}</main>
-          </div>
-        </div>
+        <Container>
+          <SidebarMenu />
+          <main className="grow">{children}</main>
+        </Container>
       </body>
     </html>
   );
 }
+
+const Container = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="flex justify-center mt-20">
+      <div className="container relative flex w-full gap-16 pt-10">
+        {children}
+      </div>
+    </div>
+  );
+};
