@@ -17,9 +17,9 @@ export default function RootLayout({
       <body>
         <Header />
         <div className="flex justify-center mt-20">
-          <div className="container relative flex w-full pt-10">
+          <div className="container relative flex w-full gap-16 pt-10">
             <SidebarMenu />
-            <main>{children}</main>
+            <main className="grow">{children}</main>
           </div>
         </div>
       </body>
