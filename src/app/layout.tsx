@@ -1,5 +1,6 @@
 import { Header } from "@/components/header";
 import { SidebarMenu } from "@/components/sidebar-menu";
+import { SidebarMeta } from "@/components/sidebar-meta";
 import "./globals.css";
 
 export const metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({
         <Container>
           <SidebarMenu />
           <main className="grow">{children}</main>
+          <SidebarMeta />
         </Container>
       </body>
     </html>
