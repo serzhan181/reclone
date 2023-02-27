@@ -1,4 +1,5 @@
 import { Header } from "@/components/header";
+import { SidebarMenu } from "@/components/sidebar-menu";
 import "./globals.css";
 
 export const metadata = {
@@ -15,9 +16,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header />
-        <main className="flex justify-center mt-20">
-          <div className="container pt-10">{children}</div>
-        </main>
+        <div className="flex justify-center mt-20">
+          <div className="container relative flex w-full pt-10">
+            <SidebarMenu />
+            <main>{children}</main>
+          </div>
+        </div>
       </body>
     </html>
   );
