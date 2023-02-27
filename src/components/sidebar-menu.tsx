@@ -24,7 +24,7 @@ export const SidebarMenu = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="absolute left-0 flex flex-col gap-5 w-[20%]">
+    <nav className="flex flex-col gap-5 basis-[20%]">
       <div className="flex gap-2">
         <h2 className="text-sm font-semibold uppercase pl-9">Menu</h2>
       </div>
