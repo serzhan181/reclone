@@ -1,22 +1,34 @@
 import UpvoteIcon from "@heroicons/react/24/solid/ArrowSmallUpIcon";
 import DownvoteIcon from "@heroicons/react/24/solid/ArrowSmallDownIcon";
+import GroupIcon from "@heroicons/react/24/outline/UsersIcon";
 import Image from "next/image";
 import Link from "next/link";
 import CommentIcon from "@heroicons/react/24/outline/ChatBubbleBottomCenterTextIcon";
+import { fromNow } from "@/utils/from-now";
 
 // ! This is not yet fully implemented. I left like that so it has nice ui for now.
 
 interface PostProps {
   title: string;
-  shortBody: string;
   href: string;
-  voteCount: number;
+  voteScore: number;
+  subName: string;
+  authorName: string;
+  createdAt: string;
+  commentCount: number;
+  subImg: string | null;
 }
 
-const SRC =
-  "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn1.iconfinder.com%2Fdata%2Ficons%2Fuser-avatars-2%2F300%2F10-1024.png&f=1&nofb=1&ipt=47d99b48731f06d11b1d84cac677c01b78d5e91947ce73c81bc3be983dfb7210&ipo=images";
-
-export const Post = ({ title, shortBody, voteCount, href }: PostProps) => {
+export const Post = ({
+  title,
+  voteScore,
+  href,
+  subName,
+  authorName,
+  createdAt,
+  commentCount,
+  subImg,
+}: PostProps) => {
   return (
     <div className="flex w-full gap-5 p-5 rounded-lg shadow-md bg-primary/5">
       {/* Votes */}
@@ -24,25 +36,25 @@ export const Post = ({ title, shortBody, voteCount, href }: PostProps) => {
         <button className="rounded hover:bg-primary/20">
           <UpvoteIcon className="w-8 scale-110 text-primary" />
         </button>
-        <span className="text-xl text-primary">{voteCount}</span>
+        <span className="text-xl text-primary">{voteScore}</span>
         <DownvoteIcon className="w-8 font-semibold hover:scale-110" />
       </div>
 
       <div className="flex flex-col w-full gap-4">
         <div>
-          <h2 className="text-2xl font-semibold">{title}</h2>
-        </div>
-        <div>
-          <p className="text-base-content">{shortBody}</p>
+          <Link href={href} className="text-2xl font-semibold">
+            {title}
+          </Link>
         </div>
         <hr className="border-[1.5px] border-primary/10" />
         {/* Fake data for now */}
         <PostFooter
-          authorImage={SRC}
-          authorName="Michael"
-          commentCount={69}
-          createdAt="5 days ago"
+          subImg={subImg}
+          authorName={authorName}
+          commentCount={commentCount}
+          createdAt={fromNow(createdAt)}
           href={href}
+          subName={subName}
         />
       </div>
     </div>
@@ -50,32 +62,47 @@ export const Post = ({ title, shortBody, voteCount, href }: PostProps) => {
 };
 
 interface PostFooterProps {
-  authorImage: string;
+  subImg: string | null;
   authorName: string;
   createdAt: string;
   commentCount: number;
   href: string;
+  subName: string;
 }
 
 const PostFooter = ({
-  authorImage,
+  subImg,
   authorName,
   commentCount,
   createdAt,
   href,
+  subName,
 }: PostFooterProps) => {
   return (
     <div className="flex items-center justify-between ">
       <div className="flex items-center gap-2">
-        <Link href={`/u/${authorName}`} className="avatar">
+        <Link href={`/r/${subName}`} className="avatar">
           <div className="relative w-8 rounded-full">
-            <Image alt="user" src={authorImage} fill />
+            {subImg ? (
+              <Image alt="user" src={subImg} fill />
+            ) : (
+              <GroupIcon className="inset-0 aboslute" />
+            )}
           </div>
         </Link>
 
         <span className="flex items-center gap-2 text-base-content/50">
-          posted by{" "}
           <Link href="/" className=" text-primary underline-offset-4">
+            r/{subName}
+          </Link>
+        </span>
+
+        <span className="flex items-center gap-2 text-base-content/50">
+          posted by{" "}
+          <Link
+            href={`/u/${authorName}`}
+            className=" text-primary underline-offset-4"
+          >
             {authorName}
           </Link>
         </span>
