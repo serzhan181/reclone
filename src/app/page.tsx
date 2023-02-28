@@ -1,39 +1,8 @@
 import { Post } from "@/components/post";
-import { gqlClient } from "@/graphql/setup";
-import { GetPost } from "@/types";
-import { gql } from "graphql-request";
-
-async function getPosts() {
-  const POSTS = gql`
-    query Posts($forUserSubscribed: Boolean) {
-      posts(forUserSubscribed: $forUserSubscribed) {
-        id
-        identifier
-        slug
-        title
-        subName
-        voteScore
-        commentCount
-        userVote
-
-        postImgUrl
-        subImgUrl
-
-        createdAt
-        user {
-          username
-        }
-      }
-    }
-  `;
-
-  const data = await gqlClient.request<{ posts: GetPost[] }>(POSTS);
-
-  return data;
-}
+import { postsRequests } from "@/graphql/requests/post-requests";
 
 export default async function Home() {
-  const { posts } = await getPosts();
+  const { posts } = await postsRequests.getPosts();
 
   return (
     <div className="flex flex-col gap-8">
