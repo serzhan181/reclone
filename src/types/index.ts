@@ -12,7 +12,7 @@ export interface AuthenticationMeta {
 
 export interface IMe {
   authenticated: boolean;
-  user: IUser;
+  user?: IUser;
 }
 
 export interface UserLogin {
