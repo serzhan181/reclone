@@ -1,6 +1,7 @@
 import { Header } from "@/components/header";
 import { SidebarMenu } from "@/components/sidebar-menu";
 import { SidebarMeta } from "@/components/sidebar-meta";
+import { RQProvider } from "@/rq/client";
 import "./globals.css";
 
 export const metadata = {
@@ -16,12 +17,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        <Container>
-          <SidebarMenu />
-          <main className="grow">{children}</main>
-          <SidebarMeta />
-        </Container>
+        <RQProvider>
+          <Header />
+          <Container>
+            <SidebarMenu />
+            <main className="grow">{children}</main>
+            <SidebarMeta />
+          </Container>
+        </RQProvider>
       </body>
     </html>
   );
