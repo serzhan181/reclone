@@ -9,7 +9,7 @@ export default async function Home() {
       {posts.map((p) => (
         <Post
           key={p.id}
-          href={`/${p.identifier}/${p.slug}`}
+          href={`/r/${p.subName}/${p.identifier}/${p.slug}`}
           title={p.title}
           voteScore={p.voteScore}
           subName={p.subName}
