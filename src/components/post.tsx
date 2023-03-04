@@ -1,14 +1,16 @@
-import UpvoteIcon from "@heroicons/react/24/solid/ArrowSmallUpIcon";
-import DownvoteIcon from "@heroicons/react/24/solid/ArrowSmallDownIcon";
 import GroupIcon from "@heroicons/react/24/outline/UsersIcon";
 import Image from "next/image";
 import Link from "next/link";
 import CommentIcon from "@heroicons/react/24/outline/ChatBubbleBottomCenterTextIcon";
 import { fromNow } from "@/utils/from-now";
+import parse from "html-react-parser";
+import { VotePost } from "./vote-post";
 
+export const dynamic = "force-dynamic";
 // ! This is not yet fully implemented. I left like that so it has nice ui for now.
 
 interface PostProps {
+  id: string;
   title: string;
   href: string;
   voteScore: number;
@@ -17,9 +19,12 @@ interface PostProps {
   createdAt: string;
   commentCount: number;
   subImg: string | null;
+  body?: string;
+  userVote?: number;
 }
 
 export const Post = ({
+  id,
   title,
   voteScore,
   href,
@@ -28,17 +33,13 @@ export const Post = ({
   createdAt,
   commentCount,
   subImg,
+  body,
+  userVote,
 }: PostProps) => {
   return (
     <div className="flex w-full gap-5 p-5 rounded-lg shadow-md bg-primary/5">
       {/* Votes */}
-      <div className="flex flex-col items-center">
-        <button className="rounded hover:bg-primary/20">
-          <UpvoteIcon className="w-8 scale-110 text-primary" />
-        </button>
-        <span className="text-xl text-primary">{voteScore}</span>
-        <DownvoteIcon className="w-8 font-semibold hover:scale-110" />
-      </div>
+      <VotePost voteScore={voteScore} userVote={userVote} postId={id} />
 
       <div className="flex flex-col w-full gap-4">
         <div>
@@ -46,6 +47,7 @@ export const Post = ({
             {title}
           </Link>
         </div>
+        {body && <div>{parse(body)}</div>}
         <hr className="border-[1.5px] border-primary/10" />
         {/* Fake data for now */}
         <PostFooter
