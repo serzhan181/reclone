@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 export interface ModalProps {
   isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: (value: boolean) => void;
   title?: string;
   children?: ReactNode;
   canLeave?: boolean;
