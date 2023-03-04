@@ -21,7 +21,7 @@ export default function RootLayout({
           <Header />
           <Container>
             <SidebarMenu />
-            <main className="grow">{children}</main>
+            <main className="w-full">{children}</main>
             <SidebarMeta />
           </Container>
         </RQProvider>
