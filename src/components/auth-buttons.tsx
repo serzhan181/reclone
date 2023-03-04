@@ -12,10 +12,14 @@ import { setCookie } from "cookies-next";
 import { useUserStore } from "@/stores/user-store";
 import { useRouter } from "next/navigation";
 import classNames from "classnames";
+import { useModalStore } from "@/stores/modal-store";
 
 export const AuthButtons = () => {
   const router = useRouter();
-  const [isOpenLogin, setIsOpenLogin] = useState(false);
+  const [isOpenLogin, setIsOpenLogin] = useModalStore((state) => [
+    state.authModal,
+    state.setAuthModal,
+  ]);
   const [isOpenSignup, setIsOpenSignup] = useState(false);
 
   const setUser = useUserStore((state) => state.setUser);
