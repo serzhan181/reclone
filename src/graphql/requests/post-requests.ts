@@ -1,6 +1,10 @@
 import { VOTE_ON_POST } from "./../api/vote-graphql";
-import { GetPostDetailed } from "./../../types/index";
-import { GET_POSTS, GET_POST_DETAILED } from "./../api/post-graphql";
+import { GetPostComments, GetPostDetailed } from "./../../types/index";
+import {
+  GET_POSTS,
+  GET_POST_COMMENTS,
+  GET_POST_DETAILED,
+} from "./../api/post-graphql";
 import { GetPost } from "@/types";
 import { request } from "../client";
 
@@ -36,6 +40,20 @@ const getPost = ({ token, identifier, slug }: WithToken & GetPostVars) =>
     token
   );
 
+const getPostComments = ({
+  identifier,
+  slug,
+  token,
+}: WithToken & GetPostVars) =>
+  request<{ post: GetPostComments }, GetPostVars>(
+    GET_POST_COMMENTS,
+    {
+      identifier,
+      slug,
+    },
+    token
+  );
+
 const voteOnPost = ({ token, postId, value }: WithToken & VoteOnPost) => {
   return request<{ vote: VoteResponse }, VoteOnPost>(
     VOTE_ON_POST,
@@ -48,4 +66,5 @@ export const postsRequests = {
   getPosts,
   getPost,
   voteOnPost,
+  getPostComments,
 };

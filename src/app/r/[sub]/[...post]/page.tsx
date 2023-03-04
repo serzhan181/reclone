@@ -1,6 +1,7 @@
 import { Post } from "@/components/post";
 import { postsRequests } from "@/graphql/requests/post-requests";
 import { getToken } from "@/utils/get-token";
+import { Comment } from "./comment";
 
 interface PostPageParams {
   params: { sub: string; post: [string, string] };
@@ -13,9 +14,12 @@ export default async function PostPage({ params }: PostPageParams) {
   const token = getToken();
 
   const { post } = await postsRequests.getPost({ token, identifier, slug });
+  const {
+    post: { comments },
+  } = await postsRequests.getPostComments({ token, identifier, slug });
 
   return (
-    <div>
+    <div className="flex flex-col w-full gap-3">
       <Post
         id={post.id}
         key={post.id}
@@ -30,6 +34,17 @@ export default async function PostPage({ params }: PostPageParams) {
         body={post.body}
         userVote={post.userVote}
       />
+      <div className="flex flex-col gap-3">
+        {comments.map((c) => (
+          <Comment
+            key={c.id}
+            body={c.body}
+            createdAt={c.createdAt}
+            username={c.user.username}
+            userImg={c.user.profile_picture_urn}
+          />
+        ))}
+      </div>
     </div>
   );
 }
