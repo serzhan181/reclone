@@ -1,8 +1,10 @@
 import { AUTH_ME, LOGIN, SIGN_UP } from "@/graphql/api/auth-graphql";
-import { AuthenticationMeta, UserLogin, UserSignUp } from "@/types";
+import { AuthenticationMeta, IMe, UserLogin, UserSignUp } from "@/types";
 import { request } from "../client";
+import { WithToken } from "./post-requests";
 
-const me = async () => await request(AUTH_ME).catch((err) => err);
+const me = ({ token }: WithToken) =>
+  request<{ me: IMe }>(AUTH_ME, undefined, token);
 
 const login = async (dto: UserLogin) =>
   await request<{ login: AuthenticationMeta }>(LOGIN, { login: dto });
