@@ -99,12 +99,16 @@ export const GET_POST_COMMENTS = gql`
     post(getSinglePost: { identifier: $identifier, slug: $slug }) {
       comments {
         createdAt
-        username
         body
         id
 
         userVote
         voteScore
+
+        user {
+          username
+          profile_picture_urn
+        }
       }
     }
   }

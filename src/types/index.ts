@@ -52,12 +52,13 @@ export interface GetPostDetailed extends GetPost {
 export interface GetPostComments {
   comments: {
     createdAt: string;
-    username: string;
     body: string;
     id: string;
 
     userVote: number;
     voteScore: number;
+
+    user: Pick<IUser, "username" | "profile_picture_urn">;
   }[];
 }
 
