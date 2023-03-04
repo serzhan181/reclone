@@ -7,7 +7,6 @@ import parse from "html-react-parser";
 import { VotePost } from "./vote-post";
 
 export const dynamic = "force-dynamic";
-// ! This is not yet fully implemented. I left like that so it has nice ui for now.
 
 interface PostProps {
   id: string;
