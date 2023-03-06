@@ -26,8 +26,9 @@ export const VotePost = ({ voteScore, userVote, postId }: VotePostProps) => {
   const token = getTokenClient();
 
   const { data: authData } = useQuery(
-    ["authed", postId],
-    authRequest.me.bind(undefined, { token })
+    ["authed"],
+    authRequest.me.bind(undefined, { token }),
+    { retry: false, refetchOnWindowFocus: false }
   );
 
   const vote = useMutation(postsRequests.voteOnPost, {

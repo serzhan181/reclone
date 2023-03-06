@@ -2,6 +2,8 @@ import { Post } from "@/components/post";
 import { postsRequests } from "@/graphql/requests/post-requests";
 import { getToken } from "@/utils/get-token";
 import { Comment } from "./comment";
+import { LocalComments } from "./local-comments";
+import { SubmitComment } from "./submit-comment";
 
 interface PostPageParams {
   params: { sub: string; post: [string, string] };
@@ -34,7 +36,16 @@ export default async function PostPage({ params }: PostPageParams) {
         body={post.body}
         userVote={post.userVote}
       />
+
+      <SubmitComment
+        identifier={post.identifier}
+        slug={post.slug}
+        postId={post.id}
+      />
+
       <div className="flex flex-col gap-3">
+        {/* If user adds a new comment, it needs to be responsive and happen immediately */}
+        <LocalComments />
         {comments.map((c) => (
           <Comment
             key={c.id}

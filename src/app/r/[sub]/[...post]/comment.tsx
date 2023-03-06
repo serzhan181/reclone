@@ -7,7 +7,7 @@ import parse from "html-react-parser";
 interface CommentProps {
   username: string;
   body: string;
-  userImg: string | null;
+  userImg: string | null | undefined;
   createdAt: string;
 }
 

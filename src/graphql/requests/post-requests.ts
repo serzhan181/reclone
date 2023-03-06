@@ -1,6 +1,7 @@
 import { VOTE_ON_POST } from "./../api/vote-graphql";
 import { GetPostComments, GetPostDetailed } from "./../../types/index";
 import {
+  COMMENT_ON_POST,
   GET_POSTS,
   GET_POST_COMMENTS,
   GET_POST_DETAILED,
@@ -25,6 +26,12 @@ export interface WithToken {
 interface GetPostVars {
   identifier: string;
   slug: string;
+}
+
+interface CreateCommentVars {
+  body: string;
+  slug: string;
+  identifier: string;
 }
 
 const getPosts = ({ token }: WithToken) =>
@@ -62,9 +69,23 @@ const voteOnPost = ({ token, postId, value }: WithToken & VoteOnPost) => {
   );
 };
 
+const createComment = ({
+  body,
+  identifier,
+  slug,
+  token,
+}: WithToken & CreateCommentVars) => {
+  return request<{}, CreateCommentVars>(
+    COMMENT_ON_POST,
+    { body, identifier, slug },
+    token
+  );
+};
+
 export const postsRequests = {
   getPosts,
   getPost,
   voteOnPost,
   getPostComments,
+  createComment,
 };
