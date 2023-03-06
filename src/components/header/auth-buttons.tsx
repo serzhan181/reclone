@@ -15,7 +15,6 @@ import classNames from "classnames";
 import { useModalStore } from "@/stores/modal-store";
 
 export const AuthButtons = () => {
-  const router = useRouter();
   const [isOpenLogin, setIsOpenLogin] = useModalStore((state) => [
     state.authModal,
     state.setAuthModal,
@@ -35,7 +34,7 @@ export const AuthButtons = () => {
       );
 
       setUser(data.login.user);
-      router.refresh();
+      window.location.reload();
     },
     onError(error) {
       console.log("You are horrible", error);
@@ -52,7 +51,7 @@ export const AuthButtons = () => {
       );
 
       setUser(data.signUp.user);
-      router.refresh();
+      window.location.reload();
     },
     onError(error) {
       console.log("You are horrible", error);
