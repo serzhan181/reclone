@@ -19,7 +19,7 @@ interface SubmitCommentProps {
 }
 
 const Schema = z.object({
-  body: z.string(),
+  body: z.string().min(5, "Comment must consist of >5 letters."),
 });
 
 type SubmitCommentType = z.infer<typeof Schema>;
@@ -42,13 +42,21 @@ export const SubmitComment = ({
   );
   // --- Handle mutation
 
-  const { register, handleSubmit, reset } = useForm<SubmitCommentType>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<SubmitCommentType>({
     resolver: zodResolver(Schema),
   });
+
+  // Optimistic update
   const addComment = useLocalComments((state) => state.addComment);
   const user = useUserStore((state) => state.user);
 
   const onSubmit = (data: SubmitCommentType) => {
+    return;
     addComment({
       body: data.body,
       createdAt: new Date().toString(),
@@ -67,7 +75,12 @@ export const SubmitComment = ({
         <textarea
           {...register("body")}
           placeholder="What are your thoughts?"
-          className="w-full textarea textarea-bordered textarea-sm"
+          className={classNames(
+            "w-full textarea textarea-bordered textarea-sm",
+            {
+              "textarea-error": errors.body?.message,
+            }
+          )}
         />
         <div className="self-end">
           <button
