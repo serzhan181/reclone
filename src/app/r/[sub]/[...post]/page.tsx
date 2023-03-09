@@ -1,6 +1,7 @@
 import { Post } from "@/components/post";
 import { postsRequests } from "@/graphql/requests/post-requests";
 import { getToken } from "@/utils/get-token";
+import { Metadata } from "next";
 import { Comment } from "./comment";
 import { LocalComments } from "./local-comments";
 import { SubmitComment } from "./submit-comment";
@@ -11,11 +12,36 @@ interface PostPageParams {
 
 export const dynamic = "force-dynamic";
 
+const getPostFromParams = ({ params }: PostPageParams) => {
+  const [identifier, slug] = params.post;
+  const token = getToken();
+  return postsRequests.getPost({ identifier, slug, token });
+};
+
+export async function generateMetadata({
+  params,
+}: PostPageParams): Promise<Metadata> {
+  const { post } = await getPostFromParams({ params });
+  return {
+    title: post.title,
+    description: post.body,
+    authors: [{ name: post.user.username }],
+    openGraph: post.postImgUrl
+      ? {
+          images: [
+            {
+              url: post.postImgUrl,
+            },
+          ],
+        }
+      : {},
+  };
+}
+
 export default async function PostPage({ params }: PostPageParams) {
   const [identifier, slug] = params.post;
   const token = getToken();
-
-  const { post } = await postsRequests.getPost({ token, identifier, slug });
+  const { post } = await getPostFromParams({ params });
   const {
     post: { comments },
   } = await postsRequests.getPostComments({ token, identifier, slug });
