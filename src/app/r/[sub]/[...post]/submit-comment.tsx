@@ -56,7 +56,6 @@ export const SubmitComment = ({
   const user = useUserStore((state) => state.user);
 
   const onSubmit = (data: SubmitCommentType) => {
-    return;
     addComment({
       body: data.body,
       createdAt: new Date().toString(),
