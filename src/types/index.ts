@@ -66,6 +66,7 @@ export interface CreatePostInput {
   title: string;
   body?: string;
   file?: File;
+  subName: string;
 }
 
 export interface GetSubsForDropdown {
@@ -114,4 +115,10 @@ export interface CreateCommentOnPost {
   identifier: string;
   slug: string;
   body: string;
+}
+
+export interface Option {
+  id: string | number;
+  value: string;
+  label?: string;
 }

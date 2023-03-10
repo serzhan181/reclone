@@ -4,7 +4,9 @@ export const SidebarMeta = () => {
   return (
     <div className="basis-[15%] gap-5 flex flex-col">
       <div>
-        <button className="w-full btn btn-primary">Create a post</button>
+        <Link href="/submit/post" className="w-full btn btn-primary">
+          Create a post
+        </Link>
       </div>
 
       <div className="flex flex-col gap-3 p-3 rounded shadow-md bg-primary">

@@ -1,7 +1,12 @@
 import { VOTE_ON_POST } from "./../api/vote-graphql";
-import { GetPostComments, GetPostDetailed } from "./../../types/index";
+import {
+  CreatePostInput,
+  GetPostComments,
+  GetPostDetailed,
+} from "./../../types/index";
 import {
   COMMENT_ON_POST,
+  CREATE_POST,
   GET_POSTS,
   GET_POST_COMMENTS,
   GET_POST_DETAILED,
@@ -82,10 +87,24 @@ const createComment = ({
   );
 };
 
+const createPost = ({
+  title,
+  body,
+  file,
+  token,
+  subName,
+}: WithToken & CreatePostInput) =>
+  request<{}, CreatePostInput>(
+    CREATE_POST,
+    { title, body, file, subName },
+    token
+  );
+
 export const postsRequests = {
   getPosts,
   getPost,
   voteOnPost,
   getPostComments,
   createComment,
+  createPost,
 };
