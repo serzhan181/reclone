@@ -4,28 +4,39 @@ import { forwardRef, HTMLProps } from "react";
 interface InputProps extends HTMLProps<HTMLInputElement> {
   label?: string;
   variant?: "sm" | "md" | "lg";
+  isError?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ placeholder, label, variant = "md", ...rest }: InputProps, ref) => {
+  (
+    { placeholder, label, variant = "md", isError, ...rest }: InputProps,
+    ref
+  ) => {
     return (
-      <div className="w-full max-w-xs form-control">
+      <div className="w-full form-control">
         {label && (
           <label className="label">
-            <span className="label-text">{label}</span>
+            <span
+              className={classNames("label-text", {
+                "text-error": isError,
+              })}
+            >
+              {label}
+            </span>
           </label>
         )}
         <input
           type="text"
           placeholder={placeholder}
-          className={classNames("w-full max-w-xs input input-bordered", {
+          {...rest}
+          className={classNames("w-full input input-bordered", {
             "input-md": variant === "md",
             "input-sm": variant === "sm",
             "input-lg": variant === "lg",
+            "input-error": isError,
           })}
           ref={ref}
-          {...rest}
         />
       </div>
     );
