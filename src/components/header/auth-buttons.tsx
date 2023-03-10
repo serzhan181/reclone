@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@/shared/ui/input";
+import { Input } from "@/shared/form/input";
 import { Modal, ModalProps } from "@/shared/ui/modal";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
