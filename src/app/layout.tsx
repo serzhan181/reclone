@@ -18,10 +18,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <RQProvider>
+          {/* @ts-ignore */}
           <Header />
           <Container>
             <SidebarMenu />
             <main className="w-full">{children}</main>
+            {/* @ts-ignore */}
             <SidebarMeta />
           </Container>
         </RQProvider>
