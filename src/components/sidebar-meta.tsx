@@ -1,12 +1,17 @@
+import { isAuthedServer } from "@/utils/is-authed";
 import Link from "next/link";
 
-export const SidebarMeta = () => {
+export const SidebarMeta = async () => {
+  const isAuthenticated = await isAuthedServer();
+
   return (
     <div className="basis-[15%] gap-5 flex flex-col">
       <div>
-        <Link href="/submit/post" className="w-full btn btn-primary">
-          Create a post
-        </Link>
+        {isAuthenticated && (
+          <Link href="/submit/post" className="w-full btn btn-primary">
+            Create a post
+          </Link>
+        )}
       </div>
 
       <div className="flex flex-col gap-3 p-3 rounded shadow-md bg-primary">
