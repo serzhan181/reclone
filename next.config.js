@@ -12,6 +12,11 @@ const nextConfig = {
         hostname: "external-content.duckduckgo.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "f004.backblazeb2.com",
+        pathname: "/**",
+      },
     ],
   },
 };
