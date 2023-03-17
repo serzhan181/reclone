@@ -59,7 +59,13 @@ const SubmitPost = () => {
         control={control}
         name="subName"
         defaultValue=""
-        render={({ field }) => <SelectSub onChange={field.onChange} />}
+        render={({ field }) => (
+          <SelectSub
+            isError={Boolean(errors.subName?.message)}
+            label={errors.subName?.message}
+            onChange={field.onChange}
+          />
+        )}
       />
       {/* Label triggers IFF there's an error */}
       <Input

@@ -1,22 +1,24 @@
 "use client";
 
 import { subsRequests } from "@/graphql/requests/subs-requests";
-import { Combobox } from "@/shared/form/combobox";
+import { Combobox, ComboboxProps } from "@/shared/form/combobox";
 import { Option, GetSubsForDropdown } from "@/types";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
 // Yes maybe it is a bit of prop drilling, but trust me, it's the good way. Let me lead you through and you shall understand my intentions!
-interface SelectSubProps {
+interface SelectSubProps extends Pick<ComboboxProps, "isError" | "label"> {
   onChange: (value: string) => void;
 }
 
-export const SelectSub = ({ onChange }: SelectSubProps) => {
+export const SelectSub = ({ onChange, isError, label }: SelectSubProps) => {
   const [selected, setSelected] = useState<Option | undefined>();
 
   const { subs, isSubsListLoading } = useGetSubsForSelect();
   return (
     <Combobox
+      label={label}
+      isError={isError}
       placeholder="Select community"
       options={subs}
       selected={selected}

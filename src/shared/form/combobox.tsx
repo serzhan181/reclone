@@ -5,8 +5,10 @@ import { Combobox as HCombobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Option } from "@/types";
 import { LoadingSpinner } from "../ui/loading-spinner";
+import { InputProps } from "./input";
+import classNames from "classnames";
 
-interface ComboboxProps {
+export interface ComboboxProps extends Pick<InputProps, "isError" | "label"> {
   selected: Option | undefined;
   setSelected: (option: Option) => void;
   options: Option[];
@@ -18,8 +20,10 @@ export const Combobox = ({
   selected,
   setSelected,
   options,
-  placeholder = "",
   isLoading,
+  placeholder = "",
+  isError,
+  label,
 }: ComboboxProps) => {
   const [query, setQuery] = useState("");
 
@@ -30,27 +34,40 @@ export const Combobox = ({
           <div className="relative w-full overflow-hidden text-left rounded-lg outline-none cursor-default sm:text-sm">
             {/* Our savior from accessability hell, headless ui, couldn't do so that options will open on focus. There's a workaround though, which you can observe below. It works. Hopefully they will add this feature. */}
             <HCombobox.Button
-              className="relative flex items-center w-full gap-2"
+              className="relative flex flex-col w-full gap-2"
               as="div"
             >
-              <HCombobox.Input
-                placeholder={placeholder}
-                className="w-full input input-bordered"
-                displayValue={(option: Option) =>
-                  option?.label ? option.label : option.value
-                }
-                onChange={(event) => setQuery(event.target.value)}
-              />
-              <span className="absolute right-3">
-                {isLoading ? (
-                  <LoadingSpinner />
-                ) : (
-                  <ChevronUpDownIcon
-                    className="w-5 h-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                )}
-              </span>
+              {label && (
+                <HCombobox.Label
+                  className={classNames("label-text", {
+                    "text-error": isError,
+                  })}
+                >
+                  {label}
+                </HCombobox.Label>
+              )}
+              <div className="relative flex items-center w-full gap-2">
+                <HCombobox.Input
+                  placeholder={placeholder}
+                  className={classNames("w-full input input-bordered", {
+                    "input-error": isError,
+                  })}
+                  displayValue={(option: Option) =>
+                    option?.label ? option.label : option.value
+                  }
+                  onChange={(event) => setQuery(event.target.value)}
+                />
+                <span className="absolute right-3">
+                  {isLoading ? (
+                    <LoadingSpinner />
+                  ) : (
+                    <ChevronUpDownIcon
+                      className="w-5 h-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  )}
+                </span>
+              </div>
             </HCombobox.Button>
           </div>
           <Transition

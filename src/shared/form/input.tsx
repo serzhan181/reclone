@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { forwardRef, HTMLProps } from "react";
 
-interface InputProps extends HTMLProps<HTMLInputElement> {
+export interface InputProps extends HTMLProps<HTMLInputElement> {
   label?: string;
   variant?: "sm" | "md" | "lg";
   isError?: boolean;
