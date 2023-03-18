@@ -1,10 +1,12 @@
 import { IMe } from "@/types";
 import UserIcon from "@heroicons/react/24/outline/UserCircleIcon";
+import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { AuthButtons } from "./auth-buttons";
 import Image from "next/image";
 import { getToken } from "@/utils/get-token";
 import { authRequest } from "@/graphql/requests/auth-requests";
 import { MeSet } from "./me-set";
+import Link from "next/link";
 
 async function getMe(): Promise<{ me: IMe }> {
   try {
@@ -38,19 +40,25 @@ export const Header = async () => {
         </div>
         <div>
           {me.authenticated ? (
-            <button className="avatar">
-              <div className="relative rounded-full w-14">
-                {me.user?.profile_picture_urn ? (
-                  <Image
-                    src={me.user.profile_picture_urn}
-                    alt={me.user.username}
-                    fill
-                  />
-                ) : (
-                  <UserIcon />
-                )}
-              </div>
-            </button>
+            <div className="flex items-center gap-2">
+              <button className="avatar">
+                <div className="relative rounded-full w-14">
+                  {me.user?.profile_picture_urn ? (
+                    <Image
+                      src={me.user.profile_picture_urn}
+                      alt={me.user.username}
+                      fill
+                    />
+                  ) : (
+                    <UserIcon />
+                  )}
+                </div>
+              </button>
+
+              <Link href="/submit/post" className="btn btn-primary">
+                <PlusIcon className="w-8" />
+              </Link>
+            </div>
           ) : (
             <AuthButtons />
           )}
