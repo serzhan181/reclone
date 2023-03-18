@@ -7,18 +7,52 @@ import CakeIcon from "@heroicons/react/24/outline/CakeIcon";
 import { getToken } from "@/utils/get-token";
 import { postsRequests } from "@/graphql/requests/post-requests";
 import { Post } from "@/components/post";
+import { Metadata } from "next";
 
 interface SubPageParams {
   params: { sub: string };
 }
 
-const SubPage = async ({ params }: SubPageParams) => {
+const getSubAndPosts = async ({ params }: SubPageParams) => {
   const token = getToken();
   const { sub } = await subsRequests.getSub({ name: params.sub, token });
   const { postsBySubName } = await postsRequests.getPostsBySubname({
     subName: params.sub,
     token,
   });
+
+  return {
+    sub,
+    postsBySubName,
+  };
+};
+
+export async function generateMetadata({
+  params,
+}: SubPageParams): Promise<Metadata> {
+  const { sub } = await getSubAndPosts({ params });
+  return {
+    title: sub.title,
+    description: sub.description,
+    authors: [{ name: sub.creator_name }],
+    openGraph:
+      sub.bannerImgUrl || sub.subImgUrl
+        ? {
+            images: [
+              {
+                url: sub.bannerImgUrl,
+              },
+              {
+                url: sub.subImgUrl,
+              },
+            ],
+          }
+        : {},
+  };
+}
+
+const SubPage = async ({ params }: SubPageParams) => {
+  const { postsBySubName, sub } = await getSubAndPosts({ params });
 
   return (
     <div className="flex gap-5">
