@@ -1,6 +1,5 @@
 import { Header } from "@/components/header";
 import { SidebarMenu } from "@/components/sidebar-menu";
-import { SidebarMeta } from "@/components/sidebar-meta";
 import { RQProvider } from "@/rq/client";
 import "./globals.css";
 
@@ -23,8 +22,6 @@ export default function RootLayout({
           <Container>
             <SidebarMenu />
             <main className="w-full">{children}</main>
-            {/* @ts-ignore */}
-            <SidebarMeta />
           </Container>
         </RQProvider>
       </body>

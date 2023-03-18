@@ -93,7 +93,10 @@ const PostFooter = ({
         </Link>
 
         <span className="flex items-center gap-2 text-base-content/50">
-          <Link href="/" className=" text-primary underline-offset-4">
+          <Link
+            href={`/r/${subName}`}
+            className=" text-primary underline-offset-4"
+          >
             r/{subName}
           </Link>
         </span>

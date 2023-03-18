@@ -8,6 +8,7 @@ import {
   COMMENT_ON_POST,
   CREATE_POST,
   GET_POSTS,
+  GET_POSTS_BY_SUBNAME,
   GET_POST_COMMENTS,
   GET_POST_DETAILED,
 } from "./../api/post-graphql";
@@ -100,6 +101,16 @@ const createPost = ({
     token
   );
 
+const getPostsBySubname = ({
+  subName,
+  token,
+}: { subName: string } & WithToken) =>
+  request<{ postsBySubName: GetPost[] }, { subName: string }>(
+    GET_POSTS_BY_SUBNAME,
+    { subName },
+    token
+  );
+
 export const postsRequests = {
   getPosts,
   getPost,
@@ -107,4 +118,5 @@ export const postsRequests = {
   getPostComments,
   createComment,
   createPost,
+  getPostsBySubname,
 };
