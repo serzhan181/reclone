@@ -50,7 +50,6 @@ export async function generateMetadata({
         : {},
   };
 }
-
 const SubPage = async ({ params }: SubPageParams) => {
   const { postsBySubName, sub } = await getSubAndPosts({ params });
 
@@ -65,7 +64,11 @@ const SubPage = async ({ params }: SubPageParams) => {
         />
 
         {/* Community posts */}
-        <div>
+        <div
+          className={classNames({
+            "mt-16": sub.bannerImgUrl,
+          })}
+        >
           {postsBySubName.map((p) => (
             <Post
               key={p.id}
@@ -108,13 +111,10 @@ const Header = ({ subName, bgImg, subImg }: HeaderProps) => {
     <div className="relative rounded-t-md">
       {bgImg && <BackgroundImage src={bgImg} />}
       <div
-        className={classNames(
-          "flex justify-between w-full px-8 bg-primary/5 ring",
-          {
-            "absolute -bottom-16 rounded-b-md pb-3": bgImg,
-            "items-center rounded-md": !bgImg,
-          }
-        )}
+        className={classNames("flex justify-between w-full px-8 bg-primary/5", {
+          "absolute -bottom-16 rounded-b-md pb-3": bgImg,
+          "items-center rounded-md ring": !bgImg,
+        })}
       >
         <div className="flex gap-3">
           <RoundedImage
