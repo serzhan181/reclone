@@ -8,6 +8,7 @@ import { getToken } from "@/utils/get-token";
 import { postsRequests } from "@/graphql/requests/post-requests";
 import { Post } from "@/components/post";
 import { Metadata } from "next";
+import { SubFront } from "./sub-front";
 
 interface SubPageParams {
   params: { sub: string };
@@ -57,10 +58,12 @@ const SubPage = async ({ params }: SubPageParams) => {
     <div className="flex gap-5">
       <div className="flex flex-col gap-5 md:basis-[75%]">
         {/* header */}
-        <Header
-          subName={sub.title}
+        <SubFront
+          subName={sub.name}
+          subDisplayName={sub.title}
           bgImg={sub.bannerImgUrl}
           subImg={sub.subImgUrl}
+          isUserSubscribed={sub.isUserSubscribed}
         />
 
         {/* Community posts */}
@@ -96,61 +99,6 @@ const SubPage = async ({ params }: SubPageParams) => {
           subsCount={sub.subsribersCount}
         />
       </div>
-    </div>
-  );
-};
-
-interface HeaderProps {
-  bgImg?: string;
-  subImg?: string;
-  subName: string;
-}
-
-// Header related
-const Header = ({ subName, bgImg, subImg }: HeaderProps) => {
-  return (
-    <div className="relative rounded-t-md">
-      {bgImg && <BackgroundImage src={bgImg} />}
-      <div
-        className={classNames("flex justify-between w-full px-8 bg-primary/5", {
-          "absolute -bottom-16 rounded-b-md pb-3": bgImg,
-          "items-center rounded-md ring": !bgImg,
-        })}
-      >
-        <div className="flex gap-3">
-          <RoundedImage
-            src={subImg || ""}
-            alt="hello"
-            size="lg"
-            className="z-20 cursor-pointer hover:ring"
-          />
-          <div
-            className={classNames({
-              "self-center": !bgImg,
-              "self-end": bgImg,
-            })}
-          >
-            <p className="text-xl font-semibold">{subName}</p>
-          </div>
-        </div>
-
-        {/* btns */}
-        <div>
-          <button className="btn btn-primary btn-sm">Join</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const BackgroundImage = ({ src }: { src: string }) => {
-  return (
-    <div className="relative z-10 w-full overflow-hidden cursor-pointer rounded-t-md h-52 hover:ring">
-      {src ? (
-        <Image src={src} alt="test" fill style={{ objectFit: "cover" }} />
-      ) : (
-        <>nothing yeat</>
-      )}
     </div>
   );
 };
