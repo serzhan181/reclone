@@ -40,7 +40,7 @@ export const Post = ({
   return (
     <div className="flex w-full gap-5 p-5 shadow-md md:rounded-md bg-primary/5">
       {/* Votes */}
-      <div className="hidden md:block">
+      <div className="block">
         <VotePost voteScore={voteScore} userVote={userVote} postId={id} />
       </div>
 
@@ -99,9 +99,12 @@ const PostFooter = ({
   subName,
 }: PostFooterProps) => {
   return (
-    <div className="flex items-center justify-between text-sm ">
+    <div className="flex items-center justify-between text-xs md:text-sm">
       <div className="flex items-center gap-2">
-        <Link href={`/r/${subName}`} className="avatar">
+        <Link
+          href={`/r/${subName}`}
+          className="hidden md:inline-block md:avatar"
+        >
           <div className="relative w-8 rounded-full">
             {subImg ? (
               <Image alt="user" src={subImg} fill />
@@ -138,7 +141,7 @@ const PostFooter = ({
         href={href}
         className="flex items-center gap-2 p-1 rounded text-base-content/50 hover:bg-neutral"
       >
-        <CommentIcon className="w-6" />
+        <CommentIcon className="w-3 md:w-6" />
         <span className="h-full">{commentCount}</span>
       </Link>
     </div>
