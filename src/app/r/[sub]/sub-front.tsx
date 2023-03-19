@@ -89,26 +89,27 @@ export const SubFront = ({
           </div>
         </div>
 
-        {/* btns */}
-        <div
-          className={classNames({
-            flex: bgImg,
-          })}
-        >
-          <button
-            className={classNames("btn btn-primary btn-sm", {
-              "self-end": bgImg,
-              "btn-ghost": isUserSubscribed,
-              "loading btn-disabled": isLoading,
+        {authData?.me.authenticated && (
+          <div
+            className={classNames({
+              flex: bgImg,
             })}
-            disabled={isLoading}
-            onClick={() =>
-              onSubJoinOrLeave(isUserSubscribed ? "leave" : "join")
-            }
           >
-            {isUserSubscribed ? "Joined" : "Join"}
-          </button>
-        </div>
+            <button
+              className={classNames("btn btn-primary btn-sm", {
+                "self-end": bgImg,
+                "btn-ghost": isUserSubscribed,
+                "loading btn-disabled": isLoading,
+              })}
+              disabled={isLoading}
+              onClick={() =>
+                onSubJoinOrLeave(isUserSubscribed ? "leave" : "join")
+              }
+            >
+              {isUserSubscribed ? "Joined" : "Join"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
