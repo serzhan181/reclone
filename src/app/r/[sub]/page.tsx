@@ -65,7 +65,7 @@ const SubPage = async ({ params }: SubPageParams) => {
 
         {/* Community posts */}
         <div
-          className={classNames({
+          className={classNames("flex flex-col gap-5", {
             "mt-16": sub.bannerImgUrl,
           })}
         >
@@ -164,25 +164,27 @@ interface AboutCardProps {
 const AboutCard = ({ description, subsCount, createdAt }: AboutCardProps) => {
   return (
     <div className="overflow-hidden rounded-md bg-primary/20">
-      <div className="p-2 bg-primary">
+      <div className="p-3 bg-primary">
         <h1 className="text-lg font-semibold text-white">About community</h1>
       </div>
 
-      <div className="p-2">
-        <p>{description}</p>
-      </div>
+      <div className="flex flex-col gap-3 p-3">
+        <div>
+          <p>{description}</p>
+        </div>
 
-      <div className="flex items-center p-2">
-        <CakeIcon className="w-6" />
+        <div className="flex items-center">
+          <CakeIcon className="w-6" />
 
-        <p className="ml-2 text-sm text-gray-500">
-          Created {dayjs(createdAt).format("MMM D, YYYY")}
-        </p>
-      </div>
+          <p className="ml-2 text-sm text-gray-500">
+            Created {dayjs(createdAt).format("MMM D, YYYY")}
+          </p>
+        </div>
 
-      <div className="flex flex-col p-2 flex-center">
-        <p className="text-lg font-semibold">{subsCount}</p>
-        <p className="text-sm text-gray-500">followers</p>
+        <div className="flex flex-col flex-center">
+          <p className="text-lg font-semibold">{subsCount}</p>
+          <p className="text-sm text-gray-500">followers</p>
+        </div>
       </div>
     </div>
   );
