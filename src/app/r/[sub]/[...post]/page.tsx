@@ -60,6 +60,7 @@ export default async function PostPage({ params }: PostPageParams) {
         commentCount={post.commentCount}
         subImg={post.subImgUrl}
         body={post.body}
+        postImg={post.postImgUrl}
         userVote={post.userVote}
       />
 

@@ -20,6 +20,7 @@ interface PostProps {
   subImg: string | null;
   body?: string;
   userVote?: number;
+  postImg?: string;
 }
 
 export const Post = ({
@@ -34,6 +35,7 @@ export const Post = ({
   subImg,
   body,
   userVote,
+  postImg,
 }: PostProps) => {
   return (
     <div className="flex w-full gap-5 p-5 rounded-lg shadow-md bg-primary/5">
@@ -47,6 +49,21 @@ export const Post = ({
           </Link>
         </div>
         {body && <div>{parse(body)}</div>}
+        {postImg && (
+          <>
+            <hr className="border-[1.5px] border-primary/10" />
+            <div className="flex items-center justify-center">
+              <Image
+                src={postImg}
+                alt="post image"
+                width={350}
+                height={215}
+                className="object-contain rounded-md"
+              />
+            </div>
+          </>
+        )}
+
         <hr className="border-[1.5px] border-primary/10" />
         {/* Fake data for now */}
         <PostFooter

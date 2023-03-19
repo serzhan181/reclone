@@ -22,6 +22,7 @@ export default async function Home() {
           createdAt={p.createdAt}
           commentCount={p.commentCount}
           subImg={p.subImgUrl}
+          postImg={p.postImgUrl}
           id={p.id}
         />
       ))}
