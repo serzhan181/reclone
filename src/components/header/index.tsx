@@ -28,7 +28,7 @@ export const Header = async () => {
 
   return (
     <MeSet user={me.user}>
-      <header className="fixed top-0 flex items-center justify-between w-full h-20 px-5 rounded-b shadow-md bg-primary">
+      <header className="fixed top-0 z-50 flex items-center justify-between w-full h-20 px-5 rounded-b shadow-md bg-primary">
         {/* Logo */}
         <div>YOUR LOGO HERE</div>
         <div className="w-[625px]">
