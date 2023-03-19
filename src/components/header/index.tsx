@@ -35,7 +35,7 @@ export const Header = async () => {
           <input
             type="text"
             placeholder="Search for topics"
-            className="w-full input input-info"
+            className="hidden w-full md:block input input-info"
           />
         </div>
         <div>

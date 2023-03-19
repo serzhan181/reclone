@@ -55,7 +55,7 @@ const SubPage = async ({ params }: SubPageParams) => {
 
   return (
     <div className="flex gap-5">
-      <div className="flex flex-col gap-5 basis-[75%]">
+      <div className="flex flex-col gap-5 md:basis-[75%]">
         {/* header */}
         <Header
           subName={sub.title}
@@ -89,7 +89,7 @@ const SubPage = async ({ params }: SubPageParams) => {
       </div>
 
       {/* About */}
-      <div className="grow">
+      <div className="hidden md:block md:grow">
         <AboutCard
           createdAt={sub.createdAt}
           description={sub.description}
