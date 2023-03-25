@@ -14,6 +14,7 @@ import XIcon from "@heroicons/react/20/solid/XMarkIcon";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import classNames from "classnames";
+import { Editor } from "@/shared/form/editor";
 
 const Schema = z.object({
   title: z
@@ -87,10 +88,16 @@ const SubmitPost = () => {
         label={errors.title?.message}
         autoComplete="off"
       />
-      <textarea
-        {...register("body")}
-        className="w-full textarea textarea-bordered"
-        placeholder="Body (optional)"
+      <Controller
+        control={control}
+        name="body"
+        render={({ field }) => (
+          <Editor
+            placeholder="Enter description"
+            value={field.value || ""}
+            onChange={field.onChange}
+          />
+        )}
       />
 
       {/* Picture */}

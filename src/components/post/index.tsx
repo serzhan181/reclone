@@ -3,11 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import CommentIcon from "@heroicons/react/24/outline/ChatBubbleBottomCenterTextIcon";
 import { fromNow } from "@/utils/from-now";
-import parse from "html-react-parser";
 import { VotePost } from "./vote-post";
 import { PostActions } from "./post-actions";
-
-export const dynamic = "force-dynamic";
+import { Editor } from "@/shared/form/editor";
 
 interface PostProps {
   id: string;
@@ -72,7 +70,6 @@ interface PostBodyProps {
   body?: string;
   postImg?: string;
 }
-
 const PostBody = ({ href, title, body, postImg }: PostBodyProps) => {
   return (
     <>
@@ -81,7 +78,16 @@ const PostBody = ({ href, title, body, postImg }: PostBodyProps) => {
           {title}
         </Link>
       </div>
-      {body && <div>{parse(body)}</div>}
+      {body && (
+        <Editor
+          preview
+          previewOnly
+          value={body}
+          style={{
+            backgroundColor: "transparent",
+          }}
+        />
+      )}
       {postImg && (
         <>
           <hr className="border-[1.5px] border-primary/10" />
