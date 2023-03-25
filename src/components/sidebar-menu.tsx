@@ -35,7 +35,7 @@ export const SidebarMenu = () => {
             key={o.title}
             className={classNames("py-2 pl-3 transition-all duration-100", {
               "border-l-8 border-l-primary bg-primary/20 text-primary":
-                o.href.includes(pathname),
+                o.href.includes(pathname || "-1"),
             })}
           >
             <Link className="flex items-center gap-3" href={o.href}>
