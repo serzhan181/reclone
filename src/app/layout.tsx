@@ -1,3 +1,4 @@
+import { HotToaster } from "@/bootstrap/hot-toaster";
 import { Header } from "@/components/header";
 import { SidebarMenu } from "@/components/sidebar-menu";
 import { RQProvider } from "@/rq/client";
@@ -24,6 +25,7 @@ export default function RootLayout({
             <main className="w-full">{children}</main>
           </Container>
         </RQProvider>
+        <HotToaster />
       </body>
     </html>
   );
