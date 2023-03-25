@@ -7,6 +7,7 @@ import {
 import {
   COMMENT_ON_POST,
   CREATE_POST,
+  DELETE_POST,
   GET_POSTS,
   GET_POSTS_BY_SUBNAME,
   GET_POST_COMMENTS,
@@ -111,6 +112,9 @@ const getPostsBySubname = ({
     token
   );
 
+const deletePost = ({ postId, token }: { postId: string } & WithToken) =>
+  request<{}, { postId: string }>(DELETE_POST, { postId }, token);
+
 export const postsRequests = {
   getPosts,
   getPost,
@@ -119,4 +123,5 @@ export const postsRequests = {
   createComment,
   createPost,
   getPostsBySubname,
+  deletePost,
 };

@@ -5,6 +5,7 @@ import CommentIcon from "@heroicons/react/24/outline/ChatBubbleBottomCenterTextI
 import { fromNow } from "@/utils/from-now";
 import parse from "html-react-parser";
 import { VotePost } from "./vote-post";
+import { PostActions } from "./post-actions";
 
 export const dynamic = "force-dynamic";
 
@@ -40,31 +41,15 @@ export const Post = ({
   return (
     <div className="flex w-full gap-5 p-5 shadow-md md:rounded-md bg-primary/5">
       {/* Votes */}
-      <div className="block">
+      <div className="flex flex-col justify-between">
         <VotePost voteScore={voteScore} userVote={userVote} postId={id} />
+        <div className="flex justify-center">
+          <PostActions postId={id} postOwnerUsername={authorName} />
+        </div>
       </div>
 
       <div className="flex flex-col w-full gap-4">
-        <div>
-          <Link href={href} className="text-2xl font-semibold">
-            {title}
-          </Link>
-        </div>
-        {body && <div>{parse(body)}</div>}
-        {postImg && (
-          <>
-            <hr className="border-[1.5px] border-primary/10" />
-            <div className="flex items-center justify-center">
-              <Image
-                src={postImg}
-                alt="post image"
-                width={350}
-                height={215}
-                className="object-contain rounded-md"
-              />
-            </div>
-          </>
-        )}
+        <PostBody href={href} title={title} body={body} postImg={postImg} />
 
         <hr className="border-[1.5px] border-primary/10" />
         {/* Fake data for now */}
@@ -78,6 +63,40 @@ export const Post = ({
         />
       </div>
     </div>
+  );
+};
+
+interface PostBodyProps {
+  href: string;
+  title: string;
+  body?: string;
+  postImg?: string;
+}
+
+const PostBody = ({ href, title, body, postImg }: PostBodyProps) => {
+  return (
+    <>
+      <div>
+        <Link href={href} className="text-2xl font-semibold">
+          {title}
+        </Link>
+      </div>
+      {body && <div>{parse(body)}</div>}
+      {postImg && (
+        <>
+          <hr className="border-[1.5px] border-primary/10" />
+          <div className="flex items-center justify-center">
+            <Image
+              src={postImg}
+              alt="post image"
+              width={350}
+              height={215}
+              className="object-contain rounded-md"
+            />
+          </div>
+        </>
+      )}
+    </>
   );
 };
 
