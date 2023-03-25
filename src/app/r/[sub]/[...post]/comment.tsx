@@ -2,7 +2,6 @@ import { fromNow } from "@/utils/from-now";
 import UserIcon from "@heroicons/react/24/outline/UserCircleIcon";
 import Image from "next/image";
 import Link from "next/link";
-import parse from "html-react-parser";
 
 interface CommentProps {
   username: string;
@@ -40,7 +39,7 @@ export const Comment = ({
             <span>&#8226;</span>
             <p className="text-sm text-base-content/50">{fromNow(createdAt)}</p>
           </div>
-          <div>{parse(body)}</div>
+          <div>{body}</div>
         </div>
       </div>
     </div>
