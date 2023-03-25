@@ -1,13 +1,17 @@
 "use client";
 
 import { postsRequests } from "@/graphql/requests/post-requests";
-import { Dropdown } from "@/shared/ui/dropdown";
 import { useMutation } from "react-query";
 import type { Option } from "@/types";
 import { getTokenClient } from "@/utils/get-token-client";
 import { promiseToast } from "@/utils/promise-toast";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/stores/user-store";
+import dynamic from "next/dynamic";
+
+const Dropdown = dynamic(() =>
+  import("@/shared/ui/dropdown").then((c) => c.Dropdown)
+);
 
 interface PostActionsProps {
   postId: string;
@@ -34,11 +38,8 @@ export const PostActions = ({
   const router = useRouter();
   const username = useUserStore((state) => state.user?.username);
 
-  if (username !== postOwnerUsername) {
-    return null;
-  }
-
   const handleClickOption = (value: PostActionOption["value"]) => {
+    if (username !== postOwnerUsername) return;
     switch (value) {
       case "delete":
         onDelete();
