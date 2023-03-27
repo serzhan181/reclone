@@ -70,6 +70,7 @@ export const PostActions = ({
     <Dropdown
       options={postActionOptions}
       onClick={(value) => handleClickOption(value as PostActionOption["value"])}
+      className="btn btn-ghost btn-circle btn-xs"
     />
   );
 };
