@@ -1,22 +1,35 @@
 "use client";
 
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, ReactNode } from "react";
 import EllipsisIcon from "@heroicons/react/20/solid/EllipsisVerticalIcon";
 import type { Option } from "@/types";
+import classNames from "classnames";
 
 interface DropdownProps {
   options: Option[];
   onClick: (value: Option["value"]) => void;
+  label?: ReactNode;
+  className?: string;
 }
 
-export const Dropdown = ({ options, onClick }: DropdownProps) => {
+export const Dropdown = ({
+  options,
+  onClick,
+  label,
+  className,
+}: DropdownProps) => {
   return (
     <div className="text-right top-16">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="btn btn-ghost btn-circle btn-xs">
-            <EllipsisIcon className="w-3" />
+          <Menu.Button
+            className={classNames({
+              "btn btn-primary": !className,
+              [`${className}`]: className,
+            })}
+          >
+            {label || <EllipsisIcon className="w-3" />}
           </Menu.Button>
         </div>
         <Transition
