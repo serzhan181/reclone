@@ -1,3 +1,4 @@
+import { getTokenClient } from "@/utils/get-token-client";
 import { GraphQLClient } from "graphql-request";
 
 export const gqlClient = new GraphQLClient(
@@ -7,11 +8,11 @@ export const gqlClient = new GraphQLClient(
 export async function request<T = any, V = any>(
   query: string,
   variables?: V,
-  token?: string
+  overrideToken?: string
 ): Promise<T> {
-  if (token) {
-    gqlClient.setHeader("Authorization", `Bearer ${token}`);
-  }
+  const token = getTokenClient();
+
+  gqlClient.setHeader("Authorization", `Bearer ${overrideToken || token}`);
 
   return gqlClient
     .request<T>(query, variables ? variables : {})
